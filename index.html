@@ -1,569 +1,249 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ContaFlash - Serviços digitais premium com até 70% de economia. ChatGPT Plus, Netflix, Spotify e mais!">
-    <meta name="keywords" content="contas digitais, ChatGPT Plus, Netflix, Spotify, serviços digitais, assinatura">
-    <meta name="author" content="ContaFlash">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#6366f1">
-    <title>ContaFlash | Serviços Digitais Premium</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conheça a ContaFlash - missão, valores e como nos tornamos referência em serviços digitais premium no Brasil.">
+  <meta name="robots" content="index, follow">
+  <title>Sobre Nós - ContaFlash</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!-- Partículas de Fundo -->
-    <div class="bg-particles" id="particles"></div>
-    
-    <!-- Gradiente de Fundo -->
-    <div class="bg-gradient"></div>
-    
-    <!-- Header / Navegação -->
-    <header class="glass-header" id="header">
-        <nav class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <span>ContaFlash</span>
-            </a>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="pages/produtos.html">Produtos</a></li>
-                <li><a href="pages/sobre.html">Sobre</a></li>
-                <li><a href="pages/faq.html">FAQ</a></li>
-                <li><a href="pages/contato.html">Contato</a></li>
-                <li><a href="pages/produtos.html" class="btn-nav">Ver Produtos</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <!-- Menu Mobile -->
-    <div class="mobile-menu glass-menu" id="mobileMenu">
+
+  <div class="loading-screen">
+    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-bar"></div>
+  </div>
+
+  <div id="particles-container"></div>
+  <div class="toast-container"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">ContaFlash</span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">Início</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="sobre.html" class="active">Sobre</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+        <a href="produtos.html" class="nav-cta">Ver Produtos</a>
+      </nav>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../index.html">Início</a>
+    <a href="produtos.html">Produtos</a>
+    <a href="sobre.html" class="active">Sobre</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Sobre a <span class="gradient-text">ContaFlash</span></h1>
+    <p>Conheça nossa história, missão e os valores que nos guiam</p>
+    <div class="breadcrumb">
+      <a href="../index.html">Início</a> <span>/</span> <span>Sobre</span>
+    </div>
+  </div>
+
+  <!-- About Content -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+      <div class="fade-in" style="max-width: 800px; margin: 0 auto; text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">Nossa <span class="gradient-text">História</span></h2>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8;">
+          A ContaFlash nasceu em 2023 com uma missão clara: democratizar o acesso a serviços digitais premium no Brasil. Percebemos que muitos brasileiros não podiam arcar com os altos preços de assinaturas internacionais, e aí nasceu a nossa ideia — oferecer contas premium compartilhadas com preços acessíveis, garantia de funcionamento e suporte dedicado.
+        </p>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
+          Hoje, somos referência no mercado digital brasileiro, com mais de 10.000 clientes satisfeitos e um portfólio com mais de 50 serviços diferentes. Nossa equipe trabalha incansavelmente para garantir a melhor experiência possível.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid fade-in" style="margin-bottom: 4rem;">
+        <div class="stat-card glass">
+          <div class="stat-icon">👥</div>
+          <div class="stat-number counter" data-target="10000" data-suffix="+">0</div>
+          <div class="stat-label">Clientes Satisfeitos</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-icon">🛒</div>
+          <div class="stat-number counter" data-target="25000" data-suffix="+">0</div>
+          <div class="stat-label">Vendas Realizadas</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number counter" data-target="4" data-suffix=".9">0</div>
+          <div class="stat-label">Avaliação Média</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-number counter" data-target="50" data-suffix="+">0</div>
+          <div class="stat-label">Serviços Disponíveis</div>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="section-header fade-in">
+        <span class="section-badge"><i class="fas fa-gem"></i> Nossos Valores</span>
+        <h2 class="section-title">No que <span>acreditamos</span></h2>
+      </div>
+
+      <div class="values-grid" style="margin-bottom: 4rem;">
+        <div class="value-card glass fade-in">
+          <div class="icon">🎯</div>
+          <h3>Missão</h3>
+          <p>Democratizar o acesso a serviços digitais premium, oferecendo qualidade e acessibilidade para todos os brasileiros.</p>
+        </div>
+        <div class="value-card glass fade-in">
+          <div class="icon">👁️</div>
+          <h3>Visão</h3>
+          <p>Ser a plataforma número 1 de serviços digitais compartilhados na América Latina até 2026.</p>
+        </div>
+        <div class="value-card glass fade-in">
+          <div class="icon">💎</div>
+          <h3>Transparência</h3>
+          <p>Comunicação clara e honesta com nossos clientes. Sem letras miúdas, sem surpresas.</p>
+        </div>
+        <div class="value-card glass fade-in">
+          <div class="icon">🤝</div>
+          <h3>Compromisso</h3>
+          <p>Garantia de 30 dias em todos os produtos. Se não funcionar, devolvemos seu dinheiro.</p>
+        </div>
+        <div class="value-card glass fade-in">
+          <div class="icon">🚀</div>
+          <h3>Inovação</h3>
+          <p>Constantemente adicionamos novos serviços e melhoramos a experiência dos nossos clientes.</p>
+        </div>
+        <div class="value-card glass fade-in">
+          <div class="icon">❤️</div>
+          <h3>Atendimento</h3>
+          <p>Suporte humanizado 24 horas, 7 dias por semana. Sempre prontos para ajudar.</p>
+        </div>
+      </div>
+
+      <!-- Como Funciona Detalhado -->
+      <div class="section-header fade-in">
+        <span class="section-badge"><i class="fas fa-cogs"></i> Processo</span>
+        <h2 class="section-title">Como funciona <span>por dentro</span></h2>
+        <p class="section-desc">Entenda o processo completo por trás de cada entrega</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div class="glass fade-in" style="padding: 2rem;">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">1</span>
+            <h3 style="font-size:1.1rem;font-weight:700;">Escolha e Pagamento</h3>
+          </div>
+          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Navegue pelo nosso catálogo, escolha o serviço desejado e realize o pagamento via PIX, cartão de crédito ou boleto. O PIX é processado instantaneamente.</p>
+        </div>
+
+        <div class="glass fade-in" style="padding: 2rem;">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">2</span>
+            <h3 style="font-size:1.1rem;font-weight:700;">Processamento Automático</h3>
+          </div>
+          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Nosso sistema automatizado gera as credenciais de acesso em segundos. Cada conta é testada e verificada antes do envio.</p>
+        </div>
+
+        <div class="glass fade-in" style="padding: 2rem;">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">3</span>
+            <h3 style="font-size:1.1rem;font-weight:700;">Entrega e Suporte</h3>
+          </div>
+          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">As credenciais são enviadas por email em até 5 minutos. Caso tenha qualquer dúvida ou problema, nosso suporte está disponível 24h.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">ContaFlash</span>
+        </a>
+        <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
         <ul>
-            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
-            <li><a href="pages/produtos.html"><i class="fas fa-box"></i> Produtos</a></li>
-            <li><a href="pages/sobre.html"><i class="fas fa-info-circle"></i> Sobre</a></li>
-            <li><a href="pages/faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
-            <li><a href="pages/contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contato.html">Contato</a></li>
         </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="produtos.html">Streaming</a></li>
+          <li><a href="produtos.html">IA</a></li>
+          <li><a href="produtos.html">Música</a></li>
+          <li><a href="produtos.html">Jogos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:suporte@contaflash.com"><i class="fas fa-envelope" style="width:16px;margin-right:6px;color:var(--primary-light)"></i>suporte@contaflash.com</a></li>
+          <li><a href="#"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(11) 99999-9999</a></li>
+        </ul>
+      </div>
     </div>
-    
-    <!-- Overlay de Segurança -->
-    <div class="security-banner glass-banner" id="securityBanner">
-        <i class="fas fa-shield-alt"></i>
-        <span>🔒 Compra 100% Segura | Seus dados estão protegidos</span>
-        <button class="close-banner" onclick="closeBanner()"><i class="fas fa-times"></i></button>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
+      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
     </div>
-    
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-badge glass-badge">
-                <i class="fas fa-fire"></i>
-                <span>Mais de 5.000 clientes atendidos</span>
-            </div>
-            
-            <h1 class="hero-title">
-                Serviços Digitais
-                <span class="gradient-text">Premium</span>
-                <br>com até 70% de economia
-            </h1>
-            
-            <p class="hero-subtitle">
-                Acesso instantâneo às melhores plataformas do mercado.
-                <br>ChatGPT Plus, Netflix, Spotify, Disney+ e muito mais!
-            </p>
-            
-            <div class="hero-cta">
-                <a href="pages/produtos.html" class="btn-primary glass-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    Ver Produtos
-                </a>
-                <a href="pages/sobre.html" class="btn-secondary glass-btn-outline">
-                    <i class="fas fa-play-circle"></i>
-                    Como Funciona
-                </a>
-            </div>
-            
-            <div class="hero-stats">
-                <div class="stat glass-stat">
-                    <span class="stat-number" data-target="5000">0</span>
-                    <span class="stat-label">Clientes</span>
-                </div>
-                <div class="stat glass-stat">
-                    <span class="stat-number" data-target="50">0</span>
-                    <span class="stat-label">Produtos</span>
-                </div>
-                <div class="stat glass-stat">
-                    <span class="stat-number" data-target="98">0</span>
-                    <span class="stat-label">% Satisfação</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="hero-visual">
-            <div class="floating-cards">
-                <div class="float-card glass-float-card card-1">
-                    <i class="fab fa-openai"></i>
-                    <span>ChatGPT Plus</span>
-                </div>
-                <div class="float-card glass-float-card card-2">
-                    <i class="fab fa-spotify"></i>
-                    <span>Spotify Premium</span>
-                </div>
-                <div class="float-card glass-float-card card-3">
-                    <i class="fab fa-netflix"></i>
-                    <span>Netflix</span>
-                </div>
-                <div class="float-card glass-float-card card-4">
-                    <i class="fab fa-youtube"></i>
-                    <span>YouTube Premium</span>
-                </div>
-                <div class="float-card glass-float-card card-5">
-                    <i class="fab faDisney"></i>
-                    <span>Disney+</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Serviços Section -->
-    <section class="services" id="services">
-        <div class="section-header">
-            <span class="section-tag glass-tag">NOSSOS SERVIÇOS</span>
-            <h2 class="section-title">Plataformas Disponíveis</h2>
-            <p class="section-subtitle">Escolha entre as melhores opções do mercado</p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-card glass-service-card" data-aos="fade-up">
-                <div class="service-icon">
-                    <i class="fab fa-openai"></i>
-                </div>
-                <h3>ChatGPT Plus</h3>
-                <p>GPT-5, DALL-E 3, navegação web e muito mais</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 194</span>
-                    <span class="price-new">R$ 89</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#chatgpt" class="btn-service">Ver Detalhes</a>
-            </div>
-            
-            <div class="service-card glass-service-card featured" data-aos="fade-up" data-aos-delay="100">
-                <div class="featured-badge">Mais Vendido</div>
-                <div class="service-icon">
-                    <i class="fab fa-spotify"></i>
-                </div>
-                <h3>Spotify Premium</h3>
-                <p>Música sem propaganda, downloads offline, qualidade máxima</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 55,90</span>
-                    <span class="price-new">R$ 19,90</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#spotify" class="btn-service">Ver Detalhes</a>
-            </div>
-            
-            <div class="service-card glass-service-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-icon">
-                    <i class="fab fa-netflix"></i>
-                </div>
-                <h3>Netflix Premium</h3>
-                <p>4K Ultra HD, até 4 telas simultâneas</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 135</span>
-                    <span class="price-new">R$ 39,90</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#netflix" class="btn-service">Ver Detalhes</a>
-            </div>
-            
-            <div class="service-card glass-service-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="service-icon">
-                    <i class="fab fa-youtube"></i>
-                </div>
-                <h3>YouTube Premium</h3>
-                <p>Sem anúncios, download, YouTube Music incluso</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 53,90</span>
-                    <span class="price-new">R$ 24,90</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#youtube" class="btn-service">Ver Detalhes</a>
-            </div>
-            
-            <div class="service-card glass-service-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-icon">
-                    <i class="fas fa-tv"></i>
-                </div>
-                <h3>Disney+ Premium</h3>
-                <p>Star Wars, Marvel, Pixar em 4K</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 110</span>
-                    <span class="price-new">R$ 29,90</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#disney" class="btn-service">Ver Detalhes</a>
-            </div>
-            
-            <div class="service-card glass-service-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="service-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <h3>PlayStation Plus</h3>
-                <p>Jogos mensais, multiplayer online, cloud gaming</p>
-                <div class="service-price">
-                    <span class="price-old">R$ 120</span>
-                    <span class="price-new">R$ 44,90</span>
-                    <span class="price-period">/mês</span>
-                </div>
-                <a href="pages/produtos.html#playstation" class="btn-service">Ver Detalhes</a>
-            </div>
-        </div>
-        
-        <div class="services-cta">
-            <a href="pages/produtos.html" class="btn-primary glass-btn btn-large">
-                <i class="fas fa-th-large"></i>
-                Ver Todos os Produtos
-            </a>
-        </div>
-    </section>
-    
-    <!-- Como Funciona Section -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="section-header">
-            <span class="section-tag glass-tag">SIMPLES E RÁPIDO</span>
-            <h2 class="section-title">Como Funciona</h2>
-            <p class="section-subtitle">Em 3 passos simples você tem acesso</p>
-        </div>
-        
-        <div class="steps-container">
-            <div class="step glass-step" data-aos="fade-right">
-                <div class="step-number">01</div>
-                <div class="step-icon">
-                    <i class="fas fa-hand-pointer"></i>
-                </div>
-                <h3>Escolha</h3>
-                <p>Selecione o produto desejado em nosso catálogo</p>
-            </div>
-            
-            <div class="step-connector" data-aos="fade-right" data-aos-delay="100"></div>
-            
-            <div class="step glass-step" data-aos="fade-right" data-aos-delay="200">
-                <div class="step-number">02</div>
-                <div class="step-icon">
-                    <i class="fas fa-credit-card"></i>
-                </div>
-                <h3>Pague</h3>
-                <p>Efetue o pagamento seguro via PIX ou cartão</p>
-            </div>
-            
-            <div class="step-connector" data-aos="fade-right" data-aos-delay="300"></div>
-            
-            <div class="step glass-step" data-aos="fade-right" data-aos-delay="400">
-                <div class="step-number">03</div>
-                <div class="step-icon">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <h3>Receba</h3>
-                <p>Accesso imediato após confirmação do pagamento</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Segurança Section -->
-    <section class="security-section" id="security">
-        <div class="section-header">
-            <span class="section-tag glass-tag">SEGURANÇA TOTAL</span>
-            <h2 class="section-title">Sua Compra é Segura</h2>
-            <p class="section-subtitle">Protegemos seus dados e garantimos sua satisfação</p>
-        </div>
-        
-        <div class="security-grid">
-            <div class="security-card glass-security-card" data-aos="zoom-in">
-                <div class="security-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>Criptografia SSL</h3>
-                <p>Seus dados protegidos com criptografia de ponta</p>
-            </div>
-            
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="100">
-                <div class="security-icon">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <h3>Pagamento Seguro</h3>
-                <p>PIX, cartão com processamento seguro</p>
-            </div>
-            
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="200">
-                <div class="security-icon">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <h3>Dados Protegidos</h3>
-                <p>Não compartilhamos suas informações</p>
-            </div>
-            
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="300">
-                <div class="security-icon">
-                    <i class="fas fa-headset"></i>
-                </div>
-                <h3>Suporte 24/7</h3>
-                <p>Equipe pronta para ajudar a qualquer momento</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Depoimentos Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header">
-            <span class="section-tag glass-tag">DEPOIMENTOS</span>
-            <h2 class="section-title">O que Dizem Nossos Clientes</h2>
-            <p class="section-subtitle">Milhares de clientes satisfeitos</p>
-        </div>
-        
-        <div class="testimonials-slider" id="testimonialsSlider">
-            <div class="testimonials-track" id="testimonialsTrack">
-                <div class="testimonial-card glass-testimonial">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Comprei o ChatGPT Plus e chegou instantaneamente! Economia incrível e atendimento top. Recomendo demais!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">M</div>
-                        <div class="author-info">
-                            <span class="author-name">Maria Silva</span>
-                            <span class="author-location">São Paulo, SP</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card glass-testimonial">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Spotify Premium por menos da metade do preço! Som perfeito, sem propaganda. Melhor decisão que tomei esse ano."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">J</div>
-                        <div class="author-info">
-                            <span class="author-name">João Santos</span>
-                            <span class="author-location">Rio de Janeiro, RJ</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card glass-testimonial">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Netflix 4K funcionando perfeitamente! Minha família inteira usa. Suporte rápido quando tive dúvidas. Super recomendo!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">A</div>
-                        <div class="author-info">
-                            <span class="author-name">Ana Oliveira</span>
-                            <span class="author-location">Belo Horizonte, MG</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card glass-testimonial">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Já é minha terceira compra aqui. YouTube Premium + Spotify juntos. Economia absurda e nunca tive problema. Frete zero!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">P</div>
-                        <div class="author-info">
-                            <span class="author-name">Pedro Costa</span>
-                            <span class="author-location">Curitiba, PR</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card glass-testimonial">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Disney+ com toda família assistindo. Atendimento excelente quando precisei de ajuda. Agora todos os meses renovo aqui!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">C</div>
-                        <div class="author-info">
-                            <span class="author-name">Carlos Mendes</span>
-                            <span class="author-location">Salvador, BA</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="slider-controls">
-                <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-                <div class="slider-dots" id="sliderDots"></div>
-                <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Newsletter Section -->
-    <section class="newsletter" id="newsletter">
-        <div class="newsletter-container glass-newsletter">
-            <div class="newsletter-content">
-                <h2>Fique por Dentro</h2>
-                <p>Receba ofertas exclusivas e novidades antes de todos!</p>
-            </div>
-            <form class="newsletter-form" id="newsletterForm">
-                <div class="input-group">
-                    <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail" required>
-                    <button type="submit" class="btn-newsletter">
-                        <i class="fas fa-paper-plane"></i>
-                        Inscrever
-                    </button>
-                </div>
-                <p class="newsletter-disclaimer">
-                    <i class="fas fa-lock"></i>
-                    Prometemos não enviar spam. Você pode cancelar a qualquer momento.
-                </p>
-            </form>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="footer" id="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <a href="index.html" class="logo footer-logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <span>ContaFlash</span>
-                </a>
-                <p>Sua plataforma de serviços digitais premium com economia de até 70%.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Links Rápidos</h4>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="pages/produtos.html">Produtos</a></li>
-                    <li><a href="pages/sobre.html">Sobre</a></li>
-                    <li><a href="pages/faq.html">FAQ</a></li>
-                    <li><a href="pages/contato.html">Contato</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Produtos</h4>
-                <ul>
-                    <li><a href="pages/produtos.html#chatgpt">ChatGPT Plus</a></li>
-                    <li><a href="pages/produtos.html#spotify">Spotify Premium</a></li>
-                    <li><a href="pages/produtos.html#netflix">Netflix</a></li>
-                    <li><a href="pages/produtos.html#youtube">YouTube Premium</a></li>
-                    <li><a href="pages/produtos.html#disney">Disney+</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-links">
-                <h4>Suporte</h4>
-                <ul>
-                    <li><a href="pages/faq.html">Dúvidas Frequentes</a></li>
-                    <li><a href="pages/contato.html">Fale Conosco</a></li>
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos de Uso</a></li>
-                    <li><a href="#">Política de Reembolso</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h4>Contato</h4>
-                <ul>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8eede1e0faeffae1ceede1e0faefe8e2effde6a0ede1e3">[email&#160;protected]</a></li>
-                    <li><i class="fab fa-whatsapp"></i> (11) 99999-9999</li>
-                    <li><i class="fas fa-clock"></i> Seg-Sex: 9h às 18h</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2026 ContaFlash. Todos os direitos reservados.</p>
-            <div class="payment-methods">
-                <span><i class="fab fa-cc-pix"></i> PIX</span>
-                <span><i class="fab fa-cc-visa"></i></span>
-                <span><i class="fab fa-cc-mastercard"></i></span>
-                <span><i class="fab fa-cc-amex"></i></span>
-            </div>
-        </div>
-    </footer>
-    
-    <!-- Botão WhatsApp Flutuante -->
-    <a href="https://wa.me/5511999999999" class="whatsapp-float" id="whatsappFloat" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">Fale Conosco</span>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <div class="whatsapp-float">
+    <span class="whatsapp-tooltip">Fale conosco no WhatsApp!</span>
+    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre a ContaFlash." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
     </a>
-    
-    <!-- Modal de Cookies -->
-    <div class="cookie-modal glass-cookie" id="cookieModal">
-        <div class="cookie-content">
-            <i class="fas fa-cookie-bite"></i>
-            <h3>🍪 Aviso de Cookies</h3>
-            <p>Utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de privacidade.</p>
-            <div class="cookie-buttons">
-                <button class="btn-cookie" id="acceptCookies">Aceitar</button>
-                <button class="btn-cookie-outline" id="rejectCookies">Recusar</button>
-            </div>
-        </div>
+  </div>
+
+  <!-- Cookie Modal -->
+  <div class="cookie-modal">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <h4>🍪 Usamos cookies</h4>
+        <p>Utilizamos cookies para melhorar sua experiência de navegação.</p>
+      </div>
+      <div class="cookie-buttons">
+        <button class="btn btn-outline cookie-reject">Recusar</button>
+        <button class="btn btn-primary cookie-accept">Aceitar</button>
+      </div>
     </div>
-    
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader">
-            <div class="loader-icon">
-                <i class="fas fa-bolt"></i>
-            </div>
-            <div class="loader-text">ContaFlash</div>
-        </div>
-    </div>
-    
-    <!-- Toast Notifications -->
-    <div class="toast-container" id="toastContainer"></div>
-    
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f"}' crossorigin="anonymous"></script>
+  </div>
+
+  <script src="../js/main.js"></script>
 </body>
 </html>

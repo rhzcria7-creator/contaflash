@@ -1,290 +1,597 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sobre a ContaFlash - Quem somos e como trabalhamos">
-    <title>Sobre Nós | ContaFlash</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="bg-particles" id="particles"></div>
-    <div class="bg-gradient"></div>
+/* =========================================
+   ContaFlash - JavaScript Principal
+   ========================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLoadingScreen();
+  initParticles();
+  initHeaderScroll();
+  initMobileMenu();
+  initSmoothScroll();
+  initFadeInAnimations();
+  initCounterAnimations();
+  initTestimonialSlider();
+  initNewsletterForm();
+  initContactForm();
+  initFAQAccordion();
+  initFAQSearch();
+  initProductFilters();
+  initWhatsAppTooltip();
+  initCookieModal();
+  initPhoneMask();
+});
+
+// ==========================================
+// Loading Screen
+// ==========================================
+function initLoadingScreen() {
+  const loader = document.querySelector('.loading-screen');
+  if (!loader) return;
+  
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loader.classList.add('hidden');
+    }, 800);
+  });
+  
+  // Fallback: hide after 3s max
+  setTimeout(() => {
+    loader.classList.add('hidden');
+  }, 3000);
+}
+
+// ==========================================
+// Particles
+// ==========================================
+function initParticles() {
+  const container = document.getElementById('particles-container');
+  if (!container) return;
+  
+  const particleCount = window.innerWidth < 768 ? 20 : 40;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
     
-    <header class="glass-header" id="header">
-        <nav class="nav-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
-                <span>ContaFlash</span>
-            </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="../index.html">Início</a></li>
-                <li><a href="produtos.html">Produtos</a></li>
-                <li><a href="sobre.html" class="active">Sobre</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contato.html">Contato</a></li>
-                <li><a href="produtos.html" class="btn-nav">Ver Produtos</a></li>
-            </ul>
-        </nav>
-    </header>
+    const size = Math.random() * 6 + 2;
+    const left = Math.random() * 100;
+    const duration = Math.random() * 20 + 10;
+    const delay = Math.random() * 20;
     
-    <div class="mobile-menu glass-menu" id="mobileMenu">
-        <ul>
-            <li><a href="../index.html"><i class="fas fa-home"></i> Início</a></li>
-            <li><a href="produtos.html"><i class="fas fa-box"></i> Produtos</a></li>
-            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> Sobre</a></li>
-            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
-            <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
-        </ul>
-    </div>
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.left = left + '%';
+    particle.style.animationDuration = duration + 's';
+    particle.style.animationDelay = delay + 's';
     
-    <section class="hero" id="hero" style="padding-top: 150px;">
-        <div class="hero-content" style="max-width: 100%; text-align: center;">
-            <span class="section-tag glass-tag">NOSSA HISTÓRIA</span>
-            <h1 class="hero-title" style="font-size: 3rem;">
-                Quem é a <span class="gradient-text">ContaFlash</span>?
-            </h1>
-            <p class="hero-subtitle">
-                Somos a plataforma líder em serviços digitais premium no Brasil.<br>
-                Conectamos você às melhores assinaturas do mercado com até 70% de economia.
-            </p>
-        </div>
-    </section>
+    // Subtle, refined dots (neutral + faint accent)
+    const colors = [
+      'rgba(23, 23, 23, 0.10)',
+      'rgba(16, 163, 127, 0.18)',
+      'rgba(23, 23, 23, 0.06)'
+    ];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
     
-    <!-- Nossa Missão -->
-    <section class="services" style="max-width: 1200px; margin: 0 auto;">
-        <div class="glass-service-card" style="padding: 3rem; border-radius: var(--radius-lg); margin-bottom: 3rem;" data-aos="fade-up">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-                <div>
-                    <span class="section-tag glass-tag">NOSSA MISSÃO</span>
-                    <h2 style="font-size: 2rem; margin: 1rem 0;">Democratizar o Acesso Digital</h2>
-                    <p style="color: var(--gray-light); line-height: 1.8;">
-                        Acreditamos que todos merecem ter acesso às melhores ferramentas digitais do mercado. 
-                        Por isso, trabalhamos incansavelmente para oferecer preços justos e acessíveis, 
-                        sem comprometer a qualidade do serviço.
-                    </p>
-                    <p style="color: var(--gray-light); line-height: 1.8; margin-top: 1rem;">
-                        Nossa missão é simples: conectar pessoas a experiências digitais premium, 
-                        tornando sonhos de consumotainment e produtividade mais acessíveis para todos.
-                    </p>
-                </div>
-                <div style="text-align: center;">
-                    <div style="font-size: 8rem; opacity: 0.3;">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+    container.appendChild(particle);
+  }
+}
+
+// ==========================================
+// Header Scroll Effect
+// ==========================================
+function initHeaderScroll() {
+  const header = document.querySelector('.header');
+  if (!header) return;
+  
+  const onScroll = () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  };
+  
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+// ==========================================
+// Mobile Menu
+// ==========================================
+function initMobileMenu() {
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  
+  if (!hamburger || !mobileMenu) return;
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  });
+  
+  // Close on link click
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+// ==========================================
+// Smooth Scroll
+// ==========================================
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
+// ==========================================
+// Fade-in Animations
+// ==========================================
+function initFadeInAnimations() {
+  const elements = document.querySelectorAll('.fade-in');
+  if (!elements.length) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  elements.forEach(el => observer.observe(el));
+}
+
+// ==========================================
+// Counter Animations
+// ==========================================
+function initCounterAnimations() {
+  const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  counters.forEach(counter => observer.observe(counter));
+}
+
+function animateCounter(element) {
+  const target = parseInt(element.getAttribute('data-target'));
+  const suffix = element.getAttribute('data-suffix') || '';
+  const duration = 2000;
+  const startTime = performance.now();
+  
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Ease out cubic
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * easeOut);
+    
+    element.textContent = current.toLocaleString('pt-BR') + suffix;
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+  
+  requestAnimationFrame(update);
+}
+
+// ==========================================
+// Testimonial Slider
+// ==========================================
+function initTestimonialSlider() {
+  const slider = document.querySelector('.testimonials-slider');
+  const dotsContainer = document.querySelector('.testimonials-dots');
+  
+  if (!slider) return;
+  
+  const slides = slider.querySelectorAll('.testimonial-card');
+  if (!slides.length) return;
+  
+  let currentSlide = 0;
+  let autoplayInterval;
+  
+  // Create dots
+  if (dotsContainer) {
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.setAttribute('aria-label', `Depoimento ${index + 1}`);
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+  }
+  
+  function goToSlide(index) {
+    currentSlide = index;
+    slider.style.transform = `translateX(-${index * 100}%)`;
+    
+    const dots = dotsContainer?.querySelectorAll('.dot');
+    dots?.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+  
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    goToSlide(currentSlide);
+  }
+  
+  // Autoplay
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+  
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+  
+  startAutoplay();
+  
+  // Pause on hover
+  slider.parentElement?.addEventListener('mouseenter', stopAutoplay);
+  slider.parentElement?.addEventListener('mouseleave', startAutoplay);
+  
+  // Touch support
+  let startX = 0;
+  let isDragging = false;
+  
+  slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    stopAutoplay();
+  });
+  
+  slider.addEventListener('touchend', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diffX = startX - e.changedTouches[0].clientX;
+    
+    if (Math.abs(diffX) > 50) {
+      if (diffX > 0 && currentSlide < slides.length - 1) {
+        goToSlide(currentSlide + 1);
+      } else if (diffX < 0 && currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+    startAutoplay();
+  });
+}
+
+// ==========================================
+// Newsletter Form
+// ==========================================
+function initNewsletterForm() {
+  const form = document.querySelector('.newsletter-form');
+  if (!form) return;
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const input = form.querySelector('input[type="email"]');
+    const email = input?.value.trim();
+    
+    if (!email || !validateEmail(email)) {
+      showToast('Por favor, insira um email válido.', 'error');
+      return;
+    }
+    
+    // Simulate submission
+    showToast('Inscrição realizada com sucesso! 🎉', 'success');
+    input.value = '';
+  });
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ==========================================
+// Contact Form
+// ==========================================
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const fields = {
+      name: form.querySelector('[name="name"]'),
+      email: form.querySelector('[name="email"]'),
+      phone: form.querySelector('[name="phone"]'),
+      subject: form.querySelector('[name="subject"]'),
+      message: form.querySelector('[name="message"]')
+    };
+    
+    let isValid = true;
+    
+    // Name validation
+    if (!fields.name) {
+      setFieldError(fields.name, 'Campo obrigatório');
+      isValid = false;
+    } else if (fields.name.value.trim().length < 2) {
+      setFieldError(fields.name, 'Nome deve ter pelo menos 2 caracteres');
+      isValid = false;
+    } else {
+      setFieldSuccess(fields.name);
+    }
+    
+    // Email validation
+    if (!validateEmail(fields.email?.value.trim())) {
+      setFieldError(fields.email, 'Insira um email válido');
+      isValid = false;
+    } else {
+      setFieldSuccess(fields.email);
+    }
+    
+    // Phone validation
+    const phoneClean = fields.phone?.value.replace(/\D/g, '') || '';
+    if (phoneClean.length < 10) {
+      setFieldError(fields.phone, 'Insira um telefone válido');
+      isValid = false;
+    } else {
+      setFieldSuccess(fields.phone);
+    }
+    
+    // Subject validation
+    if (!fields.subject?.value) {
+      setFieldError(fields.subject, 'Selecione um assunto');
+      isValid = false;
+    } else {
+      setFieldSuccess(fields.subject);
+    }
+    
+    // Message validation
+    if (!fields.message?.value.trim() || fields.message.value.trim().length < 10) {
+      setFieldError(fields.message, 'Mensagem deve ter pelo menos 10 caracteres');
+      isValid = false;
+    } else {
+      setFieldSuccess(fields.message);
+    }
+    
+    if (isValid) {
+      showToast('Mensagem enviada com sucesso! Entraremos em contato em breve. 📧', 'success');
+      form.reset();
+      
+      // Reset field styles
+      form.querySelectorAll('.form-group').forEach(g => {
+        g.classList.remove('error', 'success');
+      });
+    }
+  });
+}
+
+function setFieldError(field, message) {
+  if (!field) return;
+  const group = field.closest('.form-group');
+  group?.classList.add('error');
+  group?.classList.remove('success');
+  const errorEl = group?.querySelector('.error-msg');
+  if (errorEl) errorEl.textContent = message;
+}
+
+function setFieldSuccess(field) {
+  if (!field) return;
+  const group = field.closest('.form-group');
+  group?.classList.remove('error');
+  group?.classList.add('success');
+}
+
+// XSS Protection
+function sanitizeInput(input) {
+  const div = document.createElement('div');
+  div.textContent = input;
+  return div.innerHTML;
+}
+
+// ==========================================
+// FAQ Accordion
+// ==========================================
+function initFAQAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Close all
+      faqItems.forEach(i => i.classList.remove('active'));
+      
+      // Open clicked if wasn't active
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
+}
+
+// ==========================================
+// FAQ Search
+// ==========================================
+function initFAQSearch() {
+  const searchInput = document.querySelector('.faq-search input');
+  if (!searchInput) return;
+  
+  const faqItems = document.querySelectorAll('.faq-item');
+  const noResults = document.querySelector('.faq-no-results');
+  
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question')?.textContent.toLowerCase() || '';
+      const answer = item.querySelector('.faq-answer-inner')?.textContent.toLowerCase() || '';
+      
+      if (question.includes(query) || answer.includes(query)) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  });
+}
+
+// ==========================================
+// Product Filters
+// ==========================================
+function initProductFilters() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const productCards = document.querySelectorAll('.product-card');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active state
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const filter = btn.getAttribute('data-filter');
+      
+      productCards.forEach(card => {
+        const category = card.getAttribute('data-category');
         
-        <div class="glass-service-card" style="padding: 3rem; border-radius: var(--radius-lg; margin-bottom: 3rem;" data-aos="fade-up" data-aos-delay="100">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-                <div style="text-align: center; order: 2;">
-                    <div style="font-size: 8rem; opacity: 0.3;">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-                <div style="order: 1;">
-                    <span class="section-tag glass-tag">NOSSOS VALORES</span>
-                    <h2 style="font-size: 2rem; margin: 1rem 0;">Transparência e Confiança</h2>
-                    <p style="color: var(--gray-light); line-height: 1.8;">
-                        Cada interação conosco é construída sobre os pilares de honestidade, 
-                        clareza e respeito pelo cliente. Não escondemos informações, não praticamos 
-                        letras pequenas e sempre entregamos o que prometemos.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+        if (filter === 'all' || category === filter) {
+          card.style.display = '';
+          card.style.animation = 'fadeInUp 0.5s ease';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+// ==========================================
+// WhatsApp Tooltip
+// ==========================================
+function initWhatsAppTooltip() {
+  const float = document.querySelector('.whatsapp-float');
+  if (!float) return;
+  
+  const tooltip = float.querySelector('.whatsapp-tooltip');
+  if (!tooltip) return;
+  
+  // Show tooltip after 3 seconds
+  setTimeout(() => {
+    tooltip.style.opacity = '1';
+    tooltip.style.visibility = 'visible';
     
-    <!-- Números -->
-    <section class="hero-stats" style="justify-content: center; padding: 4rem 2rem;">
-        <div class="stat glass-stat" data-aos="zoom-in">
-            <span class="stat-number" data-target="5000">0</span>
-            <span class="stat-label">Clientes Atendidos</span>
-        </div>
-        <div class="stat glass-stat" data-aos="zoom-in" data-aos-delay="100">
-            <span class="stat-number" data-target="50">0</span>
-            <span class="stat-label">Produtos Disponíveis</span>
-        </div>
-        <div class="stat glass-stat" data-aos="zoom-in" data-aos-delay="200">
-            <span class="stat-number" data-target="98">0</span>
-            <span class="stat-label">% Satisfação</span>
-        </div>
-        <div class="stat glass-stat" data-aos="zoom-in" data-aos-delay="300">
-            <span class="stat-number" data-target="70">0</span>
-            <span class="stat-label">% Economia Máxima</span>
-        </div>
-    </section>
+    // Hide after 4 seconds
+    setTimeout(() => {
+      tooltip.style.opacity = '';
+      tooltip.style.visibility = '';
+    }, 4000);
+  }, 3000);
+}
+
+// ==========================================
+// Cookie Modal (GDPR)
+// ==========================================
+function initCookieModal() {
+  if (localStorage.getItem('contaflash-cookies-accepted')) return;
+  
+  const modal = document.querySelector('.cookie-modal');
+  if (!modal) return;
+  
+  // Show after 2 seconds
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 2000);
+  
+  const acceptBtn = modal.querySelector('.cookie-accept');
+  const rejectBtn = modal.querySelector('.cookie-reject');
+  
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('contaflash-cookies-accepted', 'true');
+    modal.classList.remove('show');
+    showToast('Cookies aceitos! Obrigado.', 'success');
+  });
+  
+  rejectBtn?.addEventListener('click', () => {
+    localStorage.setItem('contaflash-cookies-accepted', 'rejected');
+    modal.classList.remove('show');
+  });
+}
+
+// ==========================================
+// Phone Mask (Brazilian)
+// ==========================================
+function initPhoneMask() {
+  const phoneInput = document.querySelector('input[name="phone"]');
+  if (!phoneInput) return;
+  
+  phoneInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
     
-    <!-- Como Funciona -->
-    <section class="how-it-works" id="como-funciona" style="max-width: 1200px; margin: 0 auto;">
-        <div class="section-header">
-            <span class="section-tag glass-tag">SIMPLES E SEGURO</span>
-            <h2 class="section-title">Como Funciona</h2>
-            <p class="section-subtitle">Entenda nosso processo em detalhes</p>
-        </div>
-        
-        <div class="steps-container" style="flex-direction: column; gap: 2rem;">
-            <div class="step glass-step" data-aos="fade-right" style="max-width: 100%; text-align: left; display: flex; gap: 2rem; align-items: flex-start;">
-                <div class="step-number" style="position: relative; opacity: 1; font-size: 3rem;">01</div>
-                <div>
-                    <div class="step-icon" style="margin: 0 0 1rem 0;">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem;">Você Escolhe</h3>
-                    <p style="color: var(--gray-light);">
-                        Navegue pelo nosso catálogo e escolha o serviço digital desejado. 
-                        Se tiver dúvidas, nosso time está disponível 24/7 via WhatsApp para ajudar.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="step glass-step" data-aos="fade-right" data-aos-delay="200" style="max-width: 100%; text-align: left; display: flex; gap: 2rem; align-items: flex-start;">
-                <div class="step-number" style="position: relative; opacity: 1; font-size: 3rem;">02</div>
-                <div>
-                    <div class="step-icon" style="margin: 0 0 1rem 0;">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem;">Pagamento Seguro</h3>
-                    <p style="color: var(--gray-light);">
-                        Escolha entre PIX, cartão de crédito ou boleto. Todos os pagamentos são 
-                        processados com criptografia SSL e passam por análise de segurança.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="step glass-step" data-aos="fade-right" data-aos-delay="400" style="max-width: 100%; text-align: left; display: flex; gap: 2rem; align-items: flex-start;">
-                <div class="step-number" style="position: relative; opacity: 1; font-size: 3rem;">03</div>
-                <div>
-                    <div class="step-icon" style="margin: 0 0 1rem 0;">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem;">Entrega Imediata</h3>
-                    <p style="color: var(--gray-light);">
-                        Após confirmação do pagamento, você recebe seu acesso em instantes. 
-                        Em caso de qualquer problema, garantimos resolução rápida ou reembolso total.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+    if (value.length > 11) value = value.slice(0, 11);
     
-    <!-- Diferenciais -->
-    <section class="security-section" style="max-width: 1200px; margin: 0 auto; padding-top: 4rem;">
-        <div class="section-header">
-            <span class="section-tag glass-tag">NOSSA DIFERENÇA</span>
-            <h2 class="section-title">Por que escolher a ContaFlash?</h2>
-        </div>
-        
-        <div class="security-grid">
-            <div class="security-card glass-security-card" data-aos="zoom-in">
-                <div class="security-icon"><i class="fas fa-clock"></i></div>
-                <h3>Entrega Imediata</h3>
-                <p>Receba seu acesso em poucos minutos após a confirmação do pagamento</p>
-            </div>
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="100">
-                <div class="security-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Compra Segura</h3>
-                <p>Seus dados e pagamentos protegidos com criptografia de ponta</p>
-            </div>
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="200">
-                <div class="security-icon"><i class="fas fa-undo"></i></div>
-                <h3>Garantia de Reembolso</h3>
-                <p>Não ficou satisfeito? devolvemos seu dinheiro sem burocracia</p>
-            </div>
-            <div class="security-card glass-security-card" data-aos="zoom-in" data-aos-delay="300">
-                <div class="security-icon"><i class="fas fa-headset"></i></div>
-                <h3>Suporte 24/7</h3>
-                <p>Equipe sempre pronta para ajudar via WhatsApp</p>
-            </div>
-        </div>
-    </section>
+    if (value.length > 7) {
+      value = `(${value.slice(0,2)}) ${value.slice(2,7)}-${value.slice(7)}`;
+    } else if (value.length > 2) {
+      value = `(${value.slice(0,2)}) ${value.slice(2)}`;
+    } else if (value.length > 0) {
+      value = `(${value}`;
+    }
     
-    <!-- CTA -->
-    <section style="padding: 4rem 2rem; text-align: center;">
-        <div class="glass-newsletter" style="max-width: 600px; margin: 0 auto; padding: 3rem; border-radius: var(--radius-lg);">
-            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Pronto para começar?</h2>
-            <p style="color: var(--gray-light); margin-bottom: 2rem;">
-                Junte-se a mais de 5.000 clientes satisfeitos!
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="produtos.html" class="btn-primary glass-btn">
-                    <i class="fas fa-th-large"></i> Ver Produtos
-                </a>
-                <a href="contato.html" class="btn-secondary glass-btn-outline">
-                    <i class="fab fa-whatsapp"></i> Falar Conosco
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <a href="../index.html" class="logo footer-logo">
-                    <div class="logo-icon"><i class="fas fa-bolt"></i></div>
-                    <span>ContaFlash</span>
-                </a>
-                <p>Sua plataforma de serviços digitais premium.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h4>Links</h4>
-                <ul>
-                    <li><a href="../index.html">Início</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </div>
-            <div class="footer-links">
-                <h4>Suporte</h4>
-                <ul>
-                    <li><a href="faq.html">Dúvidas</a></li>
-                    <li><a href="contato.html">Fale Conosco</a></li>
-                    <li><a href="#">Privacidade</a></li>
-                    <li><a href="#">Termos</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Contato</h4>
-                <ul>
-                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f695999882978299b69599988297909a97859ed895999b">[email&#160;protected]</a></li>
-                    <li><i class="fab fa-whatsapp"></i> (11) 99999-9999</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 ContaFlash. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-    
-    <a href="https://wa.me/5511999999999" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">Fale Conosco</span>
-    </a>
-    
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loader">
-            <div class="loader-icon"><i class="fas fa-bolt"></i></div>
-            <div class="loader-text">ContaFlash</div>
-        </div>
-    </div>
-    
-    <div class="toast-container" id="toastContainer"></div>
-    
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../js/main.js"></script>
-</body>
-</html>
+    e.target.value = value;
+  });
+}
+
+// ==========================================
+// Toast Notifications
+// ==========================================
+function showToast(message, type = 'success') {
+  const container = document.querySelector('.toast-container');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.classList.add('toast', type);
+  
+  const icons = {
+    success: 'fa-solid fa-circle-check',
+    error: 'fa-solid fa-circle-xmark',
+    warning: 'fa-solid fa-triangle-exclamation'
+  };
+  
+  toast.innerHTML = `
+    <i class="${icons[type] || icons.success} toast-icon"></i>
+    <span class="toast-message">${message}</span>
+  `;
+  
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3500);
+}
