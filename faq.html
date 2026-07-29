@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Conheça a ContaFlash - vendas de contas digitais com 1 mês pago, Stripe Checkout e Atendimento de Suporte 24h. Instagram @contaf1sh.">
+  <meta name="description" content="Perguntas frequentes sobre ContaFlash. Entenda como funciona a venda de contas com 1 mês pago, Stripe Checkout e Atendimento de Suporte Autônomo 24h.">
   <meta name="robots" content="index, follow">
-  <title>Sobre Nós - ContaFlash</title>
+  <title>FAQ - Perguntas Frequentes - ContaFlash</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +36,8 @@
       <nav class="nav-links">
         <a href="../index.html">Início</a>
         <a href="produtos.html">Produtos</a>
-        <a href="sobre.html" class="active">Sobre</a>
-        <a href="faq.html">FAQ</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="faq.html" class="active">FAQ</a>
         <a href="contato.html">Contato</a>
         <a href="produtos.html" class="nav-cta">Ver Produtos</a>
       </nav>
@@ -50,85 +50,130 @@
   <div class="mobile-menu">
     <a href="../index.html">Início</a>
     <a href="produtos.html">Produtos</a>
-    <a href="sobre.html" class="active">Sobre</a>
-    <a href="faq.html">FAQ</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="faq.html" class="active">FAQ</a>
     <a href="contato.html">Contato</a>
   </div>
 
   <!-- Page Header -->
   <div class="page-header">
-    <h1>Sobre a <span class="gradient-text">ContaFlash</span></h1>
-    <p>Vendemos o produto pronto (1 Mês de acesso) sem assinaturas ou cobranças recorrentes</p>
+    <h1>Perguntas <span class="gradient-text">Frequentes</span></h1>
+    <p>Tire suas dúvidas sobre pagamento, produto único de 1 mês e estoque autônomo</p>
     <div class="breadcrumb">
-      <a href="../index.html">Início</a> <span>/</span> <span>Sobre</span>
+      <a href="../index.html">Início</a> <span>/</span> <span>FAQ</span>
     </div>
   </div>
 
-  <!-- About Content -->
+  <!-- FAQ Section -->
   <section class="section" style="padding-top: 2rem;">
     <div class="container">
-      <div class="fade-in" style="max-width: 800px; margin: 0 auto; text-align: center; margin-bottom: 4rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing:-0.02em;">Nossa <span class="gradient-text">Proposta</span></h2>
-        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8;">
-          A ContaFlash é especializada na venda de contas com 1 Mês de Acesso Garantido. Não vendemos assinaturas recorrentes — você paga o valor do produto uma única vez via Stripe Checkout ou WhatsApp, recebe os dados de acesso imediatamente e usa durante os 30 dias com total suporte e garantia.
-        </p>
-        <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
-          Gerenciamos nosso estoque de forma autônoma. Atualmente temos o lote do **ChatGPT Plus** disponível por **R$ 29,90** com desconto especial. Siga nosso Instagram **@contaf1sh** para saber de reposições.
-        </p>
+
+      <!-- Search -->
+      <div class="faq-search fade-in">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar pergunta..." aria-label="Buscar pergunta no FAQ">
       </div>
 
-      <!-- Stats -->
-      <div class="stats-grid fade-in" style="margin-bottom: 4rem;">
-        <div class="stat-card glass">
-          <div class="stat-icon">👥</div>
-          <div class="stat-number counter" data-target="10000" data-suffix="+">0</div>
-          <div class="stat-label">Clientes Satisfeitos</div>
-        </div>
-        <div class="stat-card glass">
-          <div class="stat-icon">📦</div>
-          <div class="stat-number">14 un.</div>
-          <div class="stat-label">ChatGPT Plus em Estoque</div>
-        </div>
-        <div class="stat-card glass">
-          <div class="stat-icon">💳</div>
-          <div class="stat-number">100%</div>
-          <div class="stat-label">Stripe Checkout Seguro</div>
-        </div>
-        <div class="stat-card glass">
-          <div class="stat-icon">💬</div>
-          <div class="stat-number">24/7</div>
-          <div class="stat-label">Suporte Autônomo</div>
-        </div>
+      <!-- Categories -->
+      <div class="faq-categories fade-in">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="geral">Geral</button>
+        <button class="filter-btn" data-filter="pagamento">Pagamento Stripe</button>
+        <button class="filter-btn" data-filter="estoque">Estoque Autônomo</button>
       </div>
 
-      <!-- Values -->
-      <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-gem"></i> Nossos Valores</span>
-        <h2 class="section-title">Transparência <span>e Segurança</span></h2>
+      <!-- FAQ Accordion -->
+      <div class="faq-accordion">
+
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Vocês vendem assinatura recorrente?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Não! Vendemos o produto pronto (uma conta com 1 Mês de Acesso Pago). Você paga uma única vez e não haverá nenhuma cobrança recorrente no seu cartão.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass fade-in" data-category="pagamento">
+          <button class="faq-question">
+            <span>Como funciona o link direto da Stripe Checkout?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O ChatGPT Plus (1 Mês) custa apenas R$ 29,90 e o pagamento é feito somente via Stripe Checkout ou diretamente pelo WhatsApp (31) 98292-4858, com total criptografia e segurança.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass fade-in" data-category="estoque">
+          <button class="faq-question">
+            <span>Como funciona o Estoque Autônomo?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nosso sistema lê o estoque em tempo real. Atualmente temos 14 unidades do ChatGPT Plus disponíveis. Caso queira um produto esgotado, acione nosso Suporte Autônomo no chat do site para ser notificado na próxima reposição.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Quais são as redes sociais oficiais?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nosso Instagram oficial é <strong>@contaf1sh</strong> e nosso WhatsApp de atendimento é <strong>(31) 98292-4858</strong>. Atenção: Nosso canal no Telegram está indisponível no momento.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Como funciona o Suporte Autônomo?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              É nosso sistema de atendimento de suporte integrado ao site (botão "💬 Suporte 24h") que tira dúvidas interativamente e responde questionários sobre contas, liberações e suporte em tempo real.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item glass fade-in" data-category="garantia">
+          <button class="faq-question">
+            <span>Tenho garantia durante o mês pago?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Sua conta tem <strong>Garantia Imediata de 24 horas</strong> — e isso é uma vantagem enorme: testamos o acesso junto com você na entrega e, se houver qualquer problema de login nesse período, fazemos a troca <strong>na hora</strong>, sem formulário e sem espera. Enquanto outros vendedores demoram dias para responder um chamado, aqui o problema é resolvido em minutos pelo WhatsApp (31) 98292-4858. Depois disso, o suporte continua disponível durante todo o mês para dúvidas de uso.
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="values-grid" style="margin-bottom: 4rem;">
-        <div class="value-card glass fade-in">
-          <div class="icon">🎯</div>
-          <h3>Sem Assinatura Recorrente</h3>
-          <p>Você compra o produto pronto de 1 mês. Nenhuma cobrança automática será feita no seu cartão.</p>
-        </div>
-        <div class="value-card glass fade-in">
-          <div class="icon">💳</div>
-          <h3>Stripe Checkout</h3>
-          <p>Pagamentos processados com criptografia de banco e desconto direto no link de compra.</p>
-        </div>
-        <div class="value-card glass fade-in">
-          <div class="icon">💬</div>
-          <h3>Suporte Autônomo</h3>
-          <p>Atendimento e respostas de questionários integrados no site 24 horas por dia.</p>
-        </div>
-        <div class="value-card glass fade-in">
-          <div class="icon">📱</div>
-          <h3>Instagram & WhatsApp</h3>
-          <p>Insta oficial @contaf1sh e suporte direto no WhatsApp (31) 98292-4858.</p>
-        </div>
+      <div class="faq-no-results" style="display:none; padding: 3rem; text-align: center; color: var(--text-muted);">
+        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+        <p style="font-size: 1.1rem; font-weight: 600;">Nenhum resultado encontrado</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Tente buscar com outros termos ou fale com nosso Suporte Autônomo.</p>
       </div>
+
+      <!-- Still have questions -->
+      <div class="glass fade-in" style="text-align: center; margin-top: 4rem; padding: 3rem;">
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">Ainda tem dúvidas?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Fale diretamente no WhatsApp (31) 98292-4858 ou Instagram @contaf1sh</p>
+        <a href="https://wa.me/5531982924858?text=Olá! Tenho uma dúvida sobre os produtos." class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> Chamar no WhatsApp (31) 98292-4858
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -182,7 +227,7 @@
   <!-- WhatsApp Float -->
   <div class="whatsapp-float">
     <span class="whatsapp-tooltip">Fale conosco no WhatsApp!</span>
-    <a href="https://wa.me/5531982924858?text=Olá! Gostaria de saber mais sobre a ContaFlash." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a href="https://wa.me/5531982924858?text=Olá! Tenho uma dúvida sobre os serviços." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </a>
   </div>

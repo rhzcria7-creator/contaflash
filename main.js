@@ -1,823 +1,1149 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
-
 /* =========================================
-   ContaFlash — Design System
-   Estilo editorial / ChatGPT-inspired
+   ContaFlash - JavaScript Principal
+   Suporte Autônomo Interativo & Stripe Checkout
    ========================================= */
 
-:root {
-  /* Surfaces */
-  --bg: #FAF9F5;
-  --bg-card: #FFFFFF;
-  --bg-subtle: #F4F2EC;
-  --bg-muted: #EFEDE5;
-  --ink: #171717;
-  --ink-2: #1F1F23;
-  --footer-bg: #0E0E10;
+// Configurações Globais
+const WHATSAPP_PHONE = '5531982924858';
+const INSTAGRAM_HANDLE = 'contaf1sh';
+const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+const GGMAX_URL = 'https://ggmax.com.br/anuncio/conta-chatgpt-plus-mensal-acesso-exclusivo';
 
-  /* Text */
-  --text-primary: #171717;
-  --text-secondary: #5C5C66;
-  --text-muted: #9A9AA2;
+// Endpoint opcional de Webhook de Suporte (se houver API externa)
+const WEBHOOK_SUPPORT_ENDPOINT = null; // Ex: 'https://api.contaflash.com/v1/support'
 
-  /* Accent (ChatGPT green) */
-  --accent: #10A37F;
-  --accent-2: #0E8A6B;
-  --accent-soft: rgba(16,163,127,0.08);
-  --accent-line: rgba(16,163,127,0.22);
+// Registro Autônomo de Estoque de Produtos (Apenas 1 Mês Pago - Não Assinaturas)
+const STOCK_DATA = {
+  'chatgpt-plus': {
+    id: 'chatgpt-plus',
+    title: 'ChatGPT Plus (1 Mês de Acesso)',
+    category: 'ferramentas',
+    badge: '🔥 14 unidades em estoque',
+    price: 'R$ 29,90',
+    originalPrice: 'R$ 50,00',
+    discount: '40% OFF',
+    stock: 14,
+    inStock: true,
+    icon: '🤖',
+    stripeUrl: STRIPE_CHECKOUT_URL,
+    detailUrl: 'pages/produto-chatgpt.html',
+    description: 'Conta individual pronta com 1 Mês de ChatGPT Plus ativado. Acesso total ao GPT-4, GPT-4o, DALL-E 3 e análise avançada.',
+    features: [
+      'Acesso ao GPT-4 e GPT-4o liberado',
+      'Geração de Imagens DALL-E 3',
+      '1 Mês Pago Sem cobrança recorrente',
+      'Ativação imediata no WhatsApp ou Stripe',
+      'Garantia de 30 dias'
+    ]
+  },
+  'netflix-4k': {
+    id: 'netflix-4k',
+    title: 'Netflix Premium 4K (1 Mês)',
+    category: 'streaming',
+    badge: '🚫 Esgotado',
+    price: 'R$ 19,90',
+    stock: 0,
+    inStock: false,
+    icon: '📺',
+    detailUrl: 'pages/produtos.html'
+  },
+  'spotify-premium': {
+    id: 'spotify-premium',
+    title: 'Spotify Premium (1 Mês)',
+    category: 'musica',
+    badge: '🚫 Esgotado',
+    price: 'R$ 9,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎵',
+    detailUrl: 'pages/produtos.html'
+  },
+  'disney-plus': {
+    id: 'disney-plus',
+    title: 'Disney+ Premium (1 Mês)',
+    category: 'streaming',
+    badge: '🚫 Esgotado',
+    price: 'R$ 14,90',
+    stock: 0,
+    inStock: false,
+    icon: '🏰',
+    detailUrl: 'pages/produtos.html'
+  },
+  'xbox-gamepass': {
+    id: 'xbox-gamepass',
+    title: 'Xbox Game Pass Ultimate (1 Mês)',
+    category: 'jogos',
+    badge: '🚫 Esgotado',
+    price: 'R$ 24,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎮',
+    detailUrl: 'pages/produtos.html'
+  },
+  'midjourney-pro': {
+    id: 'midjourney-pro',
+    title: 'Midjourney Pro (1 Mês)',
+    category: 'ferramentas',
+    badge: '🚫 Esgotado',
+    price: 'R$ 34,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎨',
+    detailUrl: 'pages/produtos.html'
+  },
+  'hbo-max': {
+    id: 'hbo-max',
+    title: 'Max (HBO Max) (1 Mês)',
+    category: 'streaming',
+    badge: '🚫 Esgotado',
+    price: 'R$ 14,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎬',
+    detailUrl: 'pages/produtos.html'
+  },
+  'canva-pro': {
+    id: 'canva-pro',
+    title: 'Canva Pro (1 Mês)',
+    category: 'produtividade',
+    badge: '🚫 Esgotado',
+    price: 'R$ 12,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎯',
+    detailUrl: 'pages/produtos.html'
+  },
+  'deezer-premium': {
+    id: 'deezer-premium',
+    title: 'Deezer Premium (1 Mês)',
+    category: 'musica',
+    badge: '🚫 Esgotado',
+    price: 'R$ 8,90',
+    stock: 0,
+    inStock: false,
+    icon: '🎧',
+    detailUrl: 'pages/produtos.html'
+  }
+};
 
-  /* Lines & shadows */
-  --border: rgba(23,23,23,0.08);
-  --border-strong: rgba(23,23,23,0.14);
-  --ring: rgba(16,163,127,0.30);
-  --shadow-sm: 0 1px 2px rgba(23,23,23,0.04), 0 1px 3px rgba(23,23,23,0.04);
-  --shadow-md: 0 6px 20px rgba(23,23,23,0.07);
-  --shadow-lg: 0 30px 70px rgba(23,23,23,0.12);
+document.addEventListener('DOMContentLoaded', () => {
+  initLoadingScreen();
+  initParticles();
+  initHeaderScroll();
+  initMobileMenu();
+  initSmoothScroll();
+  initFadeInAnimations();
+  initCounterAnimations();
+  initTestimonialSlider();
+  initWhatsAppVIPForm();
+  initContactForm();
+  initFAQAccordion();
+  initFAQSearch();
+  initProductFilters();
+  initWhatsAppTooltip();
+  initCookieModal();
+  initPhoneMask();
+  initStripeCheckout();
+  initStockManager();
+  initSuporteChat();
+});
 
-  /* Radius & motion */
-  --radius: 16px;
-  --radius-sm: 10px;
-  --radius-lg: 26px;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-2: cubic-bezier(0.4, 0, 0.2, 1);
+// ==========================================
+// Stock Manager (Autônomo)
+// ==========================================
+function initStockManager() {
+  const productCards = document.querySelectorAll('.product-card[data-product-id]');
+  productCards.forEach(card => {
+    const productId = card.getAttribute('data-product-id');
+    const product = STOCK_DATA[productId];
 
-  /* Legacy aliases (keep inline styles consistent) */
-  --primary: #171717;
-  --primary-light: #10A37F;
-  --primary-dark: #000000;
-  --accent-light: #34C9A2;
-  --bg-dark: #0E0E10;
-  --bg-mid: #1F1F23;
-  --bg-light: #FAF9F5;
-  --success: #16A34A;
-  --warning: #D97706;
-  --error: #DC2626;
-}
+    if (product) {
+      const badgeEl = card.querySelector('.product-badge');
+      const btnEl = card.querySelector('.btn-buy-action');
+      const imageEl = card.querySelector('.product-image');
 
-/* --- Reset --- */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      // Produtos sem estoque exibem automaticamente o banner ContaFlash
+      if (imageEl && !product.inStock && !imageEl.querySelector('.stock-banner')) {
+        imageEl.innerHTML = `
+          <div class="stock-banner">
+            <i class="fas fa-bolt"></i>
+            <div class="stock-banner-word">Conta<span>Flash</span></div>
+          </div>`;
+        imageEl.style.padding = '0';
+      }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 90px;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+      if (badgeEl) {
+        badgeEl.textContent = product.badge;
+        if (product.inStock) {
+          badgeEl.className = 'product-badge badge-instock';
+        } else {
+          badgeEl.className = 'product-badge badge-outstock';
+        }
+      }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.65;
-  font-feature-settings: "cv02","cv03","cv04","cv11";
-}
+      if (btnEl) {
+        if (product.inStock) {
+          // Se já é um link <a> configurado no HTML, apenas garante os dados
+          // (não sobrescreve o href/conteúdo para não quebrar a navegação)
+          btnEl.setAttribute('data-product', product.title);
+          btnEl.setAttribute('data-price', product.price);
+          if (btnEl.tagName !== 'A') {
+            btnEl.innerHTML = `<i class="fab fa-stripe-s"></i> Comprar Agora — ${product.price}`;
+            btnEl.className = 'btn btn-primary btn-buy-stripe';
+            btnEl.setAttribute('data-stripe-url', product.stripeUrl);
+          }
+        } else {
+          btnEl.innerHTML = `<i class="fas fa-bell"></i> Esgotado - Falar com Suporte`;
+          btnEl.className = 'btn btn-disabled btn-notify-suporte';
+          btnEl.setAttribute('data-product', product.title);
+        }
+      }
+    }
+  });
 
-a { text-decoration: none; color: inherit; transition: var(--ease-2) .25s; }
-ul { list-style: none; }
-img { max-width: 100%; display: block; }
-button { font-family: inherit; }
-
-/* --- Editorial accent (serif italic) --- */
-.gradient-text {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent-2);
-  letter-spacing: 0;
-}
-
-/* --- Scrollbar --- */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg-subtle); }
-::-webkit-scrollbar-thumb {
-  background: #cdcac0;
-  border-radius: 8px;
-  border: 2px solid var(--bg-subtle);
-}
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-::selection { background: rgba(16,163,127,0.22); color: var(--ink); }
-
-/* --- Grain overlay (premium texture) --- */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.4;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-}
-
-/* =========================================
-   Loading screen
-   ========================================= */
-.loading-screen {
-  position: fixed; inset: 0;
-  background: var(--bg);
-  z-index: 10000;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 1.4rem;
-  transition: opacity .6s var(--ease), visibility .6s var(--ease);
-}
-.loading-screen.hidden { opacity: 0; visibility: hidden; }
-.loading-logo {
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  display: flex; align-items: center; gap: .55rem;
-  animation: fadeUp .7s var(--ease) both;
-}
-.loading-logo .logo-icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px; border-radius: 11px;
-  background: var(--ink); color: #fff; font-size: 1.1rem;
-  animation: spark 1.6s var(--ease) infinite;
-}
-@keyframes spark {
-  0%,100% { transform: rotate(-4deg) scale(1); box-shadow: 0 0 0 0 rgba(16,163,127,.0);}
-  50% { transform: rotate(4deg) scale(1.06); box-shadow: 0 0 0 6px rgba(16,163,127,.10);}
-}
-.loading-bar {
-  width: 180px; height: 3px;
-  background: var(--bg-muted);
-  border-radius: 99px; overflow: hidden;
-}
-.loading-bar::after {
-  content: ''; display: block;
-  width: 40%; height: 100%;
-  background: var(--accent);
-  border-radius: 99px;
-  animation: load 1.1s var(--ease) infinite;
-}
-@keyframes load {
-  0% { transform: translateX(-110%); }
-  100% { transform: translateX(360%); }
-}
-
-/* =========================================
-   Particles (subtle dots)
-   ========================================= */
-#particles-container {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0; overflow: hidden;
-}
-.particle {
-  position: absolute; border-radius: 50%;
-  opacity: 0.5;
-  animation: floatUp linear infinite;
-}
-@keyframes floatUp {
-  0%   { transform: translateY(105vh) scale(.6); opacity: 0; }
-  10%  { opacity: .45; }
-  90%  { opacity: .45; }
-  100% { transform: translateY(-12vh) scale(1); opacity: 0; }
-}
-
-/* =========================================
-   Glass / Card base
-   ========================================= */
-.glass {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .3s;
-}
-.glass:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-strong);
-}
-
-/* =========================================
-   Buttons
-   ========================================= */
-.btn {
-  display: inline-flex; align-items: center; gap: .55rem;
-  padding: .82rem 1.6rem;
-  border-radius: 99px;
-  font-weight: 500; font-size: .95rem;
-  cursor: pointer; border: 1px solid transparent;
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .25s, color .25s, border-color .25s;
-  white-space: nowrap;
-}
-.btn i { transition: transform .3s var(--ease); }
-
-.btn-primary {
-  background: var(--ink); color: #fff;
-  box-shadow: 0 1px 2px rgba(23,23,23,.18);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(23,23,23,.22);
-}
-.btn-primary:hover i { transform: translate(3px,-3px) rotate(-8deg); }
-
-.btn-outline {
-  background: transparent; color: var(--ink);
-  border-color: var(--border-strong);
-}
-.btn-outline:hover {
-  background: var(--ink); color: #fff;
-  border-color: var(--ink);
-  transform: translateY(-2px);
-}
-.btn-lg { padding: 1rem 2.1rem; font-size: 1.02rem; }
-
-/* =========================================
-   Header
-   ========================================= */
-.header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: 1.1rem 0;
-  transition: padding .35s var(--ease), background .35s, box-shadow .35s, border-color .35s;
-  border-bottom: 1px solid transparent;
-}
-.header.scrolled {
-  background: rgba(250,249,245,0.72);
-  backdrop-filter: blur(18px) saturate(1.4);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  border-bottom: 1px solid var(--border);
-  padding: .7rem 0;
-}
-.header-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
+  // Handle Out of Stock Notify click
+  document.addEventListener('click', (e) => {
+    const notifyBtn = e.target.closest('.btn-notify-suporte');
+    if (notifyBtn) {
+      e.preventDefault();
+      const prodName = notifyBtn.getAttribute('data-product') || 'Produto';
+      openSuporteChatWithQuestion(`Quando o produto ${prodName} voltará ao estoque?`);
+    }
+  });
 }
 
-.logo { display: flex; align-items: center; gap: .55rem; font-size: 1.18rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
-.logo-icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border-radius: 9px;
-  background: var(--ink); color: #fff; font-size: .95rem;
-  transition: transform .4s var(--ease);
-}
-.logo:hover .logo-icon { transform: rotate(-8deg) scale(1.05); }
-.logo-text { color: var(--ink); }
-.logo-text b { color: var(--accent-2); font-weight: 600; }
+// ==========================================
+// Suporte Autônomo Chat Engine (Integração Interativa)
+// ==========================================
+function initSuporteChat() {
+  if (!document.getElementById('suporteWidgetBtn')) {
+    const chatHTML = `
+      <div class="suporte-widget-btn" id="suporteWidgetBtn" title="Atendimento de Suporte 24h">
+        <span class="dot-online"></span>
+        <span>💬 Suporte 24h</span>
+        <span class="suporte-badge" id="suporteBadge">1</span>
+      </div>
 
-.nav-links { display: flex; align-items: center; gap: .25rem; }
-.nav-links a {
-  padding: .5rem .9rem; border-radius: 99px;
-  font-weight: 450; font-size: .9rem;
-  color: var(--text-secondary);
-  position: relative;
-}
-.nav-links a:hover { color: var(--ink); background: var(--bg-muted); }
-.nav-links a.active { color: var(--ink); }
-.nav-links a.active::after {
-  content: ''; position: absolute; bottom: 2px; left: 50%;
-  transform: translateX(-50%);
-  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-}
+      <div class="suporte-chat-window" id="suporteChatWindow">
+        <div class="suporte-chat-header">
+          <div class="suporte-chat-title">
+            <div class="suporte-chat-avatar">💬</div>
+            <div>
+              <div style="font-size:.92rem; font-weight:600; line-height:1.2;">Suporte Autônomo</div>
+              <div style="font-size:.74rem; opacity:.8;">Online | Respostas Imediatas</div>
+            </div>
+          </div>
+          <button class="suporte-chat-close" id="closeSuporteChat">&times;</button>
+        </div>
 
-.nav-cta {
-  margin-left: .5rem;
-  padding: .58rem 1.35rem !important;
-  background: var(--ink) !important; color: #fff !important;
-  border-radius: 99px !important; font-weight: 500 !important;
-  box-shadow: 0 1px 2px rgba(23,23,23,.16);
-}
-.nav-cta:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 26px rgba(23,23,23,.2) !important;
-}
-.nav-cta::after { display: none !important; }
+        <div class="suporte-chat-messages" id="suporteChatMessages">
+          <div class="suporte-msg suporte-msg-bot">
+            👋 Olá! Bem-vindo ao <strong>Suporte ContaFlash</strong>.<br>
+            Temos <strong>ChatGPT Plus (1 Mês)</strong> em estoque por <strong>R$ 29,90</strong>.<br>
+            Como posso te ajudar?
+          </div>
+        </div>
 
-/* Hamburger */
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 8px; z-index: 1001;
-  background: none; border: none;
-}
-.hamburger span {
-  display: block; width: 22px; height: 2px;
-  background: var(--ink); border-radius: 2px;
-  transition: var(--ease-2) .3s; transform-origin: center;
-}
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-.hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+        <div class="suporte-chat-chips">
+          <button class="suporte-chip" data-query="chatgpt">⚡ Comprar ChatGPT Plus</button>
+          <button class="suporte-chip" data-query="ggmax">🛒 Comprar na GGMax</button>
+          <button class="suporte-chip" data-query="estoque">📦 Consultar Estoque</button>
+          <button class="suporte-chip" data-query="garantia">🔒 Garantia</button>
+          <button class="suporte-chip" data-query="zap">💬 WhatsApp</button>
+        </div>
 
-.mobile-menu {
-  position: fixed; inset: 0; z-index: 999;
-  background: rgba(250,249,245,0.96);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1.4rem;
-  opacity: 0; visibility: hidden;
-  transition: opacity .4s var(--ease), visibility .4s;
-}
-.mobile-menu.active { opacity: 1; visibility: visible; }
-.mobile-menu a {
-  font-size: 1.5rem; font-weight: 500; color: var(--text-secondary);
-}
-.mobile-menu a:hover, .mobile-menu a.active { color: var(--ink); }
-.mobile-menu a.active { position: relative; }
-.mobile-menu a.active::before {
-  content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-}
+        <form class="suporte-chat-input-box" id="suporteChatForm">
+          <input type="text" id="suporteChatInput" placeholder="Digite sua mensagem para o Suporte..." required autocomplete="off">
+          <button type="submit" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', chatHTML);
+  }
 
-/* =========================================
-   Hero
-   ========================================= */
-.hero {
-  position: relative; overflow: hidden;
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center;
-  padding: 9rem 1.5rem 4rem;
-  z-index: 2;
-}
-.hero-bg {
-  position: absolute; inset: -20% -5%;
-  z-index: -1;
-  background:
-    radial-gradient(42% 42% at 22% 30%, rgba(16,163,127,0.16), transparent 60%),
-    radial-gradient(40% 40% at 80% 25%, rgba(52,201,162,0.14), transparent 60%),
-    radial-gradient(45% 45% at 60% 90%, rgba(23,23,23,0.05), transparent 60%);
-  filter: blur(10px);
-  animation: meshDrift 18s ease-in-out infinite alternate;
-}
-@keyframes meshDrift {
-  0%   { transform: translate3d(0,0,0) scale(1); }
-  100% { transform: translate3d(-3%,2%,0) scale(1.06); }
-}
-.hero-content { position: relative; z-index: 1; max-width: 820px; }
+  const widgetBtn = document.getElementById('suporteWidgetBtn');
+  const chatWindow = document.getElementById('suporteChatWindow');
+  const closeBtn = document.getElementById('closeSuporteChat');
+  const chatForm = document.getElementById('suporteChatForm');
+  const chatInput = document.getElementById('suporteChatInput');
+  const messagesBox = document.getElementById('suporteChatMessages');
 
-.hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .42rem 1rem .42rem .6rem;
-  border-radius: 99px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  color: var(--text-secondary); font-size: .82rem; font-weight: 500;
-  margin-bottom: 1.8rem;
-  box-shadow: var(--shadow-sm);
-  animation: fadeUp .7s var(--ease) both;
-}
-.pulse-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--accent); position: relative;
-}
-.pulse-dot::after {
-  content: ''; position: absolute; inset: -4px; border-radius: 50%;
-  background: var(--accent); opacity: .35; animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%{transform:scale(.8);opacity:.5;} 70%{transform:scale(2.2);opacity:0;} 100%{opacity:0;} }
+  const badge = document.getElementById('suporteBadge');
 
-.hero h1 {
-  font-size: clamp(2.6rem, 6.4vw, 4.7rem);
-  font-weight: 600; line-height: 1.05;
-  letter-spacing: -0.035em;
-  margin-bottom: 1.4rem; color: var(--ink);
-  animation: fadeUp .8s var(--ease) .08s both;
-}
-.hero h1 .gradient-text { font-size: 1.06em; }
+  // Badge de notificação após 6s (se o chat nunca foi aberto)
+  if (badge && !sessionStorage.getItem('cf-chat-opened')) {
+    setTimeout(() => badge.classList.add('show'), 6000);
+  }
 
-.hero > .hero-content > p {
-  font-size: 1.16rem; color: var(--text-secondary);
-  max-width: 620px; margin: 0 auto 2.2rem;
-  animation: fadeUp .8s var(--ease) .16s both;
-}
-.hero-buttons {
-  display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap;
-  animation: fadeUp .8s var(--ease) .24s both;
-}
-.hero-stats {
-  display: flex; gap: 3rem; justify-content: center;
-  margin-top: 4rem; flex-wrap: wrap;
-  animation: fadeUp .8s var(--ease) .32s both;
-}
-.hero-stat .number {
-  font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em;
-  color: var(--ink); line-height: 1;
-}
-.hero-stat .label { font-size: .85rem; color: var(--text-muted); margin-top: .45rem; }
+  if (widgetBtn && chatWindow) {
+    widgetBtn.addEventListener('click', () => {
+      chatWindow.classList.toggle('active');
+      if (chatWindow.classList.contains('active')) {
+        badge?.classList.remove('show');
+        sessionStorage.setItem('cf-chat-opened', '1');
+        setTimeout(() => chatInput?.focus(), 400);
+      }
+    });
+  }
 
-/* Brand marquee */
-.brand-marquee {
-  position: relative; z-index: 2;
-  padding: 2rem 0; overflow: hidden;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  background: var(--bg-subtle);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-.marquee-track {
-  display: flex; gap: 3.5rem; width: max-content;
-  animation: marquee 28s linear infinite;
-}
-.marquee-track span {
-  font-size: 1.05rem; font-weight: 500; color: var(--text-muted);
-  letter-spacing: -0.01em; white-space: nowrap;
-  display: inline-flex; align-items: center; gap: .6rem;
-}
-.marquee-track span i { color: var(--text-secondary); font-size: 1.1rem; }
-.brand-marquee:hover .marquee-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+  // Fecha o chat com a tecla ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') chatWindow?.classList.remove('active');
+  });
 
-/* =========================================
-   Sections
-   ========================================= */
-.section { padding: 6.5rem 1.5rem; position: relative; z-index: 2; }
-.container { max-width: 1200px; margin: 0 auto; }
+  if (closeBtn && chatWindow) {
+    closeBtn.addEventListener('click', () => {
+      chatWindow.classList.remove('active');
+    });
+  }
 
-.section-header { text-align: center; margin-bottom: 4rem; max-width: 680px; margin-left: auto; margin-right: auto; }
-.section-badge {
-  display: inline-flex; align-items: center; gap: .45rem;
-  padding: .35rem .9rem; border-radius: 99px;
-  background: var(--accent-soft); border: 1px solid var(--accent-line);
-  color: var(--accent-2); font-size: .8rem; font-weight: 500;
-  margin-bottom: 1rem; letter-spacing: .01em;
-}
-.section-title {
-  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
-  font-weight: 600; line-height: 1.12; letter-spacing: -0.03em;
-  color: var(--ink); margin-bottom: 1rem;
-}
-.section-title span {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic; font-weight: 400; color: var(--accent-2);
-}
-.section-desc { font-size: 1.08rem; color: var(--text-secondary); }
+  // Quick Chips
+  document.addEventListener('click', (e) => {
+    const chip = e.target.closest('.suporte-chip');
+    if (chip) {
+      const queryType = chip.getAttribute('data-query');
+      if (queryType === 'chatgpt') {
+        processUserSuporteMessage('Quero comprar o ChatGPT Plus.');
+      } else if (queryType === 'ggmax') {
+        processUserSuporteMessage('Quero comprar o ChatGPT Plus pela GGMax.');
+      } else if (queryType === 'estoque') {
+        processUserSuporteMessage('Quais produtos estão disponíveis no estoque agora?');
+      } else if (queryType === 'garantia') {
+        processUserSuporteMessage('Como funciona a garantia do produto?');
+      } else if (queryType === 'zap') {
+        window.open(`https://wa.me/${WHATSAPP_PHONE}`, '_blank');
+      }
+    }
+  });
 
-/* Services */
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); gap: 1.25rem; }
-.service-card { padding: 2rem 1.8rem; }
-.service-card::before { display: none; }
-.service-icon {
-  width: 56px; height: 56px; border-radius: 14px;
-  background: var(--bg-subtle); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 0 1.4rem; font-size: 1.35rem; color: var(--accent-2);
-  transition: transform .45s var(--ease), background .3s;
-}
-.service-card:hover .service-icon { transform: translateY(-3px) rotate(-6deg); background: var(--accent-soft); }
-.service-card h3 { font-size: 1.18rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: .6rem; color: var(--ink); }
-.service-card p { color: var(--text-secondary); font-size: .95rem; }
+  // Chat Form Submit
+  if (chatForm) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (text) {
+        processUserSuporteMessage(text);
+        chatInput.value = '';
+      }
+    });
+  }
 
-/* Steps */
-.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1.25rem; }
-.step-card { padding: 2.4rem 2rem; text-align: center; position: relative; }
-.step-number {
-  width: 46px; height: 46px; border-radius: 50%;
-  background: var(--ink); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; font-weight: 600; margin: 0 auto 1.4rem;
-  font-family: 'Instrument Serif', serif; font-style: italic;
-  transition: transform .45s var(--ease);
-}
-.step-card:hover .step-number { transform: scale(1.08); background: var(--accent); }
-.step-card h3 { font-size: 1.12rem; font-weight: 600; margin-bottom: .6rem; color: var(--ink); }
-.step-card p { color: var(--text-secondary); font-size: .94rem; }
+  function nowTime() {
+    return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
 
-/* Security */
-.security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 1.25rem; }
-.security-item { padding: 1.7rem 1.4rem; text-align: center; }
-.security-item i { font-size: 1.5rem; color: var(--accent-2); margin-bottom: .9rem; }
-.security-item h4 { font-size: 1rem; font-weight: 600; margin-bottom: .35rem; color: var(--ink); }
-.security-item p { font-size: .85rem; color: var(--text-muted); }
+  function appendChatMessage(text, isUser = false) {
+    if (!messagesBox) return;
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `suporte-msg ${isUser ? 'suporte-msg-user' : 'suporte-msg-bot'}`;
+    msgDiv.innerHTML = `${text}<span class="suporte-time">${nowTime()}</span>`;
+    messagesBox.appendChild(msgDiv);
+    messagesBox.scrollTo({ top: messagesBox.scrollHeight, behavior: 'smooth' });
+  }
 
-/* Testimonials */
-.testimonials-wrapper { position: relative; max-width: 820px; margin: 0 auto; overflow: hidden; }
-.testimonials-slider { display: flex; transition: transform .6s var(--ease); }
-.testimonial-card { min-width: 100%; padding: 2.4rem; text-align: left; }
-.testimonial-card .stars { color: #E8A33D; font-size: .95rem; margin-bottom: 1.1rem; letter-spacing: 2px; }
-.testimonial-card blockquote {
-  font-size: 1.18rem; line-height: 1.6; color: var(--ink);
-  margin-bottom: 1.6rem; font-weight: 400; letter-spacing: -0.01em;
-}
-.testimonial-author { display: flex; align-items: center; gap: .9rem; }
-.testimonial-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--ink); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: .95rem;
-}
-.testimonial-info h4 { font-weight: 600; font-size: .95rem; color: var(--ink); }
-.testimonial-info span { font-size: .82rem; color: var(--text-muted); }
-.testimonials-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 2rem; }
-.testimonials-dots .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--border-strong); cursor: pointer; border: none;
-  transition: var(--ease-2) .3s;
-}
-.testimonials-dots .dot.active { background: var(--accent); width: 26px; border-radius: 99px; }
+  async function processUserSuporteMessage(userText) {
+    appendChatMessage(sanitizeInput(userText), true);
 
-/* Newsletter */
-.newsletter-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.newsletter-form { display: flex; gap: .6rem; max-width: 480px; margin: 0 auto; }
-.newsletter-form input {
-  flex: 1; padding: .9rem 1.2rem; border-radius: 99px;
-  border: 1px solid var(--border-strong); background: var(--bg-card);
-  color: var(--ink); font-family: inherit; font-size: .95rem; outline: none;
-  transition: border-color .25s, box-shadow .25s;
-}
-.newsletter-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-.newsletter-form input::placeholder { color: var(--text-muted); }
+    // Typing indicator (3 dots)
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'suporte-msg suporte-msg-bot';
+    typingDiv.innerHTML = '<span class="suporte-typing"><span></span><span></span><span></span></span>';
+    messagesBox.appendChild(typingDiv);
+    messagesBox.scrollTo({ top: messagesBox.scrollHeight, behavior: 'smooth' });
 
-/* =========================================
-   Footer (dark, premium)
-   ========================================= */
-.footer {
-  background: var(--footer-bg); color: #C9C7C0;
-  padding: 4.5rem 1.5rem 2rem; position: relative; z-index: 2;
-}
-.footer .logo, .footer .logo-text { color: #fff; }
-.footer-grid { display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 3rem; max-width: 1200px; margin: 0 auto 3rem; }
-.footer-brand p { color: #8E8C84; margin-top: 1rem; font-size: .92rem; max-width: 300px; }
-.footer-socials { display: flex; gap: .6rem; margin-top: 1.5rem; }
-.footer-socials a {
-  width: 38px; height: 38px; border-radius: 50%;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; justify-content: center;
-  color: #C9C7C0;
-}
-.footer-socials a:hover { background: var(--accent); color: #fff; transform: translateY(-3px); border-color: var(--accent); }
-.footer-col h4 { font-size: .95rem; font-weight: 600; margin-bottom: 1.2rem; color: #fff; }
-.footer-col ul { display: flex; flex-direction: column; gap: .6rem; }
-.footer-col a { color: #8E8C84; font-size: .9rem; }
-.footer-col a:hover { color: var(--accent); padding-left: 4px; }
-.footer-bottom {
-  max-width: 1200px; margin: 0 auto; padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-}
-.footer-bottom p { color: #6E6C64; font-size: .85rem; }
+    // If external Webhook configured
+    if (WEBHOOK_SUPPORT_ENDPOINT) {
+      try {
+        const response = await fetch(WEBHOOK_SUPPORT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userText, phone: WHATSAPP_PHONE })
+        });
+        const data = await response.json();
+        typingDiv.remove();
+        if (data && data.reply) {
+          appendChatMessage(data.reply, false);
+          return;
+        }
+      } catch (err) {
+        console.warn('Suporte webhook fallback:', err);
+      }
+    }
 
-/* =========================================
-   Page header (inner pages)
-   ========================================= */
-.page-header {
-  padding: 9rem 1.5rem 2.5rem; text-align: center;
-  position: relative; overflow: hidden; z-index: 2;
-}
-.page-header::before {
-  content: ''; position: absolute; inset: -10% -5%; z-index: -1;
-  background:
-    radial-gradient(40% 40% at 30% 40%, rgba(16,163,127,0.13), transparent 60%),
-    radial-gradient(38% 38% at 72% 30%, rgba(52,201,162,0.12), transparent 60%);
-  filter: blur(8px);
-}
-.page-header h1 {
-  font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 600;
-  letter-spacing: -0.035em; margin-bottom: 1rem; color: var(--ink);
-}
-.page-header h1 .gradient-text { font-size: 1.05em; }
-.page-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 580px; margin: 0 auto; }
-.breadcrumb { display: flex; justify-content: center; gap: .5rem; margin-top: 1.2rem; font-size: .88rem; color: var(--text-muted); }
-.breadcrumb a { color: var(--accent-2); }
-.breadcrumb a:hover { text-decoration: underline; }
+    // Built-in Intelligent Support Knowledge Engine
+    setTimeout(() => {
+      typingDiv.remove();
+      const lower = userText.toLowerCase();
+      let botReply = '';
 
-/* =========================================
-   Products page
-   ========================================= */
-.products-filter { display: flex; justify-content: center; flex-wrap: wrap; gap: .5rem; margin-bottom: 3rem; }
-.filter-btn {
-  padding: .5rem 1.1rem; border-radius: 99px;
-  border: 1px solid var(--border-strong); background: var(--bg-card);
-  color: var(--text-secondary); font-size: .88rem; font-weight: 500;
-  cursor: pointer; transition: var(--ease-2) .25s;
-}
-.filter-btn:hover { color: var(--ink); border-color: var(--ink); }
-.filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+      const stripeBtn = `<a href="${STRIPE_CHECKOUT_URL}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn stripe"><i class="fab fa-stripe-s"></i> Stripe (recomendado)</a>`;
+      const ggmaxBtn = `<a href="${GGMAX_URL}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn ggmax"><i class="fas fa-store"></i> GGMax</a>`;
+      const zapBtn = `<a href="https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Quero comprar o ChatGPT Plus (1 Mês).')}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn zap"><i class="fab fa-whatsapp"></i> WhatsApp</a>`;
+      const recTip = `<span class="suporte-note">💡 Recomendamos o <strong>Stripe</strong>: aprovação instantânea e liberação em minutos.</span>`;
 
-.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: 1.25rem; }
-.product-card { padding: 0; overflow: hidden; position: relative; display: flex; flex-direction: column; }
-.product-badge {
-  position: absolute; top: 1rem; right: 1rem; z-index: 2;
-  padding: .3rem .75rem; border-radius: 99px;
-  background: var(--ink); color: #fff;
-  font-size: .7rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase;
-}
-.product-image {
-  height: 150px;
-  background: var(--bg-subtle);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 3.2rem; border-bottom: 1px solid var(--border);
-}
-.product-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
-.product-category { font-size: .75rem; color: var(--accent-2); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; }
-.product-body h3 { font-size: 1.12rem; font-weight: 600; margin-bottom: .45rem; color: var(--ink); letter-spacing: -0.01em; }
-.product-body > p { color: var(--text-secondary); font-size: .9rem; margin-bottom: 1rem; }
-.product-features { margin-bottom: 1.4rem; }
-.product-features li { display: flex; align-items: center; gap: .55rem; font-size: .85rem; color: var(--text-secondary); padding: .28rem 0; }
-.product-features li i { color: var(--accent-2); font-size: .8rem; }
-.product-price { display: flex; align-items: baseline; gap: .35rem; margin-bottom: 1.1rem; margin-top: auto; }
-.product-price .current { font-size: 1.7rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
-.product-price .period { font-size: .82rem; color: var(--text-muted); }
-.product-card .btn { width: 100%; justify-content: center; }
+      const has = (...words) => words.some(w => lower.includes(w));
 
-/* =========================================
-   About page
-   ========================================= */
-.values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1.25rem; }
-.value-card { padding: 2rem; text-align: center; }
-.value-card .icon {
-  width: 54px; height: 54px; border-radius: 50%;
-  background: var(--bg-subtle); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 1.2rem; font-size: 1.4rem;
-}
-.value-card h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: .45rem; color: var(--ink); }
-.value-card p { color: var(--text-secondary); font-size: .9rem; }
+      if (has('oi', 'ola', 'olá', 'bom dia', 'boa tarde', 'boa noite', 'eae', 'opa') && lower.length < 25) {
+        botReply = `Olá! 👋 Tudo bem?<br>Temos o <strong>ChatGPT Plus (1 Mês)</strong> disponível por <strong>R$ 29,90</strong>.<br><br>` +
+          `Quer comprar agora ou tirar alguma dúvida?<br>` + stripeBtn + ggmaxBtn;
+      } else if (has('ggmax', 'gg max')) {
+        botReply = `Ótima escolha! Nosso anúncio oficial na GGMax oferece compra protegida pela plataforma:<br><br>` +
+          ggmaxBtn + `<span class="suporte-note">Pagamento e entrega intermediados pela GGMax.</span>`;
+      } else if (has('preço', 'preco', 'valor', 'quanto custa', 'quanto é', 'quanto e')) {
+        botReply = `O <strong>ChatGPT Plus (1 Mês de Acesso)</strong> custa <strong>R$ 29,90</strong> — pagamento único, sem mensalidade.<br><br>` +
+          stripeBtn + ggmaxBtn + zapBtn;
+      } else if (has('chatgpt', 'comprar', 'stripe', 'pagar', 'quero', 'gpt')) {
+        botReply = `O <strong>ChatGPT Plus (1 Mês de Acesso)</strong> está em estoque por <strong>R$ 29,90</strong>. Escolha como prefere pagar:<br><br>` +
+          stripeBtn + ggmaxBtn + zapBtn + recTip;
+      } else if (has('pix', 'cartão', 'cartao', 'boleto', 'forma de pagamento', 'parcel')) {
+        botReply = `💳 <strong>Formas de pagamento:</strong><br>` +
+          `• <strong>Stripe</strong>: cartão de crédito e PIX<br>` +
+          `• <strong>GGMax</strong>: PIX e saldo da plataforma<br>` +
+          `• <strong>WhatsApp</strong>: PIX direto<br><br>` + stripeBtn + ggmaxBtn;
+      } else if (has('entrega', 'quanto tempo', 'demora', 'prazo', 'receber')) {
+        botReply = `⚡ <strong>Entrega imediata!</strong><br>` +
+          `Após a confirmação do pagamento, enviamos os dados de acesso no seu WhatsApp em <strong>até 5 minutos</strong>.<br><br>` +
+          `Atendemos 24 horas por dia, todos os dias.`;
+      } else if (has('estoque', 'disponiv', 'disponív', 'outros', 'netflix', 'spotify', 'disney', 'xbox', 'canva', 'hbo', 'deezer', 'midjourney')) {
+        botReply = `📦 <strong>Status do estoque agora:</strong><br>` +
+          `• <strong>ChatGPT Plus</strong> — 🔥 14 unidades (pronta entrega)<br>` +
+          `• Netflix, Spotify, Disney+, Xbox, HBO, Canva, Deezer e Midjourney — 🚫 esgotados<br><br>` +
+          `Quer ser avisado na reposição? Chame no WhatsApp:<br>` + zapBtn;
+      } else if (has('garantia', 'troca', 'segur', 'confia', 'golpe', 'reembolso')) {
+        botReply = `🔒 <strong>Garantia Imediata de 24 horas</strong> — e isso é uma grande vantagem:<br><br>` +
+          `• Testamos o acesso <strong>junto com você</strong> na entrega<br>` +
+          `• Qualquer problema de login é trocado <strong>na hora</strong><br>` +
+          `• Sem formulário, sem protocolo, sem esperar dias<br>` +
+          `• Suporte segue disponível o mês todo para dúvidas<br><br>` +
+          `<span class="suporte-note">Resolvemos em minutos o que outros vendedores levam dias para responder.</span>`;
+      } else if (has('assinatura', 'recorrente', 'renova', 'mensalidade', 'cobrança', 'cobranca')) {
+        botReply = `✅ <strong>Não é assinatura!</strong><br>` +
+          `Você compra uma conta pronta com <strong>1 mês já pago</strong>. Nenhuma cobrança recorrente será feita no seu cartão.<br><br>` +
+          `Ao final dos 30 dias, você decide se quer renovar comprando novamente.`;
+      } else if (has('funciona', 'como usa', 'como recebo', 'passo')) {
+        botReply = `📝 <strong>Como funciona:</strong><br>` +
+          `1️⃣ Você paga via Stripe, GGMax ou WhatsApp<br>` +
+          `2️⃣ Confirmamos o pagamento automaticamente<br>` +
+          `3️⃣ Enviamos login e senha no seu WhatsApp<br>` +
+          `4️⃣ Você usa por 30 dias com garantia total<br><br>` + stripeBtn;
+      } else if (has('instagram', 'insta', 'rede social', 'telegram', 'contato')) {
+        botReply = `📱 <strong>Nossos canais oficiais:</strong><br>` +
+          `• Instagram: <strong>@${INSTAGRAM_HANDLE}</strong><br>` +
+          `• WhatsApp: <strong>(31) 98292-4858</strong><br>` +
+          `• Telegram: indisponível no momento<br><br>` + zapBtn;
+      } else if (has('obrigad', 'valeu', 'vlw', 'tchau', 'ok')) {
+        botReply = `Por nada! 😊 Estou aqui 24h se precisar.<br>Boas compras na <strong>ContaFlash</strong>! ⚡`;
+      } else {
+        botReply = `Não tenho certeza se entendi. 🤔 Posso te ajudar com:<br><br>` +
+          `• Preço e formas de pagamento<br>• Prazo de entrega<br>• Estoque disponível<br>• Garantia<br><br>` +
+          `Ou fale direto com um atendente humano:<br>` + zapBtn;
+      }
 
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.25rem; }
-.stat-card { padding: 2rem; text-align: center; }
-.stat-card .stat-icon { font-size: 1.7rem; margin-bottom: .7rem; }
-.stat-card .stat-number { font-size: 2.4rem; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
-.stat-card .stat-label { color: var(--text-muted); font-size: .88rem; margin-top: .4rem; }
-
-/* =========================================
-   FAQ page
-   ========================================= */
-.faq-search { max-width: 480px; margin: 0 auto 2.2rem; position: relative; }
-.faq-search input {
-  width: 100%; padding: 1rem 1.2rem 1rem 3rem; border-radius: 99px;
-  border: 1px solid var(--border-strong); background: var(--bg-card);
-  color: var(--ink); font-family: inherit; font-size: .98rem; outline: none;
-  transition: border-color .25s, box-shadow .25s;
-}
-.faq-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-.faq-search i { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-.faq-categories { display: flex; justify-content: center; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.5rem; }
-
-.faq-accordion { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: .7rem; }
-.faq-item { overflow: hidden; transition: border-color .3s; }
-.faq-item.active { border-color: var(--accent-line); }
-.faq-question {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 1.2rem 1.5rem; cursor: pointer;
-  background: none; border: none; width: 100%; text-align: left;
-  color: var(--ink); font-family: inherit; font-size: 1rem; font-weight: 500;
-  letter-spacing: -0.01em;
-}
-.faq-question i { color: var(--accent-2); transition: transform .4s var(--ease); flex-shrink: 0; }
-.faq-item.active .faq-question i { transform: rotate(180deg); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height .45s var(--ease); }
-.faq-item.active .faq-answer { max-height: 500px; }
-.faq-answer-inner { padding: 0 1.5rem 1.3rem; color: var(--text-secondary); line-height: 1.7; font-size: .95rem; }
-.faq-no-results { text-align: center; padding: 3rem; color: var(--text-muted); display: none; }
-
-/* =========================================
-   Contact page
-   ========================================= */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; }
-.contact-info-cards { display: flex; flex-direction: column; gap: 1rem; }
-.contact-info-card { padding: 1.4rem; display: flex; align-items: flex-start; gap: 1rem; }
-.contact-info-card .icon {
-  width: 46px; height: 46px; border-radius: 12px;
-  background: var(--bg-subtle); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.15rem; flex-shrink: 0;
-}
-.contact-info-card h4 { font-size: .98rem; font-weight: 600; margin-bottom: .25rem; color: var(--ink); }
-.contact-info-card p { color: var(--text-secondary); font-size: .9rem; }
-
-.contact-form-card { padding: 2.4rem; }
-.form-group { margin-bottom: 1.1rem; }
-.form-group label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .45rem; color: var(--text-secondary); }
-.form-group input, .form-group textarea, .form-group select {
-  width: 100%; padding: .82rem 1rem; border-radius: var(--radius-sm);
-  border: 1px solid var(--border-strong); background: var(--bg-card);
-  color: var(--ink); font-family: inherit; font-size: .95rem; outline: none;
-  transition: border-color .25s, box-shadow .25s;
-}
-.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-  border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
-}
-.form-group textarea { resize: vertical; min-height: 120px; }
-.form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
-.form-group .error-msg { color: var(--error); font-size: .8rem; margin-top: .3rem; display: none; }
-.form-group.error input, .form-group.error textarea, .form-group.error select { border-color: var(--error); }
-.form-group.error .error-msg { display: block; }
-.form-group.success input, .form-group.success textarea, .form-group.success select { border-color: var(--success); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-/* =========================================
-   WhatsApp float
-   ========================================= */
-.whatsapp-float { position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 900; }
-.whatsapp-btn {
-  width: 58px; height: 58px; border-radius: 50%;
-  background: #25D366; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.7rem; cursor: pointer; border: none;
-  box-shadow: 0 10px 26px rgba(37,211,102,0.4);
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
-  animation: popIn .5s var(--ease) 1s both;
-}
-.whatsapp-btn:hover { transform: scale(1.08); box-shadow: 0 14px 32px rgba(37,211,102,0.5); }
-.whatsapp-btn::after {
-  content: ''; position: absolute; inset: 0; border-radius: 50%;
-  border: 2px solid #25D366; animation: ripple 2.2s infinite;
-}
-@keyframes ripple { 0%{transform:scale(1);opacity:.6;} 100%{transform:scale(1.7);opacity:0;} }
-.whatsapp-tooltip {
-  position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
-  background: var(--ink); color: #fff; padding: .55rem .95rem;
-  border-radius: 10px; font-size: .84rem; font-weight: 500; white-space: nowrap;
-  box-shadow: var(--shadow-md); opacity: 0; visibility: hidden;
-  transition: opacity .3s, visibility .3s;
-}
-.whatsapp-float:hover .whatsapp-tooltip { opacity: 1; visibility: visible; }
-.whatsapp-tooltip::after {
-  content: ''; position: absolute; right: -5px; top: 50%; transform: translateY(-50%);
-  border: 5px solid transparent; border-left-color: var(--ink);
+      appendChatMessage(botReply, false);
+    }, 900);
+  }
 }
 
-/* =========================================
-   Cookie modal
-   ========================================= */
-.cookie-modal {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9000;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border);
-  padding: 1.4rem;
-  transform: translateY(100%); transition: transform .5s var(--ease);
-  box-shadow: 0 -10px 40px rgba(23,23,23,0.08);
-}
-.cookie-modal.show { transform: translateY(0); }
-.cookie-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-.cookie-text { flex: 1; min-width: 280px; }
-.cookie-text h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: .25rem; color: var(--ink); }
-.cookie-text p { color: var(--text-secondary); font-size: .9rem; }
-.cookie-buttons { display: flex; gap: .6rem; flex-shrink: 0; }
-.cookie-buttons .btn { padding: .6rem 1.4rem; font-size: .85rem; }
+function openSuporteChatWithQuestion(questionText) {
+  const chatWindow = document.getElementById('suporteChatWindow');
+  const chatInput = document.getElementById('suporteChatInput');
 
-/* =========================================
-   Toasts
-   ========================================= */
-.toast-container { position: fixed; top: 5.5rem; right: 1.5rem; z-index: 9500; display: flex; flex-direction: column; gap: .55rem; }
-.toast {
-  padding: .95rem 1.3rem; border-radius: 12px;
-  background: var(--ink); color: #fff;
-  display: flex; align-items: center; gap: .7rem; min-width: 300px;
-  box-shadow: var(--shadow-lg);
-  animation: toastIn .35s var(--ease), toastOut .35s var(--ease) 3s forwards;
-}
-.toast.success { border-left: 3px solid var(--success); }
-.toast.error { border-left: 3px solid var(--error); }
-.toast.warning { border-left: 3px solid var(--warning); }
-.toast-icon { font-size: 1.1rem; flex-shrink: 0; }
-.toast.success .toast-icon { color: var(--success); }
-.toast.error .toast-icon { color: var(--error); }
-.toast.warning .toast-icon { color: var(--warning); }
-.toast-message { font-size: .9rem; }
-@keyframes toastIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes toastOut { to { transform: translateX(120%); opacity: 0; } }
-
-/* =========================================
-   Animations
-   ========================================= */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
-
-.fade-in { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-
-.float-animation { animation: floatY 6s ease-in-out infinite; }
-@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
-
-/* Accessibility: reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+  if (chatWindow) chatWindow.classList.add('active');
+  if (chatInput && questionText) {
+    chatInput.value = questionText;
+  }
 }
 
-/* =========================================
-   Responsive
-   ========================================= */
-@media (max-width: 1024px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+// ==========================================
+// Loading Screen
+// ==========================================
+function initLoadingScreen() {
+  const loader = document.querySelector('.loading-screen');
+  if (!loader) return;
+
+  const hideLoader = () => {
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 500);
+  };
+
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 300);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 300));
+    setTimeout(hideLoader, 1500);
+  }
 }
-@media (max-width: 820px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .hero h1 { font-size: 2.5rem; }
-  .hero-stats { gap: 2rem; }
-  .hero-stat .number { font-size: 2rem; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-  .form-row { grid-template-columns: 1fr; }
-  .newsletter-form { flex-direction: column; }
-  .cookie-inner { flex-direction: column; text-align: center; }
+
+// ==========================================
+// Particles
+// ==========================================
+function initParticles() {
+  const container = document.getElementById('particles-container');
+  if (!container) return;
+
+  // Desliga partículas para quem prefere menos movimento
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const particleCount = window.innerWidth < 768 ? 8 : 16;
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+
+    const size = Math.random() * 4 + 2;
+    const left = Math.random() * 100;
+    const duration = Math.random() * 22 + 28; // 28s a 50s — bem devagar
+    const delay = Math.random() * 18;
+
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${left}%`;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+
+    const colors = [
+      'rgba(23, 23, 23, 0.08)',
+      'rgba(16, 163, 127, 0.16)',
+      'rgba(23, 23, 23, 0.05)'
+    ];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    fragment.appendChild(particle);
+  }
+
+  container.appendChild(fragment);
 }
-@media (max-width: 480px) {
-  .hero { padding: 8rem 1rem 3rem; }
-  .section { padding: 4.5rem 1rem; }
-  .hero-buttons { flex-direction: column; width: 100%; }
-  .hero-buttons .btn { width: 100%; justify-content: center; }
-  .hero-stats { flex-direction: column; gap: 1.5rem; }
-  .toast { min-width: auto; margin: 0 .5rem; }
-  .whatsapp-float { bottom: 1rem; right: 1rem; }
-  .whatsapp-btn { width: 50px; height: 50px; font-size: 1.45rem; }
-  .products-grid { grid-template-columns: 1fr; }
+
+// ==========================================
+// Header Scroll Effect
+// ==========================================
+function initHeaderScroll() {
+  const header = document.querySelector('.header');
+  if (!header) return;
+
+  let ticking = false;
+  const onScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 30) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+// ==========================================
+// Mobile Menu
+// ==========================================
+function initMobileMenu() {
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  if (!hamburger || !mobileMenu) return;
+
+  hamburger.addEventListener('click', () => {
+    const isActive = hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = isActive ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+// ==========================================
+// Smooth Scroll
+// ==========================================
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (targetId === '#') return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+}
+
+// ==========================================
+// Fade-in Animations
+// ==========================================
+function initFadeInAnimations() {
+  const elements = Array.from(document.querySelectorAll('.fade-in'));
+  if (!elements.length) return;
+
+  // Respeita quem prefere menos movimento
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    elements.forEach(el => el.classList.add('revealed'));
+    return;
+  }
+
+  // Ativa o estado inicial escondido só agora (garante fallback sem JS)
+  document.documentElement.classList.add('js-ready');
+
+  // Revela um elemento e, ao terminar, remove as classes de animação.
+  // Isso elimina o conflito de transform com o :hover dos cards.
+  function reveal(el, delay = 0) {
+    if (el.dataset.revealed === '1') return;
+    el.dataset.revealed = '1';
+
+    setTimeout(() => {
+      el.style.willChange = 'opacity, transform';
+      el.classList.add('visible');
+
+      const cleanup = () => {
+        el.classList.remove('fade-in', 'visible');
+        el.classList.add('revealed');
+        el.style.willChange = 'auto';
+      };
+      // Limpa após a transição (1s) com folga de segurança
+      el.addEventListener('transitionend', cleanup, { once: true });
+      setTimeout(cleanup, 1400);
+    }, delay);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => reveal(el, 0));
+    return;
+  }
+
+  // Elementos já visíveis no carregamento: stagger curto e ordenado
+  const inView = elements.filter(el => el.getBoundingClientRect().top < window.innerHeight * 0.92);
+  inView.forEach((el, i) => reveal(el, Math.min(i * 110, 550)));
+
+  const observer = new IntersectionObserver((entries) => {
+    // Ordena por posição na tela para o stagger sair de cima para baixo
+    const visibles = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+    visibles.forEach((entry, i) => {
+      reveal(entry.target, Math.min(i * 110, 440));
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  elements.forEach(el => {
+    if (el.dataset.revealed !== '1') observer.observe(el);
+  });
+}
+
+// ==========================================
+// Counter Animations
+// ==========================================
+function initCounterAnimations() {
+  const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach(counter => observer.observe(counter));
+}
+
+function animateCounter(element) {
+  const target = parseInt(element.getAttribute('data-target'), 10);
+  const suffix = element.getAttribute('data-suffix') || '';
+  const duration = 2800;
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * easeOut);
+
+    element.textContent = current.toLocaleString('pt-BR') + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+// ==========================================
+// Testimonial Slider
+// ==========================================
+function initTestimonialSlider() {
+  const slider = document.querySelector('.testimonials-slider');
+  const dotsContainer = document.querySelector('.testimonials-dots');
+
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.testimonial-card');
+  if (!slides.length) return;
+
+  let currentSlide = 0;
+  let autoplayInterval = null;
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.setAttribute('aria-label', `Depoimento ${index + 1}`);
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    slider.style.transform = `translateX(-${index * 100}%)`;
+
+    const dots = dotsContainer?.querySelectorAll('.dot');
+    dots?.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    goToSlide(currentSlide);
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayInterval = setInterval(nextSlide, 7500);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) clearInterval(autoplayInterval);
+  }
+
+  startAutoplay();
+
+  slider.parentElement?.addEventListener('mouseenter', stopAutoplay);
+  slider.parentElement?.addEventListener('mouseleave', startAutoplay);
+
+  let startX = 0;
+  slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    stopAutoplay();
+  }, { passive: true });
+
+  slider.addEventListener('touchend', (e) => {
+    const diffX = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0 && currentSlide < slides.length - 1) {
+        goToSlide(currentSlide + 1);
+      } else if (diffX < 0 && currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+    startAutoplay();
+  }, { passive: true });
+}
+
+// ==========================================
+// WhatsApp VIP Club Form
+// ==========================================
+function initWhatsAppVIPForm() {
+  const form = document.querySelector('.newsletter-form');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const input = form.querySelector('input[name="phone"], input[type="tel"], input[type="text"]');
+    const phone = input?.value.replace(/\D/g, '') || '';
+
+    if (phone.length < 10) {
+      showToast('Insira um WhatsApp válido com DDD.', 'error');
+      return;
+    }
+
+    showToast('Inscrição no Clube VIP realizada! 🎉', 'success');
+    input.value = '';
+
+    const text = encodeURIComponent(`Olá! Quero entrar no Clube VIP ContaFlash para receber descontos e reposições de estoque.`);
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
+  });
+}
+
+// ==========================================
+// Contact Form
+// ==========================================
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nameEl = form.querySelector('[name="name"]');
+    const phoneEl = form.querySelector('[name="phone"]');
+    const subjectEl = form.querySelector('[name="subject"]');
+    const messageEl = form.querySelector('[name="message"]');
+
+    const name = sanitizeInput(nameEl?.value.trim() || '');
+    const phone = phoneEl?.value.replace(/\D/g, '') || '';
+    const subject = subjectEl?.value || 'Outro';
+    const message = sanitizeInput(messageEl?.value.trim() || '');
+
+    let isValid = true;
+
+    if (!name || name.length < 2) {
+      setFieldError(nameEl, 'Insira seu nome completo');
+      isValid = false;
+    } else {
+      setFieldSuccess(nameEl);
+    }
+
+    if (!phone || phone.length < 10) {
+      setFieldError(phoneEl, 'Insira seu WhatsApp com DDD');
+      isValid = false;
+    } else {
+      setFieldSuccess(phoneEl);
+    }
+
+    if (!message || message.length < 5) {
+      setFieldError(messageEl, 'Mensagem muito curta');
+      isValid = false;
+    } else {
+      setFieldSuccess(messageEl);
+    }
+
+    if (isValid) {
+      showToast('Enviando para o Suporte Atendimento...', 'success');
+
+      const text = encodeURIComponent(
+        `⚡ *ATENDIMENTO DE SUPORTE CONTAFLASH*\n\n` +
+        `👤 *Nome:* ${name}\n` +
+        `📱 *WhatsApp:* ${phone}\n` +
+        `🏷️ *Assunto:* ${subject}\n` +
+        `💬 *Mensagem:* ${message}`
+      );
+
+      setTimeout(() => {
+        window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
+        form.reset();
+        form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error', 'success'));
+      }, 800);
+    }
+  });
+}
+
+function setFieldError(field, message) {
+  if (!field) return;
+  const group = field.closest('.form-group');
+  if (group) {
+    group.classList.add('error');
+    group.classList.remove('success');
+    const errorEl = group.querySelector('.error-msg');
+    if (errorEl) errorEl.textContent = message;
+  }
+}
+
+function setFieldSuccess(field) {
+  if (!field) return;
+  const group = field.closest('.form-group');
+  if (group) {
+    group.classList.remove('error');
+    group.classList.add('success');
+  }
+}
+
+function sanitizeInput(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ==========================================
+// Stripe Checkout Integration
+// ==========================================
+function initStripeCheckout() {
+  if (!document.getElementById('checkoutModalOverlay')) {
+    const modalHTML = `
+      <div class="checkout-modal-overlay" id="checkoutModalOverlay">
+        <div class="checkout-modal">
+          <button class="modal-close-btn" id="closeCheckoutModal" aria-label="Fechar">&times;</button>
+          <div class="checkout-badge-stripe">
+            <i class="fas fa-shield-alt"></i> Checkout Seguro via Stripe
+          </div>
+
+          <div class="checkout-product-header">
+            <div class="checkout-product-icon" id="modalProductIcon">🤖</div>
+            <div class="checkout-product-info">
+              <h3 id="modalProductName">ChatGPT Plus (1 Mês de Acesso)</h3>
+              <p id="modalProductPrice">R$ 29,90</p>
+            </div>
+          </div>
+
+          <div class="checkout-security-box">
+            <i class="fas fa-lock"></i>
+            <span>Pagamento Único processado pela Stripe (PIX / Cartão com desconto imediato).</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:.75rem; margin-top:1.2rem;">
+            <a href="${STRIPE_CHECKOUT_URL}" target="_blank" rel="noopener" class="btn btn-stripe btn-lg" style="justify-content:center; width:100%;">
+              <i class="fab fa-stripe-s"></i> Ir Direto para o Stripe Checkout
+            </a>
+
+            <button type="button" id="buyDirectWhatsApp" class="btn btn-whatsapp" style="justify-content:center; width:100%;">
+              <i class="fab fa-whatsapp"></i> Comprar pelo WhatsApp Direct
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+  }
+
+  const modalOverlay = document.getElementById('checkoutModalOverlay');
+  const closeBtn = document.getElementById('closeCheckoutModal');
+  const buyWaBtn = document.getElementById('buyDirectWhatsApp');
+
+  let activeProduct = { name: 'ChatGPT Plus', price: 'R$ 29,90' };
+
+  document.addEventListener('click', (e) => {
+    const buyBtn = e.target.closest('.btn-buy-stripe');
+    if (!buyBtn) return;
+
+    // Se for um link <a> real, deixa o navegador abrir nativamente.
+    // (window.open + preventDefault era bloqueado por popup blockers)
+    if (buyBtn.tagName === 'A' && buyBtn.getAttribute('href')) {
+      showToast('Abrindo checkout seguro...', 'success');
+      return;
+    }
+
+    // Caso seja um <button>, abre o modal de opções de compra
+    e.preventDefault();
+    activeProduct.name = buyBtn.getAttribute('data-product') || 'ChatGPT Plus (1 Mês)';
+    activeProduct.price = buyBtn.getAttribute('data-price') || 'R$ 29,90';
+    const nameEl = document.getElementById('modalProductName');
+    const priceEl = document.getElementById('modalProductPrice');
+    if (nameEl) nameEl.textContent = activeProduct.name;
+    if (priceEl) priceEl.textContent = activeProduct.price;
+    modalOverlay.classList.add('active');
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+  }
+
+  if (buyWaBtn) {
+    buyWaBtn.addEventListener('click', () => {
+      const text = encodeURIComponent(
+        `Olá! Quero comprar a conta pronta do *ChatGPT Plus (1 Mês de Acesso)* no valor de R$ 29,90.`
+      );
+      modalOverlay.classList.remove('active');
+      window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${text}`, '_blank');
+    });
+  }
+}
+
+// ==========================================
+// FAQ Accordion
+// ==========================================
+function initFAQAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach(i => i.classList.remove('active'));
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
+}
+
+// ==========================================
+// FAQ Search
+// ==========================================
+function initFAQSearch() {
+  const searchInput = document.querySelector('.faq-search input');
+  if (!searchInput) return;
+
+  const faqItems = document.querySelectorAll('.faq-item');
+  const noResults = document.querySelector('.faq-no-results');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question')?.textContent.toLowerCase() || '';
+      const answer = item.querySelector('.faq-answer-inner')?.textContent.toLowerCase() || '';
+
+      if (question.includes(query) || answer.includes(query)) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  });
+}
+
+// ==========================================
+// Product Filters
+// ==========================================
+function initProductFilters() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const productCards = document.querySelectorAll('.product-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      productCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+
+        if (filter === 'all' || category === filter) {
+          card.style.display = '';
+          card.classList.add('visible');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+// ==========================================
+// WhatsApp Tooltip
+// ==========================================
+function initWhatsAppTooltip() {
+  const float = document.querySelector('.whatsapp-float');
+  if (!float) return;
+
+  const tooltip = float.querySelector('.whatsapp-tooltip');
+  if (!tooltip) return;
+
+  setTimeout(() => {
+    tooltip.style.opacity = '1';
+    tooltip.style.visibility = 'visible';
+
+    setTimeout(() => {
+      tooltip.style.opacity = '';
+      tooltip.style.visibility = '';
+    }, 4000);
+  }, 2500);
+}
+
+// ==========================================
+// Cookie Modal
+// ==========================================
+function initCookieModal() {
+  if (localStorage.getItem('contaflash-cookies-accepted')) return;
+
+  const modal = document.querySelector('.cookie-modal');
+  if (!modal) return;
+
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 1800);
+
+  const acceptBtn = modal.querySelector('.cookie-accept');
+  const rejectBtn = modal.querySelector('.cookie-reject');
+
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('contaflash-cookies-accepted', 'true');
+    modal.classList.remove('show');
+    showToast('Cookies aceitos com sucesso!', 'success');
+  });
+
+  rejectBtn?.addEventListener('click', () => {
+    localStorage.setItem('contaflash-cookies-accepted', 'rejected');
+    modal.classList.remove('show');
+  });
+}
+
+// ==========================================
+// Phone Mask
+// ==========================================
+function initPhoneMask() {
+  document.querySelectorAll('input[name="phone"], input[type="tel"]').forEach(phoneInput => {
+    phoneInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+
+      if (value.length > 11) value = value.slice(0, 11);
+
+      if (value.length > 7) {
+        value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+      } else if (value.length > 2) {
+        value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+      } else if (value.length > 0) {
+        value = `(${value}`;
+      }
+
+      e.target.value = value;
+    });
+  });
+}
+
+// ==========================================
+// Toast Notifications
+// ==========================================
+function showToast(message, type = 'success') {
+  let container = document.querySelector('.toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.classList.add('toast', type);
+
+  const icons = {
+    success: 'fa-solid fa-circle-check',
+    error: 'fa-solid fa-circle-xmark',
+    warning: 'fa-solid fa-triangle-exclamation'
+  };
+
+  toast.innerHTML = `
+    <i class="${icons[type] || icons.success} toast-icon"></i>
+    <span class="toast-message">${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.animation = 'toastOut 0.35s forwards';
+    setTimeout(() => toast.remove(), 350);
+  }, 3200);
 }
