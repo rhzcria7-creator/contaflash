@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dúvidas Frequentes - ContaFlash">
+    <title>FAQ | ContaFlash</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .faq-question.active {
+            border-radius: var(--radius) var(--radius) 0 0;
+            border-color: var(--primary);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: none;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+        
+        .faq-answer.active {
+            max-height: 500px;
+        }
+        
+        .faq-answer-content {
+            padding: 1.5rem;
+            color: var(--gray-light);
+            line-height: 1.8;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius);
+            color: var(--white);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-particles" id="particles"></div>
+    <div class="bg-gradient"></div>
+    
+    <header class="glass-header" id="header">
+        <nav class="nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span>ContaFlash</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="faq.html" class="active">FAQ</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="produtos.html" class="btn-nav">Ver Produtos</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="mobile-menu glass-menu" id="mobileMenu">
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="produtos.html"><i class="fas fa-box"></i> Produtos</a></li>
+            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> Sobre</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+        </ul>
+    </div>
+    
+    <section style="padding-top: 150px; padding-bottom: 4rem;">
+        <div style="max-width: 900px; margin: 0 auto; padding: 0 2rem;">
+            <div class="section-header">
+                <span class="section-tag glass-tag">TIRE SUAS DÚVIDAS</span>
+                <h1 class="hero-title" style="font-size: 3rem;">
+                    Perguntas <span class="gradient-text">Frequentes</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Encontre respostas rápidas para as dúvidas mais comuns
+                </p>
+            </div>
+            
+            <!-- Busca -->
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="faqSearch" placeholder="Buscar dúvida..." onkeyup="filterFAQs()">
+            </div>
+            
+            <!-- FAQ Accordion -->
+            <div class="faq-list" id="faqList">
+                
+                <div class="faq-item" data-keywords="seguro confiável proteção">
+                    <button class="faq-question">
+                        <span>A ContaFlash é segura? Como funciona a proteção?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Sim! A ContaFlash utiliza criptografia SSL de 256 bits para proteger todos os dados e transações. Trabalhamos apenas com métodos de pagamento seguros como PIX e cartões de crédito processados por plataformas certificadas. Além disso, seu dinheiro fica segurado até que você confirme o recebimento do produto. Se houver qualquer problema, garantimos reembolso total.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="entrega tempo imediato">
+                    <button class="faq-question">
+                        <span>Quanto tempo leva para receber o produto?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>A entrega é <strong>IMEDIATA</strong>! Após a confirmação do pagamento (geralmente em poucos minutos para PIX e cartão), você recebe seu acesso na hora. Em casos raros, pode levar até 24 horas, mas isso é muito incomum. Você receberá um e-mail ou mensagem no WhatsApp com todos os dados de acesso.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="conta individual própria">
+                    <button class="faq-question">
+                        <span>A conta é individual? Posso mudar a senha?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Sim! Todas as contas vendidas são individuais e de uso exclusivo. Você pode (e deve!) alterar a senha após receber o acesso. Após a alteração, a conta é 100% sua e você pode personalizá-la como quiser, incluindo foto de perfil, informações e preferências.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="garantia reembolso dinheiro">
+                    <button class="faq-question">
+                        <span>E se eu não ficar satisfeito? Tem garantia?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Absoluta! Oferecemos <strong>garantia incondicional de 7 dias</strong>. Se por qualquer motivo você não ficar satisfeito com o produto, basta entrar em contato e devolvemos 100% do seu dinheiro, sem perguntas ou burocracia. Sua satisfação é nossa prioridade número 1.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="pagamento pix cartao">
+                    <button class="faq-question">
+                        <span>Quais formas de pagamento são aceitas?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Aceitamos <strong>PIX</strong> (mais rápido - confirmação instantânea), <strong>cartão de crédito</strong> (parcelamento em até 12x), <strong>boleto bancário</strong> e <strong>saldo em conta</strong>. Para pagamentos via PIX e cartão, a entrega é imediata. Boletos levam até 3 dias úteis para confirmação.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="renovar renovação mensal">
+                    <button class="faq-question">
+                        <span>Preciso renovar todo mês? Como funciona?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Você escolhe! Oferecemos planos mensais, trimestrais e anuais. No plano mensal, você renewal manualmente a cada mês se quiser continuar. Não há cobrança automática - você tem controle total. Quando quiser renewal, basta entrar em contato e fazemos o processo de forma rápida.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="legitimate legal conta streaming">
+                    <button class="faq-question">
+                        <span>A venda de contas é legal?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>A ContaFlash opera dentro da legalidade. Vendemos <strong>contas de acesso compartilhado</strong> e <strong>assinaturas promocionais</strong> de forma transparente. As plataformas como Netflix, Spotify e outros incentivam planos família e compartilhados. OUR modelo de negócio é similar a serviços de revenda autorizados. Sempre recomendamos verificar os termos de cada plataforma.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="suporte ajuda problema">
+                    <button class="faq-question">
+                        <span>Como posso entrar em contato com o suporte?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Estamos disponíveis <strong>24 horas por dia, 7 dias por semana</strong>! Você pode nos contatar via:</p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li>WhatsApp: Resposta em minutos</li>
+                                <li>E-mail: Resposta em até 24h</li>
+                                <li>Chat do site: Disponível 24/7</li>
+                            </ul>
+                            <p style="margin-top: 1rem;">Nosso time é treinado para resolver qualquer problema rapidamente!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-keywords="conta suspensa ban banida">
+                    <button class="faq-question">
+                        <span>E se minha conta for suspensa ou banida?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            <p>Esse risco existe em qualquer serviço de streaming ou assinatura. Para minimizá-lo:</p>
+                            <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                                <li>Altere a senha imediatamente após receber</li>
+                                <li>Não compartilhe com muitas pessoas simultâneas</li>
+                                <li>Evite mudar localização/região frequentemente</li>
+                            </ul>
+                            <p style="margin-top: 1rem;">Se acontecer algum problema, entre em contato imediatamente. Oferecemos substituição da conta ou reembolso total, conforme sua preferência.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Contato CTA -->
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: var(--radius);">
+                <h3 style="margin-bottom: 1rem;">Não encontrou o que procurava?</h3>
+                <p style="color: var(--gray-light); margin-bottom: 1.5rem;">Nossa equipe está pronta para ajudar!</p>
+                <a href="contato.html" class="btn-primary glass-btn">
+                    <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo footer-logo">
+                    <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                    <span>ContaFlash</span>
+                </a>
+                <p>Sua plataforma de serviços digitais premium.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Suporte</h4>
+                <ul>
+                    <li><a href="faq.html">Dúvidas</a></li>
+                    <li><a href="contato.html">Fale Conosco</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contato</h4>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e98a86879d889d86a98a86879d888f85889a81c78a8684">[email&#160;protected]</a></li>
+                    <li><i class="fab fa-whatsapp"></i> (11) 99999-9999</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ContaFlash. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <a href="https://wa.me/5511999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Fale Conosco</span>
+    </a>
+    
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader">
+            <div class="loader-icon"><i class="fas fa-bolt"></i></div>
+            <div class="loader-text">ContaFlash</div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../js/main.js"></script>
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const isActive = button.classList.contains('active');
+                
+                // Fecha todos
+                document.querySelectorAll('.faq-question').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.nextElementSibling.classList.remove('active');
+                });
+                
+                // Abre o clicado se não estava ativo
+                if (!isActive) {
+                    button.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+        
+        // Busca de FAQs
+        function filterFAQs() {
+            const searchTerm = document.getElementById('faqSearch').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const keywords = item.getAttribute('data-keywords') || '';
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm) || keywords.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
