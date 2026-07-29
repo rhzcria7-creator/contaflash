@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Confira todos os produtos ContaFlash. Contas premium de streaming, IA, música, jogos e produtividade com os melhores preços.">
+  <meta name="description" content="Confira todos os produtos ContaFlash. Contas de 1 Mês de streaming, ferramentas, música, jogos e produtividade com os melhores preços e Stripe Checkout.">
   <meta name="robots" content="index, follow">
   <title>Produtos - ContaFlash</title>
 
@@ -12,12 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
   <div class="loading-screen">
-    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-logo"><span class="logo-icon">⚡</span> ContaFlash</div>
     <div class="loading-bar"></div>
   </div>
 
@@ -55,8 +57,8 @@
 
   <!-- Page Header -->
   <div class="page-header">
-    <h1>Nossos <span class="gradient-text">Produtos</span></h1>
-    <p>Escolha entre mais de 50 serviços premium com os melhores preços do mercado</p>
+    <h1>Catálogo de <span class="gradient-text">Produtos</span></h1>
+    <p>Contas prontas com 1 mês pago (não é assinatura recorrente). Compre com desconto via Stripe Checkout</p>
     <div class="breadcrumb">
       <a href="../index.html">Início</a> <span>/</span> <span>Produtos</span>
     </div>
@@ -69,9 +71,9 @@
       <!-- Filters -->
       <div class="products-filter fade-in">
         <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="ferramentas">Ferramentas & Assistentes</button>
         <button class="filter-btn" data-filter="streaming">Streaming</button>
         <button class="filter-btn" data-filter="musica">Música</button>
-        <button class="filter-btn" data-filter="ia">IA</button>
         <button class="filter-btn" data-filter="jogos">Jogos</button>
         <button class="filter-btn" data-filter="produtividade">Produtividade</button>
       </div>
@@ -79,212 +81,242 @@
       <!-- Products Grid -->
       <div class="products-grid">
 
-        <!-- Netflix -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-badge">Mais Vendido</div>
-          <div class="product-image">📺</div>
-          <div class="product-body">
-            <div class="product-category">Streaming</div>
-            <h3>Netflix Premium 4K</h3>
-            <p>Acesso completo ao catálogo Netflix em Ultra HD com 4 telas simultâneas.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Qualidade 4K Ultra HD</li>
-              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-              <li><i class="fas fa-check-circle"></i> Entrega imediata</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 19,90</span>
-              <span class="period">/mês</span>
+        <!-- ChatGPT Plus (EM ESTOQUE) -->
+        <div class="product-card glass fade-in" data-category="ferramentas" data-product-id="chatgpt-plus">
+          <div class="product-badge badge-instock">🔥 14 unidades em estoque</div>
+          <div class="product-image" style="padding:0; height:auto;">
+            <div class="chatgpt-showcase compact">
+              <div class="chatgpt-ribbon">R$ 29,90</div>
+              <div class="chatgpt-ticket">ChatGPT Plus</div>
+              <div class="chatgpt-chip chip-tl"><i class="fas fa-image"></i> DALL·E 3</div>
+              <div class="chatgpt-chip chip-tr"><i class="fas fa-globe"></i> Web</div>
+              <div class="chatgpt-chip chip-bl"><i class="fas fa-bolt"></i> GPT-4o</div>
+              <div class="chatgpt-card">
+                <div class="logo-circle"><i class="fas fa-atom"></i></div>
+                <h4>ChatGPT Plus</h4>
+                <div class="price-line">R$ 29,90</div>
+                <div class="method-line">Stripe / WhatsApp</div>
+              </div>
+              <div class="chatgpt-payment-mock"><span class="dots">•••• 4242</span></div>
+              <div class="chatgpt-shield"><i class="fas fa-shield-halved"></i></div>
             </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="netflix">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
           </div>
-        </div>
-
-        <!-- Disney+ -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-image">🏰</div>
           <div class="product-body">
-            <div class="product-category">Streaming</div>
-            <h3>Disney+ Premium</h3>
-            <p>Marvel, Star Wars, Pixar e todo conteúdo Disney em alta qualidade.</p>
+            <div class="product-category">Ferramentas & Assistentes</div>
+            <h3>ChatGPT Plus (1 Mês de Acesso)</h3>
+            <p>Conta individual exclusiva pronta com 1 Mês de GPT-4, GPT-4o e DALL-E 3 ativados.</p>
             <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> 4K + HDR</li>
-              <li><i class="fas fa-check-circle"></i> Downloads ilimitados</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 14,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="disney">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
-          </div>
-        </div>
-
-        <!-- Spotify -->
-        <div class="product-card glass fade-in" data-category="musica">
-          <div class="product-badge">Popular</div>
-          <div class="product-image">🎵</div>
-          <div class="product-body">
-            <div class="product-category">Música</div>
-            <h3>Spotify Premium</h3>
-            <p>Música sem limites, sem anúncios e com downloads offline.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Sem anúncios</li>
-              <li><i class="fas fa-check-circle"></i> Qualidade máxima</li>
-              <li><i class="fas fa-check-circle"></i> Downloads offline</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 9,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="spotify">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
-          </div>
-        </div>
-
-        <!-- ChatGPT Plus -->
-        <div class="product-card glass fade-in" data-category="ia">
-          <div class="product-badge">🔥 Hot</div>
-          <div class="product-image">🤖</div>
-          <div class="product-body">
-            <div class="product-category">Inteligência Artificial</div>
-            <h3>ChatGPT Plus</h3>
-            <p>Acesso ao GPT-4 com respostas avançadas, DALL-E 3 e navegação web.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Modelo GPT-4</li>
-              <li><i class="fas fa-check-circle"></i> DALL-E 3 incluso</li>
-              <li><i class="fas fa-check-circle"></i> Respostas prioritárias</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+              <li><i class="fas fa-check-circle"></i> Modelo GPT-4 e GPT-4o Liberado</li>
+              <li><i class="fas fa-check-circle"></i> Geração de Imagens com DALL-E 3</li>
+              <li><i class="fas fa-check-circle"></i> 1 Mês Pago (Sem cobrança recorrente)</li>
+              <li><i class="fas fa-check-circle"></i> Entrega e Garantia de 30 dias</li>
             </ul>
             <div class="product-price">
               <span class="current">R$ 29,90</span>
-              <span class="period">/mês</span>
+              <span class="period">via Stripe / WhatsApp</span>
             </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="chatgpt">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
+
+            <div style="display:flex; flex-direction:column; gap:.5rem; margin-top:auto;">
+              <a href="https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01" target="_blank" rel="noopener" class="btn btn-primary btn-buy-action btn-buy-stripe" data-product="ChatGPT Plus (1 Mês)" data-price="R$ 29,90" data-stripe-url="https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01">
+                <i class="fab fa-stripe-s"></i> Compre Agora e Receba Desconto
+              </a>
+              <a href="produto-chatgpt.html" class="btn btn-outline" style="justify-content:center; padding:.5rem 1rem; font-size:.85rem;">
+                <i class="fas fa-info-circle"></i> Ver Detalhes do Produto
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Xbox Game Pass -->
-        <div class="product-card glass fade-in" data-category="jogos">
-          <div class="product-image">🎮</div>
-          <div class="product-body">
-            <div class="product-category">Jogos</div>
-            <h3>Xbox Game Pass Ultimate</h3>
-            <p>Centenas de jogos no console, PC e cloud gaming com EA Play incluso.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> +500 jogos</li>
-              <li><i class="fas fa-check-circle"></i> EA Play incluso</li>
-              <li><i class="fas fa-check-circle"></i> Cloud Gaming</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 24,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="xbox">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
+        <!-- Netflix (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="streaming" data-product-id="netflix-4k">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
           </div>
-        </div>
-
-        <!-- Midjourney -->
-        <div class="product-card glass fade-in" data-category="ia">
-          <div class="product-image">🎨</div>
-          <div class="product-body">
-            <div class="product-category">Inteligência Artificial</div>
-            <h3>Midjourney Pro</h3>
-            <p>Gere imagens incríveis com IA. O melhor gerador de imagens do mercado.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Relaxe time ilimitado</li>
-              <li><i class="fas fa-check-circle"></i> Gerações privadas</li>
-              <li><i class="fas fa-check-circle"></i> Alta resolução</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 34,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="midjourney">
-              <i class="fas fa-bolt"></i> Assinar Agora
-            </button>
-          </div>
-        </div>
-
-        <!-- HBO Max -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-image">🎬</div>
           <div class="product-body">
             <div class="product-category">Streaming</div>
-            <h3>Max (HBO Max)</h3>
-            <p>Séries HBO originais, filmes blockbuster e conteúdo exclusivo Warner.</p>
+            <h3>Netflix Premium 4K (1 Mês)</h3>
+            <p>Acesso completo ao catálogo Netflix em Ultra HD 4K com 1 Mês pago.</p>
             <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Séries HBO originais</li>
-              <li><i class="fas fa-check-circle"></i> 3 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> 4K HDR</li>
+              <li><i class="fas fa-check-circle"></i> Qualidade 4K Ultra HD</li>
               <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+              <li><i class="fas fa-check-circle"></i> Suporte WhatsApp (31) 98292-4858</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 19,90</span>
+              <span class="period">(Preço Único)</span>
+            </div>
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Netflix Premium 4K">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
+            </button>
+          </div>
+        </div>
+
+        <!-- Spotify (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="musica" data-product-id="spotify-premium">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Música</div>
+            <h3>Spotify Premium (1 Mês)</h3>
+            <p>Música ilimitada, sem anúncios e com downloads offline por 1 Mês.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Sem anúncios</li>
+              <li><i class="fas fa-check-circle"></i> Qualidade máxima de áudio</li>
+              <li><i class="fas fa-check-circle"></i> Downloads offline</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 9,90</span>
+              <span class="period">(Preço Único)</span>
+            </div>
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Spotify Premium">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
+            </button>
+          </div>
+        </div>
+
+        <!-- Disney+ (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="streaming" data-product-id="disney-plus">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Streaming</div>
+            <h3>Disney+ Premium (1 Mês)</h3>
+            <p>Marvel, Star Wars, Pixar e todo catálogo Disney com 1 Mês pago.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Conteúdo 4K + HDR</li>
+              <li><i class="fas fa-check-circle"></i> Downloads ilimitados</li>
             </ul>
             <div class="product-price">
               <span class="current">R$ 14,90</span>
-              <span class="period">/mês</span>
+              <span class="period">(Preço Único)</span>
             </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="max">
-              <i class="fas fa-bolt"></i> Assinar Agora
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Disney+ Premium">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
             </button>
           </div>
         </div>
 
-        <!-- Canva Pro -->
-        <div class="product-card glass fade-in" data-category="produtividade">
-          <div class="product-image">🎯</div>
+        <!-- Xbox Game Pass (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="jogos" data-product-id="xbox-gamepass">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Jogos</div>
+            <h3>Xbox Game Pass Ultimate (1 Mês)</h3>
+            <p>Centenas de jogos no PC, console e cloud gaming com EA Play incluso por 1 Mês.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> +500 jogos para PC e Console</li>
+              <li><i class="fas fa-check-circle"></i> Cloud Gaming no celular</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 24,90</span>
+              <span class="period">(Preço Único)</span>
+            </div>
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Xbox Game Pass Ultimate">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
+            </button>
+          </div>
+        </div>
+
+        <!-- Midjourney (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="ferramentas" data-product-id="midjourney-pro">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Ferramentas & Assistentes</div>
+            <h3>Midjourney Pro (1 Mês)</h3>
+            <p>Gere artes e imagens ultra-realistas por 1 Mês com o gerador número 1.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Gerações em relax mode</li>
+              <li><i class="fas fa-check-circle"></i> Resolução ultra HD</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 34,90</span>
+              <span class="period">(Preço Único)</span>
+            </div>
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Midjourney Pro">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
+            </button>
+          </div>
+        </div>
+
+        <!-- HBO Max (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="streaming" data-product-id="hbo-max">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Streaming</div>
+            <h3>Max (HBO Max) (1 Mês)</h3>
+            <p>Séries HBO originais e filmes blockbuster com 1 Mês pago.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Séries originais HBO</li>
+              <li><i class="fas fa-check-circle"></i> Qualidade 4K HDR</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 14,90</span>
+              <span class="period">(Preço Único)</span>
+            </div>
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Max HBO">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
+            </button>
+          </div>
+        </div>
+
+        <!-- Canva Pro (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="produtividade" data-product-id="canva-pro">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
           <div class="product-body">
             <div class="product-category">Produtividade</div>
-            <h3>Canva Pro</h3>
-            <p>Crie designs profissionais com templates premium e ferramentas avançadas.</p>
+            <h3>Canva Pro (1 Mês)</h3>
+            <p>Crie designs profissionais com templates premium por 1 Mês.</p>
             <ul class="product-features">
               <li><i class="fas fa-check-circle"></i> Templates premium</li>
-              <li><i class="fas fa-check-circle"></i> Background remover</li>
-              <li><i class="fas fa-check-circle"></i> Kit de marca</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+              <li><i class="fas fa-check-circle"></i> Removedor de fundo avançado</li>
             </ul>
             <div class="product-price">
               <span class="current">R$ 12,90</span>
-              <span class="period">/mês</span>
+              <span class="period">(Preço Único)</span>
             </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="canva">
-              <i class="fas fa-bolt"></i> Assinar Agora
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Canva Pro">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
             </button>
           </div>
         </div>
 
-        <!-- Deezer -->
-        <div class="product-card glass fade-in" data-category="musica">
-          <div class="product-image">🎧</div>
+        <!-- Deezer (ESGOTADO) -->
+        <div class="product-card glass fade-in" data-category="musica" data-product-id="deezer-premium">
+          <div class="product-badge badge-outstock">🚫 Esgotado</div>
+          <div class="product-image" style="padding:0;">
+            <div class="stock-banner"><i class="fas fa-bolt"></i><div class="stock-banner-word">Conta<span>Flash</span></div></div>
+          </div>
           <div class="product-body">
             <div class="product-category">Música</div>
-            <h3>Deezer Premium</h3>
-            <p>Música HiFi, letras em tempo real e mix personalizado por IA.</p>
+            <h3>Deezer Premium (1 Mês)</h3>
+            <p>Áudio HiFi sem propaganda e com modo offline por 1 Mês.</p>
             <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Qualidade HiFi</li>
-              <li><i class="fas fa-check-circle"></i> Letras em tempo real</li>
-              <li><i class="fas fa-check-circle"></i> Mix por IA</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+              <li><i class="fas fa-check-circle"></i> Áudio HiFi sem perdas</li>
+              <li><i class="fas fa-check-circle"></i> Modo offline</li>
             </ul>
             <div class="product-price">
               <span class="current">R$ 8,90</span>
-              <span class="period">/mês</span>
+              <span class="period">(Preço Único)</span>
             </div>
-            <button type="button" class="btn btn-primary buy-btn" data-product="deezer">
-              <i class="fas fa-bolt"></i> Assinar Agora
+            <button class="btn btn-disabled btn-buy-action btn-notify-suporte" data-product="Deezer Premium">
+              <i class="fas fa-bell"></i> Esgotado - Falar com Suporte
             </button>
           </div>
         </div>
@@ -303,10 +335,9 @@
         </a>
         <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5531982924858" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <span style="opacity:0.5; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.06);" title="Telegram Indisponível no momento"><i class="fab fa-telegram"></i></span>
         </div>
       </div>
       <div class="footer-col">
@@ -320,24 +351,24 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4>Redes Sociais</h4>
         <ul>
-          <li><a href="produtos.html">Streaming</a></li>
-          <li><a href="produtos.html">IA</a></li>
-          <li><a href="produtos.html">Música</a></li>
-          <li><a href="produtos.html">Jogos</a></li>
+          <li><a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener"><i class="fab fa-instagram" style="width:16px;margin-right:6px;color:var(--accent)"></i>@contaf1sh</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><span style="color:#6E6C64; font-size:0.85rem;"><i class="fab fa-telegram" style="width:16px;margin-right:6px;"></i>Telegram (Indisponível no momento)</span></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h4>Atendimento</h4>
         <ul>
           <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><a href="contato.html"><i class="fas fa-headset" style="width:16px;margin-right:6px;color:var(--accent)"></i>Suporte 24h Direct</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
-      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados. Processado via Stripe Checkout.</p>
+      <p>Instagram: @contaf1sh | WhatsApp: (31) 98292-4858</p>
     </div>
   </footer>
 
@@ -354,7 +385,7 @@
     <div class="cookie-inner">
       <div class="cookie-text">
         <h4>🍪 Usamos cookies</h4>
-        <p>Utilizamos cookies para melhorar sua experiência de navegação.</p>
+        <p>Utilizamos cookies para melhorar sua experiência e segurança no Stripe Checkout.</p>
       </div>
       <div class="cookie-buttons">
         <button class="btn btn-outline cookie-reject">Recusar</button>

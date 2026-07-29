@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ContaFlash - Contas premium de streaming, IA, música e jogos com os melhores preços do mercado. Entrega imediata e suporte 24h.">
-  <meta name="keywords" content="streaming premium, spotify, netflix, chatgpt plus, contas digitais, jogos premium">
+  <meta name="description" content="ContaFlash - Contas com 1 mês pago de ChatGPT Plus, streaming e mais. Entrega imediata via Stripe Checkout e Suporte 24h.">
+  <meta name="keywords" content="chatgpt plus 1 mes, contas digitais, stripe checkout, instagram @contaf1sh, whatsapp 31982924858">
   <meta name="author" content="ContaFlash">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ContaFlash - Serviços Digitais Premium">
-  <meta property="og:description" content="As melhores contas premium com preços acessíveis. Entrega imediata e suporte 24 horas.">
+  <meta property="og:description" content="Contas prontas com 1 mês pago. Entrega imediata via Stripe Checkout e WhatsApp (31) 98292-4858.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://contaflash.com">
   <meta property="og:locale" content="pt_BR">
 
-  <title>ContaFlash - Serviços Digitais Premium</title>
+  <title>ContaFlash - Serviços Digitais Premium (1 Mês de Acesso)</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
@@ -28,7 +28,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- Tailwind CSS -->
+  <!-- Stripe JS SDK -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <!-- CSS -->
@@ -38,7 +41,7 @@
 
   <!-- Loading Screen -->
   <div class="loading-screen">
-    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-logo"><span class="logo-icon">⚡</span> ContaFlash</div>
     <div class="loading-bar"></div>
   </div>
 
@@ -88,22 +91,22 @@
     <div class="hero-content">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        Mais de 10.000 clientes ativos no Brasil
+        💬 Suporte Autônomo & Stripe Checkout Ativo
       </div>
 
       <h1>
-        Serviços premium,<br>
-        <span class="gradient-text">preços reais.</span>
+        Contas prontas com<br>
+        <span class="gradient-text">1 mês pago.</span>
       </h1>
 
-      <p>Streaming, inteligência artificial, música e jogos em contas compartilhadas verificadas. Entrega na hora, garantia de 30 dias e suporte humano 24h.</p>
+      <p>Vendemos o produto direto, não assinaturas recorrentes. Compre ChatGPT Plus em estoque com desconto via Stripe Checkout e liberação imediata.</p>
 
       <div class="hero-buttons">
-        <a href="pages/produtos.html" class="btn btn-primary btn-lg">
-          <i class="fas fa-bolt"></i> Ver Produtos
+        <a href="https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01" target="_blank" rel="noopener" class="btn btn-stripe btn-lg">
+          <i class="fab fa-stripe-s"></i> ChatGPT Plus com Desconto
         </a>
-        <a href="#como-funciona" class="btn btn-outline btn-lg">
-          <i class="fas fa-play-circle"></i> Como Funciona
+        <a href="pages/produtos.html" class="btn btn-outline btn-lg">
+          <i class="fas fa-boxes-stacked"></i> Ver Estoque Autônomo
         </a>
       </div>
 
@@ -113,16 +116,16 @@
           <div class="label">Clientes Ativos</div>
         </div>
         <div class="hero-stat">
-          <div class="number counter" data-target="98" data-suffix="%">0</div>
-          <div class="label">Satisfação</div>
+          <div class="number">14 un.</div>
+          <div class="label">Estoque ChatGPT Plus</div>
         </div>
         <div class="hero-stat">
-          <div class="number counter" data-target="50" data-suffix="+">0</div>
-          <div class="label">Serviços</div>
+          <div class="number">1 Mês</div>
+          <div class="label">Acesso Garantido</div>
         </div>
         <div class="hero-stat">
           <div class="number">24/7</div>
-          <div class="label">Suporte Online</div>
+          <div class="label">Suporte WhatsApp</div>
         </div>
       </div>
     </div>
@@ -131,74 +134,61 @@
   <!-- ===== BRAND MARQUEE ===== -->
   <div class="brand-marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span><i class="fas fa-tv"></i> Netflix</span>
-      <span><i class="fab fa-spotify"></i> Spotify</span>
-      <span><i class="fas fa-robot"></i> ChatGPT Plus</span>
-      <span><i class="fab fa-xbox"></i> Xbox Game Pass</span>
-      <span><i class="fas fa-wand-magic-sparkles"></i> Midjourney</span>
-      <span><i class="fas fa-clapperboard"></i> Max HBO</span>
-      <span><i class="fab fa-deezer"></i> Deezer</span>
-      <span><i class="fas fa-palette"></i> Canva Pro</span>
-      <span><i class="fas fa-castle"></i> Disney+</span>
-      <span><i class="fab fa-youtube"></i> YouTube Premium</span>
-      <!-- duplicado para loop contínuo -->
-      <span><i class="fas fa-tv"></i> Netflix</span>
-      <span><i class="fab fa-spotify"></i> Spotify</span>
-      <span><i class="fas fa-robot"></i> ChatGPT Plus</span>
-      <span><i class="fab fa-xbox"></i> Xbox Game Pass</span>
-      <span><i class="fas fa-wand-magic-sparkles"></i> Midjourney</span>
-      <span><i class="fas fa-clapperboard"></i> Max HBO</span>
-      <span><i class="fab fa-deezer"></i> Deezer</span>
-      <span><i class="fas fa-palette"></i> Canva Pro</span>
-      <span><i class="fas fa-castle"></i> Disney+</span>
-      <span><i class="fab fa-youtube"></i> YouTube Premium</span>
+      <span><i class="fas fa-robot"></i> ChatGPT Plus (Em Estoque)</span>
+      <span><i class="fab fa-instagram"></i> @contaf1sh</span>
+      <span><i class="fab fa-whatsapp"></i> (31) 98292-4858</span>
+      <span><i class="fab fa-stripe-s"></i> Stripe Checkout Seguro</span>
+      <span><i class="fas fa-headset"></i> Suporte Autônomo 24h</span>
+      <!-- Loop -->
+      <span><i class="fas fa-robot"></i> ChatGPT Plus (Em Estoque)</span>
+      <span><i class="fab fa-instagram"></i> @contaf1sh</span>
+      <span><i class="fab fa-whatsapp"></i> (31) 98292-4858</span>
+      <span><i class="fab fa-stripe-s"></i> Stripe Checkout Seguro</span>
+      <span><i class="fas fa-headset"></i> Suporte Autônomo 24h</span>
     </div>
   </div>
 
-  <!-- ===== SERVIÇOS ===== -->
+  <!-- ===== SERVIÇOS / PRODUTO DESTAQUE ===== -->
   <section class="section" id="servicos">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-star"></i> Nossos Serviços</span>
-        <h2 class="section-title">O que <span>oferecemos</span></h2>
-        <p class="section-desc">Acesse os melhores serviços digitais com preços que cabem no seu bolso</p>
+        <span class="section-badge"><i class="fas fa-fire"></i> Produto em Destaque</span>
+        <h2 class="section-title">ChatGPT Plus <span>(1 Mês Pago)</span></h2>
+        <p class="section-desc">Atualmente nosso único produto em estoque com desconto exclusivo no Stripe</p>
       </div>
 
-      <div class="services-grid">
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-tv"></i></div>
-          <h3>Streaming de Vídeo</h3>
-          <p>Netflix, Disney+, HBO Max, Amazon Prime e muito mais em contas premium compartilhadas.</p>
+      <div class="glass fade-in" style="padding: 1.5rem; max-width: 900px; margin: 0 auto; display:grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items:center;">
+        <div class="chatgpt-showcase" style="min-height:320px;">
+          <div class="chatgpt-ribbon">R$ 29,90</div>
+          <div class="chatgpt-ticket">Acesso Liberado</div>
+          <div class="chatgpt-chip chip-tl"><i class="fas fa-image"></i> DALL·E 3</div>
+          <div class="chatgpt-chip chip-tr"><i class="fas fa-globe"></i> Web</div>
+          <div class="chatgpt-chip chip-bl"><i class="fas fa-bolt"></i> GPT-4o</div>
+          <div class="chatgpt-card">
+            <div class="logo-circle"><i class="fas fa-atom"></i></div>
+            <h4>ChatGPT Plus</h4>
+            <div class="price-line">R$ 29,90</div>
+            <div class="method-line">Stripe ou WhatsApp</div>
+            <span class="premium-badge"><i class="fas fa-check-circle"></i> Premium</span>
+          </div>
+          <div class="chatgpt-payment-mock"><span class="dots">•••• 4242</span></div>
+          <div class="chatgpt-shield"><i class="fas fa-shield-halved"></i></div>
         </div>
 
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-music"></i></div>
-          <h3>Streaming de Música</h3>
-          <p>Spotify, Deezer, YouTube Music e Apple Music premium sem anúncios e com qualidade máxima.</p>
-        </div>
+        <div style="padding: 1rem 1.5rem 1rem 0;">
+          <h3 style="font-size:1.4rem; font-weight:600; margin-bottom:.5rem;">ChatGPT Plus - Conta Individual</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:1rem;">
+            Acesso ilimitado ao GPT-4, GPT-4o, DALL-E 3 e Análise de Dados por 1 Mês inteiro.
+          </p>
 
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-robot"></i></div>
-          <h3>Inteligência Artificial</h3>
-          <p>ChatGPT Plus, Claude Pro, Midjourney e outras ferramentas de IA para produtividade.</p>
-        </div>
+          <div class="product-price-large" style="margin:.8rem 0 1.2rem;">
+            <span class="main-price">R$ 29,90</span>
+            <span class="discount-tag">Stripe ou WhatsApp</span>
+          </div>
 
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-gamepad"></i></div>
-          <h3>Jogos</h3>
-          <p>Xbox Game Pass, PlayStation Plus, Nintendo Switch Online e contas Steam premium.</p>
-        </div>
-
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-cloud"></i></div>
-          <h3>Cloud & Produtividade</h3>
-          <p>Google Workspace, Microsoft 365, Canva Pro e ferramentas profissionais.</p>
-        </div>
-
-        <div class="service-card glass fade-in">
-          <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
-          <h3>Educação</h3>
-          <p>Coursera, Udemy, Duolingo Plus e plataformas educacionais premium.</p>
+          <a href="https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01" target="_blank" rel="noopener" class="btn btn-stripe btn-lg" style="width:100%; justify-content:center;">
+            <i class="fab fa-stripe-s"></i> Compre Agora com Desconto (Stripe)
+          </a>
         </div>
       </div>
     </div>
@@ -208,153 +198,46 @@
   <section class="section" id="como-funciona" style="background: var(--bg-subtle);">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-magic"></i> Simples e Rápido</span>
+        <span class="section-badge"><i class="fas fa-magic"></i> Simples e Autônomo</span>
         <h2 class="section-title">Como <span>funciona</span></h2>
-        <p class="section-desc">Em apenas 3 passos simples, você terá acesso a qualquer serviço premium</p>
+        <p class="section-desc">Vendemos o produto pronto com 1 mês pago, sem renovação automática ou surpresas</p>
       </div>
 
       <div class="steps-grid">
         <div class="step-card glass fade-in">
           <div class="step-number">1</div>
-          <h3>Escolha o Serviço</h3>
-          <p>Navegue pelo nosso catálogo e selecione o serviço premium desejado. Temos mais de 50 opções disponíveis.</p>
+          <h3>Escolha o Produto</h3>
+          <p>Confira os produtos disponíveis no nosso estoque autônomo (ChatGPT Plus disponível agora).</p>
         </div>
 
         <div class="step-card glass fade-in">
           <div class="step-number">2</div>
-          <h3>Faça o Pagamento</h3>
-          <p>Pagamento via PIX, cartão ou boleto. Processamento instantâneo via PIX para ativação imediata.</p>
+          <h3>Pagamento via Stripe</h3>
+          <p>Pagamento direto no link seguro da Stripe com desconto automático liberado.</p>
         </div>
 
         <div class="step-card glass fade-in">
           <div class="step-number">3</div>
-          <h3>Receba seus Dados</h3>
-          <p>Receba as credenciais de acesso no seu email em até 5 minutos. Suporte 24h garantido.</p>
+          <h3>Receba e Ative</h3>
+          <p>Sua conta com 1 Mês pago é liberada e nosso Suporte Autônomo fica disponível 24h para você.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SEGURANÇA ===== -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-shield-halved"></i> 100% Seguro</span>
-        <h2 class="section-title">Sua <span>segurança</span> em primeiro lugar</h2>
-        <p class="section-desc">Todas as transações são protegidas e seus dados ficam seguros</p>
-      </div>
-
-      <div class="security-grid">
-        <div class="security-item glass fade-in">
-          <i class="fas fa-lock"></i>
-          <h4>Pagamento Seguro</h4>
-          <p>Criptografia SSL em todas as transações</p>
-        </div>
-        <div class="security-item glass fade-in">
-          <i class="fas fa-user-shield"></i>
-          <h4>Privacidade Total</h4>
-          <p>Seus dados nunca são compartilhados</p>
-        </div>
-        <div class="security-item glass fade-in">
-          <i class="fas fa-headset"></i>
-          <h4>Suporte 24h</h4>
-          <p>Equipe disponível a qualquer momento</p>
-        </div>
-        <div class="security-item glass fade-in">
-          <i class="fas fa-rotate"></i>
-          <h4>Garantia de 30 dias</h4>
-          <p>Satisfação garantida ou seu dinheiro de volta</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== DEPOIMENTOS ===== -->
-  <section class="section" style="background: var(--bg-subtle);">
-    <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-heart"></i> Depoimentos</span>
-        <h2 class="section-title">O que nossos <span>clientes dizem</span></h2>
-        <p class="section-desc">Mais de 10.000 clientes satisfeitos em todo o Brasil</p>
-      </div>
-
-      <div class="testimonials-wrapper fade-in">
-        <div class="testimonials-slider">
-          <div class="testimonial-card glass">
-            <div class="stars">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            </div>
-            <blockquote>"Comprei o Netflix e o Spotify, tudo funcionando perfeitamente! Entrega em menos de 2 minutos. Recomendo demais!"</blockquote>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">RL</div>
-              <div class="testimonial-info">
-                <h4>Rafael Lima</h4>
-                <span>Cliente desde 2023</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card glass">
-            <div class="stars">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            </div>
-            <blockquote>"Melhor custo-benefício! O ChatGPT Plus que eu pago aqui sai quase 10x mais barato. Suporte excelente."</blockquote>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">AS</div>
-              <div class="testimonial-info">
-                <h4>Ana Silva</h4>
-                <span>Cliente desde 2024</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card glass">
-            <div class="stars">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            </div>
-            <blockquote>"Já comprei Xbox Game Pass e Disney+. Tudo funciona liso, sem travamentos. O suporte pelo WhatsApp responde rápido."</blockquote>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">MC</div>
-              <div class="testimonial-info">
-                <h4>Marcos Costa</h4>
-                <span>Cliente desde 2023</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card glass">
-            <div class="stars">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            </div>
-            <blockquote>"Estou impressionada com a qualidade. O Midjourney funciona perfeitamente e o preço é surreal de bom!"</blockquote>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">JO</div>
-              <div class="testimonial-info">
-                <h4>Juliana Oliveira</h4>
-                <span>Cliente desde 2024</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonials-dots"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== NEWSLETTER ===== -->
+  <!-- ===== CLUBE VIP WHATSAPP ===== -->
   <section class="section newsletter-section">
     <div class="container">
       <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-envelope"></i> Newsletter</span>
-        <h2 class="section-title">Fique por dentro das <span>novidades</span></h2>
-        <p class="section-desc">Receba ofertas exclusivas e novos produtos diretamente no seu email</p>
+        <span class="section-badge"><i class="fab fa-whatsapp"></i> Clube VIP</span>
+        <h2 class="section-title">Receba reposições no <span>WhatsApp</span></h2>
+        <p class="section-desc">Cadastre seu WhatsApp e seja avisado assim que novos lotes de contas entrarem em estoque</p>
       </div>
 
       <form class="newsletter-form fade-in">
-        <input type="email" placeholder="Seu melhor email..." required aria-label="Email para newsletter">
+        <input type="tel" name="phone" placeholder="(31) 98292-4858" required aria-label="WhatsApp para Clube VIP">
         <button type="submit" class="btn btn-primary">
-          <i class="fas fa-paper-plane"></i> Inscrever-se
+          <i class="fab fa-whatsapp"></i> Entrar no Clube VIP
         </button>
       </form>
     </div>
@@ -368,12 +251,11 @@
           <span class="logo-icon">⚡</span>
           <span class="logo-text">ContaFlash</span>
         </a>
-        <p>A melhor plataforma de serviços digitais premium do Brasil. Preços acessíveis com qualidade garantida.</p>
+        <p>Serviços digitais com 1 Mês pago. Processamento Stripe e atendimento Suporte & WhatsApp.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5531982924858" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <span style="opacity:0.5; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.06);" title="Telegram Indisponível no momento"><i class="fab fa-telegram"></i></span>
         </div>
       </div>
 
@@ -389,28 +271,26 @@
       </div>
 
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4>Redes Sociais</h4>
         <ul>
-          <li><a href="pages/produtos.html">Streaming</a></li>
-          <li><a href="pages/produtos.html">Inteligência Artificial</a></li>
-          <li><a href="pages/produtos.html">Música</a></li>
-          <li><a href="pages/produtos.html">Jogos</a></li>
-          <li><a href="pages/produtos.html">Produtividade</a></li>
+          <li><a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener"><i class="fab fa-instagram" style="width:16px;margin-right:6px;color:var(--accent)"></i>@contaf1sh</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><span style="color:#6E6C64; font-size:0.85rem;"><i class="fab fa-telegram" style="width:16px;margin-right:6px;"></i>Telegram (Indisponível no momento)</span></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h4>Atendimento</h4>
         <ul>
           <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
-          <li><a href="#"><i class="fab fa-discord" style="width:16px;margin-right:6px;color:#7289da"></i>Discord Server</a></li>
+          <li><a href="pages/contato.html"><i class="fas fa-headset" style="width:16px;margin-right:6px;color:var(--accent)"></i>Suporte 24h Direct</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
-      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados. Processado via Stripe Checkout.</p>
+      <p>Instagram: @contaf1sh | WhatsApp: (31) 98292-4858</p>
     </div>
   </footer>
 
@@ -427,7 +307,7 @@
     <div class="cookie-inner">
       <div class="cookie-text">
         <h4>🍪 Usamos cookies</h4>
-        <p>Utilizamos cookies para melhorar sua experiência de navegação e personalizar conteúdo. Ao continuar navegando, você concorda com nossa Política de Privacidade.</p>
+        <p>Utilizamos cookies para melhorar sua experiência e segurança no Stripe Checkout.</p>
       </div>
       <div class="cookie-buttons">
         <button class="btn btn-outline cookie-reject">Recusar</button>

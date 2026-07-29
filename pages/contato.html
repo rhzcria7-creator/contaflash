@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Entre em contato com a ContaFlash. Suporte 24h via WhatsApp, email ou formulário de contato. Estamos prontos para ajudar!">
+  <meta name="description" content="Entre em contato com a ContaFlash. Atendimento via Suporte Autônomo e WhatsApp (31) 98292-4858. Instagram @contaf1sh.">
   <meta name="robots" content="index, follow">
-  <title>Contato - ContaFlash</title>
+  <title>Contato & Suporte 24h - ContaFlash</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
   <div class="loading-screen">
-    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-logo"><span class="logo-icon">⚡</span> ContaFlash</div>
     <div class="loading-bar"></div>
   </div>
 
@@ -55,8 +57,8 @@
 
   <!-- Page Header -->
   <div class="page-header">
-    <h1>Entre em <span class="gradient-text">Contato</span></h1>
-    <p>Estamos sempre prontos para ajudar. Escolha o canal que preferir!</p>
+    <h1>Contato & <span class="gradient-text">Suporte 24h</span></h1>
+    <p>Envie sua mensagem para nosso Atendimento de Suporte ou fale direto no WhatsApp</p>
     <div class="breadcrumb">
       <a href="../index.html">Início</a> <span>/</span> <span>Contato</span>
     </div>
@@ -67,129 +69,91 @@
     <div class="container">
       <div class="contact-grid">
 
-        <!-- Contact Info -->
+        <!-- Contact Info Cards -->
         <div>
           <div class="contact-info-cards">
             <div class="contact-info-card glass fade-in">
               <div class="icon"><i class="fab fa-whatsapp" style="color: #25d366;"></i></div>
               <div>
-                <h4>WhatsApp</h4>
+                <h4>WhatsApp Oficial</h4>
                 <p>(31) 98292-4858</p>
-                <p style="color: var(--success); font-size: 0.8rem; margin-top: 0.3rem;">● Online agora</p>
-              </div>
-            </div>
-
-            <div class="contact-info-card glass fade-in">
-              <div class="icon"><i class="fab fa-discord" style="color: #7289da;"></i></div>
-              <div>
-                <h4>Discord</h4>
-                <p>discord.gg/contaflash</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem;">Comunidade ativa 24h</p>
-              </div>
-            </div>
-
-            <div class="contact-info-card glass fade-in">
-              <div class="icon"><i class="fab fa-telegram" style="color: #0088cc;"></i></div>
-              <div>
-                <h4>Telegram</h4>
-                <p>@contaflash</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem;">Canal de novidades</p>
+                <p style="color: var(--success); font-size: 0.82rem; margin-top: 0.3rem;">● Atendimento 24h</p>
               </div>
             </div>
 
             <div class="contact-info-card glass fade-in">
               <div class="icon"><i class="fab fa-instagram" style="color: var(--accent);"></i></div>
               <div>
-                <h4>Instagram</h4>
-                <p>@contaflash.oficial</p>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem;">Ofertas e promoções</p>
+                <h4>Instagram Oficial</h4>
+                <p>@contaf1sh</p>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.3rem;">Siga para novidades e cupons</p>
+              </div>
+            </div>
+
+            <div class="contact-info-card glass fade-in">
+              <div class="icon"><i class="fas fa-headset" style="color: var(--ink);"></i></div>
+              <div>
+                <h4>Suporte Autônomo</h4>
+                <p>Atendimento no Chat 24/7</p>
+                <p style="color: var(--accent-2); font-size: 0.82rem; margin-top: 0.3rem;">Respostas em tempo real</p>
+              </div>
+            </div>
+
+            <div class="contact-info-card glass fade-in" style="opacity: 0.7;">
+              <div class="icon"><i class="fab fa-telegram" style="color: #0088cc;"></i></div>
+              <div>
+                <h4>Telegram</h4>
+                <p style="color: var(--error); font-weight: 500;">Indisponível no momento</p>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.3rem;">Use nosso WhatsApp ou Instagram</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Contact Form -->
+        <!-- Contact Form (Suporte Direct) -->
         <div class="contact-form-card glass fade-in">
-          <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">Envie uma Mensagem</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Preencha o formulário abaixo e retornaremos em breve.</p>
+          <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.01em;">Envie sua Mensagem para o Suporte</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Preencha os dados e nossa equipe atenderá imediatamente.</p>
 
           <form id="contactForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Nome completo *</label>
-                <input type="text" id="name" name="name" placeholder="Seu nome" required autocomplete="name">
-                <span class="error-msg"></span>
-              </div>
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required autocomplete="email">
-                <span class="error-msg"></span>
-              </div>
+            <div class="form-group">
+              <label for="name">Nome completo *</label>
+              <input type="text" id="name" name="name" placeholder="Seu nome" required autocomplete="name">
+              <span class="error-msg"></span>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="phone">Telefone</label>
-                <input type="tel" id="phone" name="phone" placeholder="(31) 98292-4858" autocomplete="tel">
+                <label for="phone">Seu WhatsApp com DDD *</label>
+                <input type="tel" id="phone" name="phone" placeholder="(31) 98292-4858" required autocomplete="tel">
                 <span class="error-msg"></span>
               </div>
               <div class="form-group">
                 <label for="subject">Assunto *</label>
                 <select id="subject" name="subject" required>
                   <option value="">Selecione...</option>
-                  <option value="duvida">Dúvida sobre produto</option>
-                  <option value="suporte">Suporte técnico</option>
-                  <option value="reembolso">Solicitar reembolso</option>
-                  <option value="parceria">Parceria</option>
-                  <option value="outro">Outro</option>
+                  <option value="chatgpt">ChatGPT Plus (1 Mês de Acesso)</option>
+                  <option value="estoque">Dúvidas sobre Estoque Autônomo</option>
+                  <option value="stripe">Dúvida sobre Stripe Checkout</option>
+                  <option value="garantia">Suporte / Garantia de 30 Dias</option>
+                  <option value="outro">Outro Atendimento</option>
                 </select>
                 <span class="error-msg"></span>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="message">Mensagem *</label>
-              <textarea id="message" name="message" placeholder="Descreva sua mensagem com detalhes..." required></textarea>
+              <label for="message">Mensagem para o Suporte *</label>
+              <textarea id="message" name="message" placeholder="Escreva sua dúvida ou mensagem para a equipe..." required></textarea>
               <span class="error-msg"></span>
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
-              <i class="fas fa-paper-plane"></i> Enviar Mensagem
+              <i class="fas fa-paper-plane"></i> Enviar Mensagem para o Suporte
             </button>
           </form>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- Map / Additional Info -->
-  <section class="section" style="background: var(--bg-subtle); padding-top: 3rem;">
-    <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-clock"></i> Horário</span>
-        <h2 class="section-title">Nosso <span>horário de atendimento</span></h2>
-      </div>
-
-      <div class="stats-grid fade-in" style="max-width: 800px; margin: 0 auto;">
-        <div class="stat-card glass">
-          <div class="stat-icon">💬</div>
-          <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem;">WhatsApp</div>
-          <div class="stat-label" style="color: var(--success);">24 horas / 7 dias</div>
-          <div class="stat-label">Tempo médio: 2 min</div>
-        </div>
-        <div class="stat-card glass">
-          <div class="stat-icon">📧</div>
-          <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem;">Email</div>
-          <div class="stat-label" style="color: var(--primary-light);">Seg a Sex, 8h - 22h</div>
-          <div class="stat-label">Tempo médio: 2 horas</div>
-        </div>
-        <div class="stat-card glass">
-          <div class="stat-icon">🎮</div>
-          <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem;">Discord</div>
-          <div class="stat-label" style="color: #7289da;">24 horas / 7 dias</div>
-          <div class="stat-label">Comunidade ativa</div>
-        </div>
       </div>
     </div>
   </section>
@@ -204,10 +168,9 @@
         </a>
         <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5531982924858" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <span style="opacity:0.5; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.06);" title="Telegram Indisponível no momento"><i class="fab fa-telegram"></i></span>
         </div>
       </div>
       <div class="footer-col">
@@ -221,24 +184,24 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4>Redes Sociais</h4>
         <ul>
-          <li><a href="produtos.html">Streaming</a></li>
-          <li><a href="produtos.html">IA</a></li>
-          <li><a href="produtos.html">Música</a></li>
-          <li><a href="produtos.html">Jogos</a></li>
+          <li><a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener"><i class="fab fa-instagram" style="width:16px;margin-right:6px;color:var(--accent)"></i>@contaf1sh</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><span style="color:#6E6C64; font-size:0.85rem;"><i class="fab fa-telegram" style="width:16px;margin-right:6px;"></i>Telegram (Indisponível no momento)</span></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h4>Atendimento</h4>
         <ul>
           <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><a href="contato.html"><i class="fas fa-headset" style="width:16px;margin-right:6px;color:var(--accent)"></i>Suporte 24h Direct</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
-      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados. Processado via Stripe Checkout.</p>
+      <p>Instagram: @contaf1sh | WhatsApp: (31) 98292-4858</p>
     </div>
   </footer>
 
@@ -255,7 +218,7 @@
     <div class="cookie-inner">
       <div class="cookie-text">
         <h4>🍪 Usamos cookies</h4>
-        <p>Utilizamos cookies para melhorar sua experiência de navegação.</p>
+        <p>Utilizamos cookies para melhorar sua experiência de navegação e segurança dos pagamentos.</p>
       </div>
       <div class="cookie-buttons">
         <button class="btn btn-outline cookie-reject">Recusar</button>

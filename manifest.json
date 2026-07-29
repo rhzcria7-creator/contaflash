@@ -1,7 +1,7 @@
 {
   "name": "ContaFlash",
   "short_name": "ContaFlash",
-  "description": "Serviços digitais premium - Streaming, IA, Música e Jogos",
+  "description": "Serviços digitais premium - Contas prontas com 1 mês pago",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FAF9F5",

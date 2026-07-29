@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Conheça a ContaFlash - missão, valores e como nos tornamos referência em serviços digitais premium no Brasil.">
+  <meta name="description" content="Conheça a ContaFlash - vendas de contas digitais com 1 mês pago, Stripe Checkout e Atendimento de Suporte 24h. Instagram @contaf1sh.">
   <meta name="robots" content="index, follow">
   <title>Sobre Nós - ContaFlash</title>
 
@@ -12,12 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
   <div class="loading-screen">
-    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-logo"><span class="logo-icon">⚡</span> ContaFlash</div>
     <div class="loading-bar"></div>
   </div>
 
@@ -56,7 +58,7 @@
   <!-- Page Header -->
   <div class="page-header">
     <h1>Sobre a <span class="gradient-text">ContaFlash</span></h1>
-    <p>Conheça nossa história, missão e os valores que nos guiam</p>
+    <p>Vendemos o produto pronto (1 Mês de acesso) sem assinaturas ou cobranças recorrentes</p>
     <div class="breadcrumb">
       <a href="../index.html">Início</a> <span>/</span> <span>Sobre</span>
     </div>
@@ -66,12 +68,12 @@
   <section class="section" style="padding-top: 2rem;">
     <div class="container">
       <div class="fade-in" style="max-width: 800px; margin: 0 auto; text-align: center; margin-bottom: 4rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem;">Nossa <span class="gradient-text">História</span></h2>
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing:-0.02em;">Nossa <span class="gradient-text">Proposta</span></h2>
         <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8;">
-          A ContaFlash nasceu em 2023 com uma missão clara: democratizar o acesso a serviços digitais premium no Brasil. Percebemos que muitos brasileiros não podiam arcar com os altos preços de assinaturas internacionais, e aí nasceu a nossa ideia — oferecer contas premium compartilhadas com preços acessíveis, garantia de funcionamento e suporte dedicado.
+          A ContaFlash é especializada na venda de contas com 1 Mês de Acesso Garantido. Não vendemos assinaturas recorrentes — você paga o valor do produto uma única vez via Stripe Checkout ou WhatsApp, recebe os dados de acesso imediatamente e usa durante os 30 dias com total suporte e garantia.
         </p>
         <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-top: 1rem;">
-          Hoje, somos referência no mercado digital brasileiro, com mais de 10.000 clientes satisfeitos e um portfólio com mais de 50 serviços diferentes. Nossa equipe trabalha incansavelmente para garantir a melhor experiência possível.
+          Gerenciamos nosso estoque de forma autônoma. Atualmente temos o lote do **ChatGPT Plus** disponível por **R$ 29,90** com desconto especial. Siga nosso Instagram **@contaf1sh** para saber de reposições.
         </p>
       </div>
 
@@ -83,91 +85,48 @@
           <div class="stat-label">Clientes Satisfeitos</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-icon">🛒</div>
-          <div class="stat-number counter" data-target="25000" data-suffix="+">0</div>
-          <div class="stat-label">Vendas Realizadas</div>
+          <div class="stat-icon">📦</div>
+          <div class="stat-number">14 un.</div>
+          <div class="stat-label">ChatGPT Plus em Estoque</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-icon">⭐</div>
-          <div class="stat-number counter" data-target="4" data-suffix=".9">0</div>
-          <div class="stat-label">Avaliação Média</div>
+          <div class="stat-icon">💳</div>
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Stripe Checkout Seguro</div>
         </div>
         <div class="stat-card glass">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-number counter" data-target="50" data-suffix="+">0</div>
-          <div class="stat-label">Serviços Disponíveis</div>
+          <div class="stat-icon">💬</div>
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Suporte Autônomo</div>
         </div>
       </div>
 
       <!-- Values -->
       <div class="section-header fade-in">
         <span class="section-badge"><i class="fas fa-gem"></i> Nossos Valores</span>
-        <h2 class="section-title">No que <span>acreditamos</span></h2>
+        <h2 class="section-title">Transparência <span>e Segurança</span></h2>
       </div>
 
       <div class="values-grid" style="margin-bottom: 4rem;">
         <div class="value-card glass fade-in">
           <div class="icon">🎯</div>
-          <h3>Missão</h3>
-          <p>Democratizar o acesso a serviços digitais premium, oferecendo qualidade e acessibilidade para todos os brasileiros.</p>
+          <h3>Sem Assinatura Recorrente</h3>
+          <p>Você compra o produto pronto de 1 mês. Nenhuma cobrança automática será feita no seu cartão.</p>
         </div>
         <div class="value-card glass fade-in">
-          <div class="icon">👁️</div>
-          <h3>Visão</h3>
-          <p>Ser a plataforma número 1 de serviços digitais compartilhados na América Latina até 2026.</p>
+          <div class="icon">💳</div>
+          <h3>Stripe Checkout</h3>
+          <p>Pagamentos processados com criptografia de banco e desconto direto no link de compra.</p>
         </div>
         <div class="value-card glass fade-in">
-          <div class="icon">💎</div>
-          <h3>Transparência</h3>
-          <p>Comunicação clara e honesta com nossos clientes. Sem letras miúdas, sem surpresas.</p>
+          <div class="icon">💬</div>
+          <h3>Suporte Autônomo</h3>
+          <p>Atendimento e respostas de questionários integrados no site 24 horas por dia.</p>
         </div>
         <div class="value-card glass fade-in">
-          <div class="icon">🤝</div>
-          <h3>Compromisso</h3>
-          <p>Garantia de 30 dias em todos os produtos. Se não funcionar, devolvemos seu dinheiro.</p>
-        </div>
-        <div class="value-card glass fade-in">
-          <div class="icon">🚀</div>
-          <h3>Inovação</h3>
-          <p>Constantemente adicionamos novos serviços e melhoramos a experiência dos nossos clientes.</p>
-        </div>
-        <div class="value-card glass fade-in">
-          <div class="icon">❤️</div>
-          <h3>Atendimento</h3>
-          <p>Suporte humanizado 24 horas, 7 dias por semana. Sempre prontos para ajudar.</p>
-        </div>
-      </div>
-
-      <!-- Como Funciona Detalhado -->
-      <div class="section-header fade-in">
-        <span class="section-badge"><i class="fas fa-cogs"></i> Processo</span>
-        <h2 class="section-title">Como funciona <span>por dentro</span></h2>
-        <p class="section-desc">Entenda o processo completo por trás de cada entrega</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-        <div class="glass fade-in" style="padding: 2rem;">
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
-            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">1</span>
-            <h3 style="font-size:1.1rem;font-weight:700;">Escolha e Pagamento</h3>
-          </div>
-          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Navegue pelo nosso catálogo, escolha o serviço desejado e realize o pagamento via PIX, cartão de crédito ou boleto. O PIX é processado instantaneamente.</p>
-        </div>
-
-        <div class="glass fade-in" style="padding: 2rem;">
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
-            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">2</span>
-            <h3 style="font-size:1.1rem;font-weight:700;">Processamento Automático</h3>
-          </div>
-          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">Nosso sistema automatizado gera as credenciais de acesso em segundos. Cada conta é testada e verificada antes do envio.</p>
-        </div>
-
-        <div class="glass fade-in" style="padding: 2rem;">
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
-            <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;">3</span>
-            <h3 style="font-size:1.1rem;font-weight:700;">Entrega e Suporte</h3>
-          </div>
-          <p style="color:var(--text-secondary);font-size:0.95rem;line-height:1.7;">As credenciais são enviadas por email em até 5 minutos. Caso tenha qualquer dúvida ou problema, nosso suporte está disponível 24h.</p>
+          <div class="icon">📱</div>
+          <h3>Instagram & WhatsApp</h3>
+          <p>Insta oficial @contaf1sh e suporte direto no WhatsApp (31) 98292-4858.</p>
         </div>
       </div>
     </div>
@@ -183,10 +142,9 @@
         </a>
         <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5531982924858" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <span style="opacity:0.5; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.06);" title="Telegram Indisponível no momento"><i class="fab fa-telegram"></i></span>
         </div>
       </div>
       <div class="footer-col">
@@ -200,24 +158,24 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4>Redes Sociais</h4>
         <ul>
-          <li><a href="produtos.html">Streaming</a></li>
-          <li><a href="produtos.html">IA</a></li>
-          <li><a href="produtos.html">Música</a></li>
-          <li><a href="produtos.html">Jogos</a></li>
+          <li><a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener"><i class="fab fa-instagram" style="width:16px;margin-right:6px;color:var(--accent)"></i>@contaf1sh</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><span style="color:#6E6C64; font-size:0.85rem;"><i class="fab fa-telegram" style="width:16px;margin-right:6px;"></i>Telegram (Indisponível no momento)</span></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h4>Atendimento</h4>
         <ul>
           <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><a href="contato.html"><i class="fas fa-headset" style="width:16px;margin-right:6px;color:var(--accent)"></i>Suporte Direct</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
-      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados. Processado via Stripe Checkout.</p>
+      <p>Instagram: @contaf1sh | WhatsApp: (31) 98292-4858</p>
     </div>
   </footer>
 
