@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Confira todos os produtos ContaFlash. Contas premium de streaming, IA, música, jogos e produtividade com os melhores preços.">
+  <meta name="robots" content="index, follow">
+  <title>Produtos - ContaFlash</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="loading-screen">
+    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-bar"></div>
+  </div>
+
+  <div id="particles-container"></div>
+  <div class="toast-container"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">ContaFlash</span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">Início</a>
+        <a href="produtos.html" class="active">Produtos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contato.html">Contato</a>
+        <a href="produtos.html" class="nav-cta">Ver Produtos</a>
+      </nav>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../index.html">Início</a>
+    <a href="produtos.html" class="active">Produtos</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Nossos <span class="gradient-text">Produtos</span></h1>
+    <p>Escolha entre mais de 50 serviços premium com os melhores preços do mercado</p>
+    <div class="breadcrumb">
+      <a href="../index.html">Início</a> <span>/</span> <span>Produtos</span>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+
+      <!-- Filters -->
+      <div class="products-filter fade-in">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="streaming">Streaming</button>
+        <button class="filter-btn" data-filter="musica">Música</button>
+        <button class="filter-btn" data-filter="ia">IA</button>
+        <button class="filter-btn" data-filter="jogos">Jogos</button>
+        <button class="filter-btn" data-filter="produtividade">Produtividade</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid">
+
+        <!-- Netflix -->
+        <div class="product-card glass fade-in" data-category="streaming">
+          <div class="product-badge">Mais Vendido</div>
+          <div class="product-image">📺</div>
+          <div class="product-body">
+            <div class="product-category">Streaming</div>
+            <h3>Netflix Premium 4K</h3>
+            <p>Acesso completo ao catálogo Netflix em Ultra HD com 4 telas simultâneas.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Qualidade 4K Ultra HD</li>
+              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+              <li><i class="fas fa-check-circle"></i> Entrega imediata</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 19,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Netflix Premium 4K" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Disney+ -->
+        <div class="product-card glass fade-in" data-category="streaming">
+          <div class="product-image">🏰</div>
+          <div class="product-body">
+            <div class="product-category">Streaming</div>
+            <h3>Disney+ Premium</h3>
+            <p>Marvel, Star Wars, Pixar e todo conteúdo Disney em alta qualidade.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
+              <li><i class="fas fa-check-circle"></i> 4K + HDR</li>
+              <li><i class="fas fa-check-circle"></i> Downloads ilimitados</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 14,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Disney+ Premium" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Spotify -->
+        <div class="product-card glass fade-in" data-category="musica">
+          <div class="product-badge">Popular</div>
+          <div class="product-image">🎵</div>
+          <div class="product-body">
+            <div class="product-category">Música</div>
+            <h3>Spotify Premium</h3>
+            <p>Música sem limites, sem anúncios e com downloads offline.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Sem anúncios</li>
+              <li><i class="fas fa-check-circle"></i> Qualidade máxima</li>
+              <li><i class="fas fa-check-circle"></i> Downloads offline</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 9,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Spotify Premium" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- ChatGPT Plus -->
+        <div class="product-card glass fade-in" data-category="ia">
+          <div class="product-badge">🔥 Hot</div>
+          <div class="product-image">🤖</div>
+          <div class="product-body">
+            <div class="product-category">Inteligência Artificial</div>
+            <h3>ChatGPT Plus</h3>
+            <p>Acesso ao GPT-4 com respostas avançadas, DALL-E 3 e navegação web.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Modelo GPT-4</li>
+              <li><i class="fas fa-check-circle"></i> DALL-E 3 incluso</li>
+              <li><i class="fas fa-check-circle"></i> Respostas prioritárias</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 29,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o ChatGPT Plus" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Xbox Game Pass -->
+        <div class="product-card glass fade-in" data-category="jogos">
+          <div class="product-image">🎮</div>
+          <div class="product-body">
+            <div class="product-category">Jogos</div>
+            <h3>Xbox Game Pass Ultimate</h3>
+            <p>Centenas de jogos no console, PC e cloud gaming com EA Play incluso.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> +500 jogos</li>
+              <li><i class="fas fa-check-circle"></i> EA Play incluso</li>
+              <li><i class="fas fa-check-circle"></i> Cloud Gaming</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 24,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Xbox Game Pass Ultimate" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Midjourney -->
+        <div class="product-card glass fade-in" data-category="ia">
+          <div class="product-image">🎨</div>
+          <div class="product-body">
+            <div class="product-category">Inteligência Artificial</div>
+            <h3>Midjourney Pro</h3>
+            <p>Gere imagens incríveis com IA. O melhor gerador de imagens do mercado.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Relaxe time ilimitado</li>
+              <li><i class="fas fa-check-circle"></i> Gerações privadas</li>
+              <li><i class="fas fa-check-circle"></i> Alta resolução</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 34,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Midjourney Pro" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- HBO Max -->
+        <div class="product-card glass fade-in" data-category="streaming">
+          <div class="product-image">🎬</div>
+          <div class="product-body">
+            <div class="product-category">Streaming</div>
+            <h3>Max (HBO Max)</h3>
+            <p>Séries HBO originais, filmes blockbuster e conteúdo exclusivo Warner.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Séries HBO originais</li>
+              <li><i class="fas fa-check-circle"></i> 3 telas simultâneas</li>
+              <li><i class="fas fa-check-circle"></i> 4K HDR</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 14,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Max HBO" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Canva Pro -->
+        <div class="product-card glass fade-in" data-category="produtividade">
+          <div class="product-image">🎯</div>
+          <div class="product-body">
+            <div class="product-category">Produtividade</div>
+            <h3>Canva Pro</h3>
+            <p>Crie designs profissionais com templates premium e ferramentas avançadas.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Templates premium</li>
+              <li><i class="fas fa-check-circle"></i> Background remover</li>
+              <li><i class="fas fa-check-circle"></i> Kit de marca</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 12,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Canva Pro" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+        <!-- Deezer -->
+        <div class="product-card glass fade-in" data-category="musica">
+          <div class="product-image">🎧</div>
+          <div class="product-body">
+            <div class="product-category">Música</div>
+            <h3>Deezer Premium</h3>
+            <p>Música HiFi, letras em tempo real e mix personalizado por IA.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Qualidade HiFi</li>
+              <li><i class="fas fa-check-circle"></i> Letras em tempo real</li>
+              <li><i class="fas fa-check-circle"></i> Mix por IA</li>
+              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
+            </ul>
+            <div class="product-price">
+              <span class="current">R$ 8,90</span>
+              <span class="period">/mês</span>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Deezer Premium" class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Assinar Agora
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <span class="logo-icon">⚡</span>
+          <span class="logo-text">ContaFlash</span>
+        </a>
+        <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="produtos.html">Streaming</a></li>
+          <li><a href="produtos.html">IA</a></li>
+          <li><a href="produtos.html">Música</a></li>
+          <li><a href="produtos.html">Jogos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:suporte@contaflash.com"><i class="fas fa-envelope" style="width:16px;margin-right:6px;color:var(--primary-light)"></i>suporte@contaflash.com</a></li>
+          <li><a href="#"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(11) 99999-9999</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
+      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <div class="whatsapp-float">
+    <span class="whatsapp-tooltip">Fale conosco no WhatsApp!</span>
+    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os produtos da ContaFlash." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Cookie Modal -->
+  <div class="cookie-modal">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <h4>🍪 Usamos cookies</h4>
+        <p>Utilizamos cookies para melhorar sua experiência de navegação.</p>
+      </div>
+      <div class="cookie-buttons">
+        <button class="btn btn-outline cookie-reject">Recusar</button>
+        <button class="btn btn-primary cookie-accept">Aceitar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
