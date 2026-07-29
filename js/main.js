@@ -3,13 +3,26 @@
    Suporte Autônomo Interativo & Stripe Checkout
    ========================================= */
 
+// ==========================================
 // Configurações Globais
+// ==========================================
 const WHATSAPP_PHONE = '5531982924858';
 const INSTAGRAM_HANDLE = 'contaf1sh';
 const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+const CHAT_API_URL = '/api/chat'; // Endpoint da IA vendedora
 
-// Endpoint opcional de Webhook de Suporte (se houver API externa)
-const WEBHOOK_SUPPORT_ENDPOINT = null; // Ex: 'https://api.contaflash.com/v1/support'
+// Session ID único por visitante (persiste no localStorage)
+function getChatSessionId() {
+  let sid = localStorage.getItem('cf-chat-session');
+  if (!sid) {
+    sid = 'cf-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8);
+    localStorage.setItem('cf-chat-session', sid);
+  }
+  return sid;
+}
+
+// Histórico da conversa (mantido em memória)
+const chatHistory = [];
 
 // Registro Autônomo de Estoque de Produtos (Apenas 1 Mês Pago - Não Assinaturas)
 const STOCK_DATA = {
@@ -159,6 +172,17 @@ function initStockManager() {
     if (product) {
       const badgeEl = card.querySelector('.product-badge');
       const btnEl = card.querySelector('.btn-buy-action');
+      const imageEl = card.querySelector('.product-image');
+
+      // Produtos sem estoque exibem automaticamente o banner ContaFlash
+      if (imageEl && !product.inStock && !imageEl.querySelector('.stock-banner')) {
+        imageEl.innerHTML = `
+          <div class="stock-banner">
+            <i class="fas fa-bolt"></i>
+            <div class="stock-banner-word">Conta<span>Flash</span></div>
+          </div>`;
+        imageEl.style.padding = '0';
+      }
 
       if (badgeEl) {
         badgeEl.textContent = product.badge;
@@ -197,7 +221,7 @@ function initStockManager() {
 }
 
 // ==========================================
-// Suporte Autônomo Chat Engine (Integração Interativa)
+// Suporte Autônomo Chat Engine (API IA Vendedora)
 // ==========================================
 function initSuporteChat() {
   if (!document.getElementById('suporteWidgetBtn')) {
@@ -212,8 +236,8 @@ function initSuporteChat() {
           <div class="suporte-chat-title">
             <div class="suporte-chat-avatar">💬</div>
             <div>
-              <div style="font-size:.92rem; font-weight:600; line-height:1.2;">Suporte Autônomo</div>
-              <div style="font-size:.74rem; opacity:.8;">Online | Respostas Imediatas</div>
+              <div style="font-size:.92rem; font-weight:600; line-height:1.2;">ContaFlash AI</div>
+              <div style="font-size:.74rem; opacity:.8;">Vendedora Online | Respostas Imediatas</div>
             </div>
           </div>
           <button class="suporte-chat-close" id="closeSuporteChat">&times;</button>
@@ -221,7 +245,7 @@ function initSuporteChat() {
 
         <div class="suporte-chat-messages" id="suporteChatMessages">
           <div class="suporte-msg suporte-msg-bot">
-            Olá! Sou o assistente do <strong>Suporte ContaFlash</strong>. Como posso te ajudar hoje?
+            Olá! Sou a vendedora da <strong>ContaFlash</strong>. Como posso te ajudar? 😊
           </div>
         </div>
 
@@ -233,7 +257,7 @@ function initSuporteChat() {
         </div>
 
         <form class="suporte-chat-input-box" id="suporteChatForm">
-          <input type="text" id="suporteChatInput" placeholder="Digite sua mensagem para o Suporte..." required autocomplete="off">
+          <input type="text" id="suporteChatInput" placeholder="Digite sua mensagem..." required autocomplete="off">
           <button type="submit" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
@@ -266,11 +290,11 @@ function initSuporteChat() {
     if (chip) {
       const queryType = chip.getAttribute('data-query');
       if (queryType === 'chatgpt') {
-        processUserSuporteMessage('Quero comprar o ChatGPT Plus com desconto.');
+        sendToAI('Quero comprar o ChatGPT Plus com desconto.');
       } else if (queryType === 'estoque') {
-        processUserSuporteMessage('Quais produtos estão disponíveis no estoque agora?');
+        sendToAI('Quais produtos estão disponíveis no estoque agora?');
       } else if (queryType === 'garantia') {
-        processUserSuporteMessage('Como funciona a garantia do produto?');
+        sendToAI('Como funciona a garantia do produto?');
       } else if (queryType === 'zap') {
         window.open(`https://wa.me/${WHATSAPP_PHONE}`, '_blank');
       }
@@ -283,79 +307,63 @@ function initSuporteChat() {
       e.preventDefault();
       const text = chatInput.value.trim();
       if (text) {
-        processUserSuporteMessage(text);
+        sendToAI(text);
         chatInput.value = '';
       }
     });
   }
 
-  function appendChatMessage(text, isUser = false) {
-    if (!messagesBox) return;
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `suporte-msg ${isUser ? 'suporte-msg-user' : 'suporte-msg-bot'}`;
-    msgDiv.innerHTML = text;
-    messagesBox.appendChild(msgDiv);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
-  }
-
-  async function processUserSuporteMessage(userText) {
+  // Envia mensagem pra API da IA
+  async function sendToAI(userText) {
     appendChatMessage(sanitizeInput(userText), true);
 
-    // Show typing indicator
+    // Salva no histórico local
+    chatHistory.push({ role: 'user', content: userText });
+
+    // Mostra "Digitando..."
     const typingDiv = document.createElement('div');
     typingDiv.className = 'suporte-msg suporte-msg-bot';
     typingDiv.innerHTML = '<i>Digitando...</i>';
     messagesBox.appendChild(typingDiv);
     messagesBox.scrollTop = messagesBox.scrollHeight;
 
-    // If external Webhook configured
-    if (WEBHOOK_SUPPORT_ENDPOINT) {
-      try {
-        const response = await fetch(WEBHOOK_SUPPORT_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: userText, phone: WHATSAPP_PHONE })
-        });
-        const data = await response.json();
-        typingDiv.remove();
-        if (data && data.reply) {
-          appendChatMessage(data.reply, false);
-          return;
-        }
-      } catch (err) {
-        console.warn('Suporte webhook fallback:', err);
-      }
-    }
+    try {
+      const response = await fetch(CHAT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userText,
+          sessionId: getChatSessionId(),
+          conversationHistory: chatHistory.slice(-10)
+        })
+      });
 
-    // Built-in Intelligent Support Knowledge Engine
-    setTimeout(() => {
+      const data = await response.json();
       typingDiv.remove();
-      const lower = userText.toLowerCase();
-      let botReply = '';
 
-      if (lower.includes('chatgpt') || lower.includes('desconto') || lower.includes('comprar') || lower.includes('stripe')) {
-        botReply = `⚡ **ChatGPT Plus (1 Mês de Acesso)** está em estoque por **R$ 29,90** (40% OFF).<br><br>` +
-          `<a href="${STRIPE_CHECKOUT_URL}" target="_blank" rel="noopener" class="btn btn-stripe" style="padding:.4rem .9rem; font-size:.8rem; margin-top:.4rem; display:inline-flex;">` +
-          `<i class="fab fa-stripe-s"></i> Pagar via Stripe Checkout</a><br><br>` +
-          `Ou se preferir, <a href="https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Quero comprar ChatGPT Plus')}" target="_blank" style="color:var(--accent-2); font-weight:600;">fale com atendente no WhatsApp</a>.`;
-      } else if (lower.includes('estoque') || lower.includes('disponiv') || lower.includes('outros')) {
-        botReply = `📦 **Status do Estoque Autônomo:**<br>` +
-          `• **ChatGPT Plus**: 🔥 14 unidades em estoque (Pronta Entrega)<br>` +
-          `• Outros serviços: 🚫 Esgotados temporariamente.<br><br>` +
-          `Insta oficial: <strong>@${INSTAGRAM_HANDLE}</strong> | Zap: <strong>(31) 98292-4858</strong>.`;
-      } else if (lower.includes('garantia') || lower.includes('troca') || lower.includes('segur')) {
-        botReply = `🔒 **Garantia & Segurança ContaFlash:**<br>` +
-          `• Todas as contas possuem **30 dias de garantia**.<br>` +
-          `• Vendemos o produto pronto (1 mês pago), não é assinatura recorrente.<br>` +
-          `• Pagamentos 100% protegidos por criptografia Stripe Checkout.`;
-      } else {
-        botReply = `Entendido! Para atendimento personalizado sobre "${sanitizeInput(userText)}", você pode falar diretamente com nossa equipe no WhatsApp:<br><br>` +
-          `<a href="https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Dúvida do Suporte: ' + userText)}" target="_blank" class="btn btn-whatsapp" style="padding:.4rem .9rem; font-size:.8rem; display:inline-flex;">` +
-          `<i class="fab fa-whatsapp"></i> Chamar no WhatsApp (31) 98292-4858</a>`;
-      }
+      const reply = data.reply || 'Desculpe, tive um problema. Fala comigo no WhatsApp: https://wa.me/5531982924858';
+      appendChatMessage(reply, false);
+      chatHistory.push({ role: 'assistant', content: reply });
 
-      appendChatMessage(botReply, false);
-    }, 600);
+    } catch (err) {
+      typingDiv.remove();
+      appendChatMessage('Erro de conexão. Tenta novamente ou fala no WhatsApp: https://wa.me/5531982924858', false);
+      console.error('Chat API error:', err);
+    }
+  }
+
+  function appendChatMessage(text, isUser = false) {
+    if (!messagesBox) return;
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `suporte-msg ${isUser ? 'suporte-msg-user' : 'suporte-msg-bot'}`;
+    // Converte markdown simples (**, links)
+    let html = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:600;">$1</a>')
+      .replace(/\n/g, '<br>');
+    msgDiv.innerHTML = html;
+    messagesBox.appendChild(msgDiv);
+    messagesBox.scrollTop = messagesBox.scrollHeight;
   }
 }
 

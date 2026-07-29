@@ -643,6 +643,116 @@ body::before {
 .product-card .btn { width: 100%; justify-content: center; }
 
 /* =========================================
+   Banner ContaFlash (Placeholder Sem Estoque)
+   ========================================= */
+.stock-banner {
+  height: 150px;
+  background: #050506;
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.stock-banner::after {
+  content: ''; position: absolute; inset: -60%;
+  background: radial-gradient(circle, rgba(41,182,246,0.18), transparent 60%);
+}
+.stock-banner i {
+  font-size: 2rem; color: #29B6F6; position: relative; z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(41,182,246,.55));
+}
+.stock-banner .stock-banner-word {
+  font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.02em;
+  position: relative; z-index: 1;
+}
+.stock-banner .stock-banner-word span { color: #29B6F6; }
+
+/* =========================================
+   ChatGPT Plus - Showcase Visual
+   ========================================= */
+.chatgpt-showcase {
+  position: relative; border-radius: 22px; overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #16233a, #0b1120 70%);
+  border: 1px solid rgba(255,255,255,.08);
+  min-height: 380px; display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
+}
+.chatgpt-showcase::before {
+  content: ''; position: absolute; inset: 0; opacity: .35; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+.chatgpt-ribbon {
+  position: absolute; top: 22px; right: -60px; width: 230px; text-align: center;
+  background: linear-gradient(90deg,#b9f5d0,#7fe3ab); color: #064e3b;
+  font-weight: 800; font-size: .74rem; letter-spacing: .03em; padding: .55rem 0;
+  transform: rotate(35deg); box-shadow: 0 6px 16px rgba(0,0,0,.3); z-index: 3;
+}
+.chatgpt-ticket {
+  position: absolute; top: 34px; left: 22px;
+  background: linear-gradient(135deg,#f7d774,#e2a93c); color: #3b2a08;
+  font-weight: 700; font-size: .7rem; padding: .55rem .9rem; border-radius: 6px;
+  transform: rotate(-6deg); box-shadow: 0 6px 14px rgba(0,0,0,.3); z-index: 3;
+}
+.chatgpt-card {
+  background: #fff; border-radius: 20px; padding: 2.2rem 1.8rem; width: min(300px,86%);
+  text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,.5); position: relative; z-index: 2;
+}
+.chatgpt-card .logo-circle {
+  width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 1rem;
+  background: conic-gradient(from 180deg,#10a37f,#0b1120,#10a37f);
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem;
+}
+.chatgpt-card h4 { color: #10A37F; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: .3rem; }
+.chatgpt-card .price-line { font-size: 1.6rem; font-weight: 800; color: #111; margin: .3rem 0; }
+.chatgpt-card .method-line { font-size: .82rem; color: #666; margin-bottom: 1.1rem; }
+.chatgpt-card .premium-badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: linear-gradient(90deg,#f7d774,#e2b53c); color: #3b2a08;
+  padding: .4rem .95rem; border-radius: 99px; font-weight: 700; font-size: .78rem;
+}
+.chatgpt-chip {
+  position: absolute; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  color: #e5e7eb; font-size: .68rem; font-weight: 600; padding: .4rem .7rem; border-radius: 8px;
+  backdrop-filter: blur(6px); z-index: 2; display: flex; align-items: center; gap: .3rem;
+}
+.chip-tl { top: 100px; left: 18px; }
+.chip-tr { top: 100px; right: 18px; }
+.chip-bl { bottom: 90px; left: 10px; }
+.chatgpt-payment-mock {
+  position: absolute; bottom: 20px; right: 20px; z-index: 3;
+  background: linear-gradient(135deg,#161616,#2b2b2b);
+  border-radius: 12px; padding: .75rem 1rem; color: #fff; font-size: .72rem;
+  box-shadow: 0 12px 28px rgba(0,0,0,.45);
+}
+.chatgpt-payment-mock .dots { letter-spacing: 2px; font-weight: 600; }
+.chatgpt-payment-mock .status { color: #34d399; font-weight: 700; display: block; margin-top: .15rem; }
+.chatgpt-shield {
+  position: absolute; bottom: 20px; left: 20px; z-index: 3;
+  color: #93c5fd; font-size: 1.6rem; opacity: .85;
+}
+
+/* Compact variant (usado no card do grid de produtos) */
+.chatgpt-showcase.compact {
+  min-height: 150px; padding: 1.2rem; border-radius: 0; border: none;
+  border-bottom: 1px solid var(--border);
+}
+.chatgpt-showcase.compact .chatgpt-card {
+  padding: 1rem 1.1rem; width: auto; border-radius: 14px; box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+.chatgpt-showcase.compact .chatgpt-card .logo-circle { width: 40px; height: 40px; font-size: 1.1rem; margin-bottom: .5rem; }
+.chatgpt-showcase.compact .chatgpt-card h4 { font-size: .92rem; }
+.chatgpt-showcase.compact .chatgpt-card .price-line { font-size: 1.15rem; }
+.chatgpt-showcase.compact .chatgpt-card .method-line { font-size: .68rem; margin-bottom: .5rem; }
+.chatgpt-showcase.compact .chatgpt-card .premium-badge { font-size: .68rem; padding: .3rem .7rem; }
+.chatgpt-showcase.compact .chatgpt-ribbon,
+.chatgpt-showcase.compact .chatgpt-ticket,
+.chatgpt-showcase.compact .chatgpt-chip,
+.chatgpt-showcase.compact .chatgpt-payment-mock,
+.chatgpt-showcase.compact .chatgpt-shield { display: none; }
+
+/* =========================================
    Individual Product Detail Page Style
    ========================================= */
 .product-detail-grid {
