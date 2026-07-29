@@ -38,8 +38,12 @@
   --radius: 16px;
   --radius-sm: 10px;
   --radius-lg: 26px;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-2: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Durações lentas e suaves */
+  --t-fast: .45s;
+  --t-base: .7s;
+  --t-slow: 1.1s;
 
   /* Aliases */
   --primary: #171717;
@@ -146,7 +150,7 @@ body::before {
   width: 40%; height: 100%;
   background: var(--accent);
   border-radius: 99px;
-  animation: load 1.1s var(--ease) infinite;
+  animation: load 1.9s var(--ease-2) infinite;
 }
 @keyframes load {
   0% { transform: translateX(-110%); }
@@ -167,8 +171,8 @@ body::before {
 }
 @keyframes floatUp {
   0%   { transform: translateY(105vh) scale(.6); opacity: 0; }
-  10%  { opacity: .4; }
-  90%  { opacity: .4; }
+  12%  { opacity: .35; }
+  88%  { opacity: .35; }
   100% { transform: translateY(-12vh) scale(1); opacity: 0; }
 }
 
@@ -180,13 +184,16 @@ body::before {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .25s, opacity .35s var(--ease);
+  transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+              border-color var(--t-fast) var(--ease), opacity var(--t-base) var(--ease);
 }
-.glass:hover {
-  transform: translateY(-4px);
+/* Hover só atua em elementos que já terminaram o reveal */
+.glass:hover:not(.fade-in) {
+  transform: translate3d(0, -4px, 0);
   box-shadow: var(--shadow-md);
   border-color: var(--border-strong);
 }
+.product-card:hover:not(.fade-in) { transform: translate3d(0, -4px, 0); }
 
 /* =========================================
    Buttons
@@ -197,10 +204,11 @@ body::before {
   border-radius: 99px;
   font-weight: 500; font-size: .95rem;
   cursor: pointer; border: 1px solid transparent;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s;
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease),
+              background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
   white-space: nowrap;
 }
-.btn i { transition: transform .25s var(--ease); }
+.btn i { transition: transform var(--t-fast) var(--ease); }
 
 .btn-primary {
   background: var(--ink); color: #fff;
@@ -249,13 +257,42 @@ body::before {
 }
 .btn-lg { padding: 1rem 2.1rem; font-size: 1.02rem; }
 
+/* Wrapper com selo "Recomendado" */
+.buy-option { position: relative; }
+.buy-option .btn { width: 100%; justify-content: center; }
+.recommended-tag {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #fff;
+  font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+  padding: .22rem .8rem; border-radius: 99px; text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(16,163,127,.35); z-index: 3; white-space: nowrap;
+}
+.buy-option.is-recommended .btn {
+  box-shadow: 0 0 0 2px var(--accent), 0 8px 24px rgba(99,91,255,.28);
+}
+.buy-hint {
+  display: block; text-align: center; font-size: .78rem;
+  color: var(--text-muted); margin-top: .4rem;
+}
+
+/* Selo de garantia */
+.warranty-box {
+  display: flex; align-items: flex-start; gap: .9rem;
+  background: var(--accent-soft); border: 1px solid var(--accent-line);
+  border-radius: var(--radius-sm); padding: 1rem 1.2rem; margin-top: 1.2rem;
+}
+.warranty-box i { color: var(--accent-2); font-size: 1.3rem; margin-top: .15rem; }
+.warranty-box strong { display: block; color: var(--ink); font-size: .95rem; margin-bottom: .2rem; }
+.warranty-box p { color: var(--text-secondary); font-size: .84rem; line-height: 1.55; }
+
 /* =========================================
    Header
    ========================================= */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   padding: 1.1rem 0;
-  transition: padding .3s var(--ease), background .3s, box-shadow .3s, border-color .3s;
+  transition: padding var(--t-base) var(--ease), background var(--t-base) var(--ease),
+              box-shadow var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
   border-bottom: 1px solid transparent;
 }
 .header.scrolled {
@@ -363,11 +400,12 @@ body::before {
     radial-gradient(40% 40% at 80% 25%, rgba(52,201,162,0.14), transparent 60%),
     radial-gradient(45% 45% at 60% 90%, rgba(23,23,23,0.05), transparent 60%);
   filter: blur(10px);
-  animation: meshDrift 18s ease-in-out infinite alternate;
+  animation: meshDrift 34s ease-in-out infinite alternate;
+  will-change: transform;
 }
 @keyframes meshDrift {
   0%   { transform: translate3d(0,0,0) scale(1); }
-  100% { transform: translate3d(-3%,2%,0) scale(1.06); }
+  100% { transform: translate3d(-2.5%,1.5%,0) scale(1.05); }
 }
 .hero-content { position: relative; z-index: 1; max-width: 820px; }
 
@@ -386,9 +424,9 @@ body::before {
 }
 .pulse-dot::after {
   content: ''; position: absolute; inset: -4px; border-radius: 50%;
-  background: var(--accent); opacity: .35; animation: pulse 2s infinite;
+  background: var(--accent); opacity: .35; animation: pulse 3.4s ease-out infinite;
 }
-@keyframes pulse { 0%{transform:scale(.8);opacity:.5;} 70%{transform:scale(2.2);opacity:0;} 100%{opacity:0;} }
+@keyframes pulse { 0%{transform:scale(.8);opacity:.5;} 70%{transform:scale(2.1);opacity:0;} 100%{opacity:0;} }
 
 .hero h1 {
   font-size: clamp(2.6rem, 6.4vw, 4.7rem);
@@ -426,7 +464,7 @@ body::before {
 }
 .marquee-track {
   display: flex; gap: 3.5rem; width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marquee 55s linear infinite;
   will-change: transform;
 }
 .marquee-track span {
@@ -733,6 +771,18 @@ body::before {
   color: #93c5fd; font-size: 1.6rem; opacity: .85;
 }
 
+/* Featured product grid (home) */
+.featured-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2rem; align-items: center;
+  padding: 1.5rem; max-width: 920px; margin: 0 auto;
+}
+.featured-grid > div:last-child { padding-right: 1rem; }
+@media (max-width: 860px) {
+  .featured-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .featured-grid > div:last-child { padding: 1rem .5rem; }
+}
+
 /* Compact variant (usado no card do grid de produtos) */
 .chatgpt-showcase.compact {
   min-height: 150px; padding: 1.2rem; border-radius: 0; border: none;
@@ -751,6 +801,38 @@ body::before {
 .chatgpt-showcase.compact .chatgpt-chip,
 .chatgpt-showcase.compact .chatgpt-payment-mock,
 .chatgpt-showcase.compact .chatgpt-shield { display: none; }
+
+/* Shine sweep on the white card (living micro-interaction) */
+.chatgpt-card::after {
+  content: ''; position: absolute; top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.65), transparent);
+  transform: skewX(-18deg);
+  transition: left 1.6s var(--ease);
+  pointer-events: none;
+}
+.chatgpt-showcase:hover .chatgpt-card::after { left: 130%; }
+.chatgpt-card { position: relative; overflow: hidden; }
+
+/* Floating drift on floating chips */
+.chatgpt-chip { animation: chipDrift 10s ease-in-out infinite; }
+.chip-tr { animation-delay: 2.6s; }
+.chip-bl { animation-delay: 5.2s; }
+@keyframes chipDrift {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 560px) {
+  .chatgpt-showcase { min-height: 340px; padding: 2.4rem 1rem; }
+  .chatgpt-showcase .chatgpt-chip { display: none; }
+  .chatgpt-ribbon { top: 14px; right: -70px; width: 210px; font-size: .68rem; }
+  .chatgpt-ticket { top: 20px; left: 12px; font-size: .62rem; }
+  .chatgpt-payment-mock { bottom: 12px; right: 12px; font-size: .66rem; }
+  .chatgpt-card h4 { font-size: 1.1rem; }
+  .chatgpt-card .price-line { font-size: 1.4rem; }
+  .product-info-box h2 { font-size: 1.7rem; }
+}
 
 /* =========================================
    Individual Product Detail Page Style
@@ -815,12 +897,12 @@ body::before {
 
 .suporte-chat-window {
   position: fixed; bottom: 6rem; right: 1.8rem; z-index: 9999;
-  width: 380px; max-width: calc(100vw - 2rem); height: 520px; max-height: calc(100vh - 8rem);
+  width: 380px; max-width: calc(100vw - 2rem); height: 540px; max-height: calc(100vh - 8rem);
   background: var(--bg-card); border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; overflow: hidden;
-  opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95);
-  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s;
+  opacity: 0; visibility: hidden; transform: translateY(24px) scale(0.96);
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease), visibility var(--t-base);
   pointer-events: none;
 }
 .suporte-chat-window.active {
@@ -883,6 +965,66 @@ body::before {
   transition: transform .2s;
 }
 .suporte-chat-input-box button:hover { transform: scale(1.06); background: var(--accent); }
+
+/* Action buttons inside chat bubbles */
+.suporte-link-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .45rem .9rem; border-radius: 99px;
+  font-size: .8rem; font-weight: 600; margin: .2rem .25rem .2rem 0;
+  color: #fff; transition: transform .2s var(--ease), box-shadow .2s, filter .2s;
+  vertical-align: middle;
+}
+.suporte-link-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.suporte-link-btn.stripe { background: #635BFF; box-shadow: 0 3px 10px rgba(99,91,255,.3); }
+.suporte-link-btn.ggmax { background: #111; box-shadow: 0 3px 10px rgba(0,0,0,.25); }
+.suporte-link-btn.zap { background: #25D366; box-shadow: 0 3px 10px rgba(37,211,102,.3); }
+.suporte-note { display: block; margin-top: .5rem; font-size: .74rem; color: var(--text-muted); }
+
+/* Typing indicator (3 dots) */
+.suporte-typing { display: inline-flex; gap: 4px; align-items: center; padding: .2rem 0; }
+.suporte-typing span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted);
+  animation: typingBounce 1.6s ease-in-out infinite;
+}
+.suporte-typing span:nth-child(2) { animation-delay: .25s; }
+.suporte-typing span:nth-child(3) { animation-delay: .5s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Message entrance */
+.suporte-msg {
+  animation: msgIn var(--t-base) var(--ease) both;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Unread badge on widget button */
+.suporte-badge {
+  position: absolute; top: -6px; right: -6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #EF4444; color: #fff; font-size: .7rem; font-weight: 700;
+  display: none; align-items: center; justify-content: center;
+  border: 2px solid var(--bg);
+  animation: badgePop var(--t-base) var(--ease) both;
+}
+.suporte-badge.show { display: flex; }
+@keyframes badgePop { from { transform: scale(0); } to { transform: scale(1); } }
+.suporte-widget-btn { position: fixed; }
+
+/* Chat timestamp */
+.suporte-time {
+  display: block; font-size: .66rem; color: var(--text-muted);
+  margin-top: .35rem; opacity: .8;
+}
+.suporte-msg-user .suporte-time { color: rgba(255,255,255,.6); }
+
+/* Scrollbar inside chat */
+.suporte-chat-messages::-webkit-scrollbar { width: 6px; }
+.suporte-chat-messages::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
 
 /* Modal Fallback Overlay */
 .suporte-modal-overlay {
@@ -1058,9 +1200,9 @@ body::before {
 .whatsapp-btn:hover { transform: scale(1.08); box-shadow: 0 14px 32px rgba(37,211,102,0.5); }
 .whatsapp-btn::after {
   content: ''; position: absolute; inset: 0; border-radius: 50%;
-  border: 2px solid #25D366; animation: ripple 2.2s infinite;
+  border: 2px solid #25D366; animation: ripple 3.6s ease-out infinite;
 }
-@keyframes ripple { 0%{transform:scale(1);opacity:.6;} 100%{transform:scale(1.7);opacity:0;} }
+@keyframes ripple { 0%{transform:scale(1);opacity:.55;} 100%{transform:scale(1.65);opacity:0;} }
 .whatsapp-tooltip {
   position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
   background: var(--ink); color: #fff; padding: .55rem .95rem;
@@ -1116,21 +1258,41 @@ body::before {
 @keyframes toastOut { to { transform: translateX(120%); opacity: 0; } }
 
 /* =========================================
-   Animation Fixes & Classes
+   Scroll Reveal — sem conflito de transform
+   O reveal usa um wrapper de opacidade + translate próprio.
+   Depois de revelar, o JS remove as classes, liberando o hover.
    ========================================= */
-.fade-in {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
-  will-change: opacity, transform;
-}
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+/* Por padrão tudo é visível (à prova de falha se o JS não carregar).
+   O estado inicial escondido só é aplicado quando o JS confirma que está pronto. */
+.fade-in { opacity: 1; }
 
-.float-animation { animation: floatY 6s ease-in-out infinite; }
-@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+.js-ready .fade-in {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.js-ready .fade-in.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+/* Enquanto revela, o hover fica desligado para não brigar de transform */
+.js-ready .fade-in:hover { transform: translate3d(0, 0, 0); }
+
+/* Elemento já revelado: volta ao comportamento normal */
+.revealed { opacity: 1; }
+
+.float-animation { animation: floatY 12s ease-in-out infinite; }
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
 /* Accessibility: reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in { opacity: 1 !important; transform: none !important; }
 }
 
 /* =========================================
