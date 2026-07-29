@@ -159,17 +159,6 @@ function initStockManager() {
     if (product) {
       const badgeEl = card.querySelector('.product-badge');
       const btnEl = card.querySelector('.btn-buy-action');
-      const imageEl = card.querySelector('.product-image');
-
-      // Produtos sem estoque exibem automaticamente o banner ContaFlash
-      if (imageEl && !product.inStock && !imageEl.querySelector('.stock-banner')) {
-        imageEl.innerHTML = `
-          <div class="stock-banner">
-            <i class="fas fa-bolt"></i>
-            <div class="stock-banner-word">Conta<span>Flash</span></div>
-          </div>`;
-        imageEl.style.padding = '0';
-      }
 
       if (badgeEl) {
         badgeEl.textContent = product.badge;
@@ -345,7 +334,7 @@ function initSuporteChat() {
       let botReply = '';
 
       if (lower.includes('chatgpt') || lower.includes('desconto') || lower.includes('comprar') || lower.includes('stripe')) {
-        botReply = `⚡ **ChatGPT Plus (1 Mês de Acesso)** está em estoque por **R$ 29,90**, pagamento somente via Stripe ou WhatsApp.<br><br>` +
+        botReply = `⚡ **ChatGPT Plus (1 Mês de Acesso)** está em estoque por **R$ 29,90** (40% OFF).<br><br>` +
           `<a href="${STRIPE_CHECKOUT_URL}" target="_blank" rel="noopener" class="btn btn-stripe" style="padding:.4rem .9rem; font-size:.8rem; margin-top:.4rem; display:inline-flex;">` +
           `<i class="fab fa-stripe-s"></i> Pagar via Stripe Checkout</a><br><br>` +
           `Ou se preferir, <a href="https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Quero comprar ChatGPT Plus')}" target="_blank" style="color:var(--accent-2); font-weight:600;">fale com atendente no WhatsApp</a>.`;

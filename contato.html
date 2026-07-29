@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Confira todos os produtos ContaFlash. Contas premium de streaming, IA, música, jogos e produtividade com os melhores preços.">
+  <meta name="description" content="Perguntas frequentes sobre ContaFlash. Entenda como funciona a venda de contas com 1 mês pago, Stripe Checkout e Atendimento de Suporte Autônomo 24h.">
   <meta name="robots" content="index, follow">
-  <title>Produtos - ContaFlash</title>
+  <title>FAQ - Perguntas Frequentes - ContaFlash</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
   <div class="loading-screen">
-    <div class="loading-logo">⚡ ContaFlash</div>
+    <div class="loading-logo"><span class="logo-icon">⚡</span> ContaFlash</div>
     <div class="loading-bar"></div>
   </div>
 
@@ -33,9 +35,9 @@
       </a>
       <nav class="nav-links">
         <a href="../index.html">Início</a>
-        <a href="produtos.html" class="active">Produtos</a>
+        <a href="produtos.html">Produtos</a>
         <a href="sobre.html">Sobre</a>
-        <a href="faq.html">FAQ</a>
+        <a href="faq.html" class="active">FAQ</a>
         <a href="contato.html">Contato</a>
         <a href="produtos.html" class="nav-cta">Ver Produtos</a>
       </nav>
@@ -47,249 +49,131 @@
 
   <div class="mobile-menu">
     <a href="../index.html">Início</a>
-    <a href="produtos.html" class="active">Produtos</a>
+    <a href="produtos.html">Produtos</a>
     <a href="sobre.html">Sobre</a>
-    <a href="faq.html">FAQ</a>
+    <a href="faq.html" class="active">FAQ</a>
     <a href="contato.html">Contato</a>
   </div>
 
   <!-- Page Header -->
   <div class="page-header">
-    <h1>Nossos <span class="gradient-text">Produtos</span></h1>
-    <p>Escolha entre mais de 50 serviços premium com os melhores preços do mercado</p>
+    <h1>Perguntas <span class="gradient-text">Frequentes</span></h1>
+    <p>Tire suas dúvidas sobre pagamento, produto único de 1 mês e estoque autônomo</p>
     <div class="breadcrumb">
-      <a href="../index.html">Início</a> <span>/</span> <span>Produtos</span>
+      <a href="../index.html">Início</a> <span>/</span> <span>FAQ</span>
     </div>
   </div>
 
-  <!-- Products Section -->
+  <!-- FAQ Section -->
   <section class="section" style="padding-top: 2rem;">
     <div class="container">
 
-      <!-- Filters -->
-      <div class="products-filter fade-in">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <button class="filter-btn" data-filter="streaming">Streaming</button>
-        <button class="filter-btn" data-filter="musica">Música</button>
-        <button class="filter-btn" data-filter="ia">IA</button>
-        <button class="filter-btn" data-filter="jogos">Jogos</button>
-        <button class="filter-btn" data-filter="produtividade">Produtividade</button>
+      <!-- Search -->
+      <div class="faq-search fade-in">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar pergunta..." aria-label="Buscar pergunta no FAQ">
       </div>
 
-      <!-- Products Grid -->
-      <div class="products-grid">
+      <!-- Categories -->
+      <div class="faq-categories fade-in">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="geral">Geral</button>
+        <button class="filter-btn" data-filter="pagamento">Pagamento Stripe</button>
+        <button class="filter-btn" data-filter="estoque">Estoque Autônomo</button>
+      </div>
 
-        <!-- Netflix -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-badge">Mais Vendido</div>
-          <div class="product-image">📺</div>
-          <div class="product-body">
-            <div class="product-category">Streaming</div>
-            <h3>Netflix Premium 4K</h3>
-            <p>Acesso completo ao catálogo Netflix em Ultra HD com 4 telas simultâneas.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Qualidade 4K Ultra HD</li>
-              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-              <li><i class="fas fa-check-circle"></i> Entrega imediata</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 19,90</span>
-              <span class="period">/mês</span>
+      <!-- FAQ Accordion -->
+      <div class="faq-accordion">
+
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Vocês vendem assinatura recorrente?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Não! Vendemos o produto pronto (uma conta com 1 Mês de Acesso Pago). Você paga uma única vez e não haverá nenhuma cobrança recorrente no seu cartão.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Netflix Premium 4K" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
-        <!-- Disney+ -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-image">🏰</div>
-          <div class="product-body">
-            <div class="product-category">Streaming</div>
-            <h3>Disney+ Premium</h3>
-            <p>Marvel, Star Wars, Pixar e todo conteúdo Disney em alta qualidade.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> 4 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> 4K + HDR</li>
-              <li><i class="fas fa-check-circle"></i> Downloads ilimitados</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 14,90</span>
-              <span class="period">/mês</span>
+        <div class="faq-item glass fade-in" data-category="pagamento">
+          <button class="faq-question">
+            <span>Como funciona o link direto da Stripe Checkout?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O link oficial da Stripe Checkout (<code>https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01</code>) permite pagar o ChatGPT Plus com R$ 20,10 de desconto (por apenas R$ 29,90) via PIX ou Cartão com criptografia bancária.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Disney+ Premium" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
-        <!-- Spotify -->
-        <div class="product-card glass fade-in" data-category="musica">
-          <div class="product-badge">Popular</div>
-          <div class="product-image">🎵</div>
-          <div class="product-body">
-            <div class="product-category">Música</div>
-            <h3>Spotify Premium</h3>
-            <p>Música sem limites, sem anúncios e com downloads offline.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Sem anúncios</li>
-              <li><i class="fas fa-check-circle"></i> Qualidade máxima</li>
-              <li><i class="fas fa-check-circle"></i> Downloads offline</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 9,90</span>
-              <span class="period">/mês</span>
+        <div class="faq-item glass fade-in" data-category="estoque">
+          <button class="faq-question">
+            <span>Como funciona o Estoque Autônomo?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nosso sistema lê o estoque em tempo real. Atualmente temos 14 unidades do ChatGPT Plus disponíveis. Caso queira um produto esgotado, acione nosso Suporte Autônomo no chat do site para ser notificado na próxima reposição.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Spotify Premium" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
-        <!-- ChatGPT Plus -->
-        <div class="product-card glass fade-in" data-category="ia">
-          <div class="product-badge">🔥 Hot</div>
-          <div class="product-image">🤖</div>
-          <div class="product-body">
-            <div class="product-category">Inteligência Artificial</div>
-            <h3>ChatGPT Plus</h3>
-            <p>Acesso ao GPT-4 com respostas avançadas, DALL-E 3 e navegação web.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Modelo GPT-4</li>
-              <li><i class="fas fa-check-circle"></i> DALL-E 3 incluso</li>
-              <li><i class="fas fa-check-circle"></i> Respostas prioritárias</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 29,90</span>
-              <span class="period">/mês</span>
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Quais são as redes sociais oficiais?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nosso Instagram oficial é <strong>@contaf1sh</strong> e nosso WhatsApp de atendimento é <strong>(31) 98292-4858</strong>. Atenção: Nosso canal no Telegram está indisponível no momento.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o ChatGPT Plus" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
-        <!-- Xbox Game Pass -->
-        <div class="product-card glass fade-in" data-category="jogos">
-          <div class="product-image">🎮</div>
-          <div class="product-body">
-            <div class="product-category">Jogos</div>
-            <h3>Xbox Game Pass Ultimate</h3>
-            <p>Centenas de jogos no console, PC e cloud gaming com EA Play incluso.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> +500 jogos</li>
-              <li><i class="fas fa-check-circle"></i> EA Play incluso</li>
-              <li><i class="fas fa-check-circle"></i> Cloud Gaming</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 24,90</span>
-              <span class="period">/mês</span>
+        <div class="faq-item glass fade-in" data-category="geral">
+          <button class="faq-question">
+            <span>Como funciona o Suporte Autônomo?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              É nosso sistema de atendimento de suporte integrado ao site (botão "💬 Suporte 24h") que tira dúvidas interativamente e responde questionários sobre contas, liberações e suporte em tempo real.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Xbox Game Pass Ultimate" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
-        <!-- Midjourney -->
-        <div class="product-card glass fade-in" data-category="ia">
-          <div class="product-image">🎨</div>
-          <div class="product-body">
-            <div class="product-category">Inteligência Artificial</div>
-            <h3>Midjourney Pro</h3>
-            <p>Gere imagens incríveis com IA. O melhor gerador de imagens do mercado.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Relaxe time ilimitado</li>
-              <li><i class="fas fa-check-circle"></i> Gerações privadas</li>
-              <li><i class="fas fa-check-circle"></i> Alta resolução</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 34,90</span>
-              <span class="period">/mês</span>
+        <div class="faq-item glass fade-in" data-category="garantia">
+          <button class="faq-question">
+            <span>Tenho garantia durante o mês pago?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Durante todos os 30 dias de acesso, você conta com garantia e suporte no WhatsApp (31) 98292-4858. Qualquer dúvida é resolvida em minutos.
             </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Midjourney Pro" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
-          </div>
-        </div>
-
-        <!-- HBO Max -->
-        <div class="product-card glass fade-in" data-category="streaming">
-          <div class="product-image">🎬</div>
-          <div class="product-body">
-            <div class="product-category">Streaming</div>
-            <h3>Max (HBO Max)</h3>
-            <p>Séries HBO originais, filmes blockbuster e conteúdo exclusivo Warner.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Séries HBO originais</li>
-              <li><i class="fas fa-check-circle"></i> 3 telas simultâneas</li>
-              <li><i class="fas fa-check-circle"></i> 4K HDR</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 14,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Max HBO" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
-          </div>
-        </div>
-
-        <!-- Canva Pro -->
-        <div class="product-card glass fade-in" data-category="produtividade">
-          <div class="product-image">🎯</div>
-          <div class="product-body">
-            <div class="product-category">Produtividade</div>
-            <h3>Canva Pro</h3>
-            <p>Crie designs profissionais com templates premium e ferramentas avançadas.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Templates premium</li>
-              <li><i class="fas fa-check-circle"></i> Background remover</li>
-              <li><i class="fas fa-check-circle"></i> Kit de marca</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 12,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Canva Pro" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
-          </div>
-        </div>
-
-        <!-- Deezer -->
-        <div class="product-card glass fade-in" data-category="musica">
-          <div class="product-image">🎧</div>
-          <div class="product-body">
-            <div class="product-category">Música</div>
-            <h3>Deezer Premium</h3>
-            <p>Música HiFi, letras em tempo real e mix personalizado por IA.</p>
-            <ul class="product-features">
-              <li><i class="fas fa-check-circle"></i> Qualidade HiFi</li>
-              <li><i class="fas fa-check-circle"></i> Letras em tempo real</li>
-              <li><i class="fas fa-check-circle"></i> Mix por IA</li>
-              <li><i class="fas fa-check-circle"></i> Garantia de 30 dias</li>
-            </ul>
-            <div class="product-price">
-              <span class="current">R$ 8,90</span>
-              <span class="period">/mês</span>
-            </div>
-            <a href="https://wa.me/5511999999999?text=Olá! Quero assinar o Deezer Premium" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fab fa-whatsapp"></i> Assinar Agora
-            </a>
           </div>
         </div>
 
       </div>
+
+      <div class="faq-no-results" style="display:none; padding: 3rem; text-align: center; color: var(--text-muted);">
+        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+        <p style="font-size: 1.1rem; font-weight: 600;">Nenhum resultado encontrado</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Tente buscar com outros termos ou fale com nosso Suporte Autônomo.</p>
+      </div>
+
+      <!-- Still have questions -->
+      <div class="glass fade-in" style="text-align: center; margin-top: 4rem; padding: 3rem;">
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; letter-spacing: -0.02em;">Ainda tem dúvidas?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Fale diretamente no WhatsApp (31) 98292-4858 ou Instagram @contaf1sh</p>
+        <a href="https://wa.me/5531982924858?text=Olá! Tenho uma dúvida sobre os produtos." class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> Chamar no WhatsApp (31) 98292-4858
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -303,10 +187,9 @@
         </a>
         <p>A melhor plataforma de serviços digitais premium do Brasil.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-          <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/5531982924858" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <span style="opacity:0.5; cursor:not-allowed; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.06);" title="Telegram Indisponível no momento"><i class="fab fa-telegram"></i></span>
         </div>
       </div>
       <div class="footer-col">
@@ -320,32 +203,31 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h4>Redes Sociais</h4>
         <ul>
-          <li><a href="produtos.html">Streaming</a></li>
-          <li><a href="produtos.html">IA</a></li>
-          <li><a href="produtos.html">Música</a></li>
-          <li><a href="produtos.html">Jogos</a></li>
+          <li><a href="https://instagram.com/contaf1sh" target="_blank" rel="noopener"><i class="fab fa-instagram" style="width:16px;margin-right:6px;color:var(--accent)"></i>@contaf1sh</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><span style="color:#6E6C64; font-size:0.85rem;"><i class="fab fa-telegram" style="width:16px;margin-right:6px;"></i>Telegram (Indisponível no momento)</span></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h4>Atendimento</h4>
         <ul>
-          <li><a href="mailto:suporte@contaflash.com"><i class="fas fa-envelope" style="width:16px;margin-right:6px;color:var(--primary-light)"></i>suporte@contaflash.com</a></li>
-          <li><a href="#"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(11) 99999-9999</a></li>
+          <li><a href="https://wa.me/5531982924858" target="_blank" rel="noopener"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;color:var(--success)"></i>(31) 98292-4858</a></li>
+          <li><a href="contato.html"><i class="fas fa-headset" style="width:16px;margin-right:6px;color:var(--accent)"></i>Suporte Direct</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 ContaFlash. Todos os direitos reservados.</p>
-      <p>Feito com <i class="fas fa-heart" style="color: var(--accent);"></i> no Brasil</p>
+      <p>&copy; 2025 ContaFlash. Todos os direitos reservados. Processado via Stripe Checkout.</p>
+      <p>Instagram: @contaf1sh | WhatsApp: (31) 98292-4858</p>
     </div>
   </footer>
 
   <!-- WhatsApp Float -->
   <div class="whatsapp-float">
     <span class="whatsapp-tooltip">Fale conosco no WhatsApp!</span>
-    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os produtos da ContaFlash." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a href="https://wa.me/5531982924858?text=Olá! Tenho uma dúvida sobre os serviços." class="whatsapp-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
       <i class="fab fa-whatsapp"></i>
     </a>
   </div>
