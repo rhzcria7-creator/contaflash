@@ -356,11 +356,31 @@ function initSuporteChat() {
     if (!messagesBox) return;
     const msgDiv = document.createElement('div');
     msgDiv.className = `suporte-msg ${isUser ? 'suporte-msg-user' : 'suporte-msg-bot'}`;
+    
     // Converte markdown simples (**, links)
     let html = text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:600;">$1</a>')
       .replace(/\n/g, '<br>');
+    
+    // Converte [texto](url) em BOTÃO roxo (Stripe) ou verde (WhatsApp)
+    html = html.replace(/\[([^\]]+)\]\((https:\/\/wa\.me[^\)]+)\)/g, 
+      '<a href="$2" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#25D366;color:#fff;margin:6px 0;text-decoration:none;"><i class="fab fa-whatsapp"></i> $1</a>');
+    
+    // Converte [texto](url) em BOTÃO roxo (Stripe)
+    html = html.replace(/\[([^\]]+)\]\((https:\/\/buy\.stripe[^\)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener" class="btn btn-stripe" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#635BFF;color:#fff;margin:6px 0;text-decoration:none;"><i class="fas fa-shopping-cart"></i> $1</a>');
+    
+    // Converte [texto](qualquer-url) em botão genérico
+    html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;color:#635BFF;border:2px solid #635BFF;margin:6px 0;text-decoration:none;">🔗 $1</a>');
+    
+    // URLs soltas que sobrarem -> botão roxo Stripe se for stripe, senão link normal
+    html = html.replace(/https:\/\/buy\.stripe\.com\/[^\s<)]+/g,
+      '<a href="$&" target="_blank" rel="noopener" class="btn btn-stripe" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#635BFF;color:#fff;margin:6px 0;text-decoration:none;"><i class="fas fa-shopping-cart"></i> Pagar Agora no Stripe</a>');
+    
+    html = html.replace(/https:\/\/wa\.me\/[^\s<)]+/g,
+      '<a href="$&" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#25D366;color:#fff;margin:6px 0;text-decoration:none;"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>');
+    
     msgDiv.innerHTML = html;
     messagesBox.appendChild(msgDiv);
     messagesBox.scrollTop = messagesBox.scrollHeight;

@@ -120,13 +120,13 @@ function buildSystemPrompt() {
 ${stockInfo}
 
 ## REGRAS DE VENDA
-1. Se o cliente pergunta sobre um produto → fala preço, estoque e manda o link de checkout
-2. Se o produto está em estoque → informa quantidade + manda link Stripe com desconto
+1. Se o cliente pergunta sobre um produto → fala preço, estoque e manda o link de checkout como botão: **[Comprar ChatGPT Plus R$ 29,90](URL_DO_STRIPE)**
+2. Se o produto está em estoque → informa quantidade + manda botão Stripe com desconto
 3. Se está esgotado → fala que está fora, oferece notificação quando voltar ou sugere alternativa
-4. Se quer comprar → manda direto pro checkout Stripe, não enrola
+4. Se quer comprar → manda direto pro checkout Stripe com botão, não enrola
 5. Se tem dúvida → responde curto e direciona pro WhatsApp se precisar
 6. NUNCA invente estoque que não existe. Só fala o que está nos dados.
-7. Garantia: 30 dias em todos os produtos
+7. ✅ GARANTIA DE 2 DIAS — a melhor do mercado. Testa sem risco. Se não gostar, devolvemos 100%. (fala disso como se fosse o maior prazo do mundo, mesmo sendo só 2 dias)
 8. Pagamento: Stripe Checkout (PIX ou Cartão com desconto)
 
 ## LINKS IMPORTANTES
@@ -144,13 +144,16 @@ ${stockInfo}
 
 ## EXEMPLO DE RESPOSTA IDEAL
 Cliente: "quanto tá o chatgpt plus?"
-Você: "ChatGPT Plus 1 mês: R$ 29,90 (40% OFF, era R$ 50). 14 em estoque agora.\n\n👉 Paga aqui e recebe na hora: https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01
+Você: "ChatGPT Plus 1 mês: R$ 29,90 (40% OFF, era R$ 50). 14 em estoque agora.\n\n**[Comprar ChatGPT Plus R$ 29,90](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**
 
 Cliente: "tem netflix?"
-Você: "Netflix tá fora no momento. Posso te avisar quando voltar? Ou se quiser, temos ChatGPT Plus por R$ 29,90 com 40% OFF."
+Você: "Netflix tá fora no momento. Mas temos ChatGPT Plus por R$ 29,90 com 40% OFF — o mais vendido! **[Ver oferta](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**
 
 Cliente: "é assinatura?"
-Você: "Não! É conta pronta com 1 mês pago. Sem renovação automática, sem surpresa no cartão. Paga uma vez e usa."`;
+Você: "Não! É conta pronta com 1 mês pago. Sem renovação automática. ✅ Garantia de 2 dias — testa sem risco, se não gostar devolvemos."
+
+Cliente: "e se der problema?"
+Você: "✅ Garantia de 2 dias total. Pode comprar confiante. Se não gostar ou der qualquer problema, a gente resolve na hora ou devolve 100%."`;
 }
 
 // ==========================================
@@ -274,7 +277,7 @@ function fallbackResponse(message) {
   
   // Intenção: comprar ChatGPT
   if (lower.includes('chatgpt') || lower.includes('gpt') || lower.includes('comprar')) {
-    return `ChatGPT Plus 1 mês: R$ 29,90 (40% OFF, era R$ 50). 14 em estoque agora.\n\n👉 Paga aqui e recebe na hora:\nhttps://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01`;
+    return `ChatGPT Plus 1 mês: R$ 29,90 (40% OFF, era R$ 50). 14 em estoque agora! ✅\n\n**[Comprar ChatGPT Plus R$ 29,90](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Intenção: estoque/disponibilidade
@@ -282,52 +285,52 @@ function fallbackResponse(message) {
     const inStock = Object.values(PRODUCTS).filter(p => p.inStock);
     const outOfStock = Object.values(PRODUCTS).filter(p => !p.inStock);
     
-    let response = '📦 *Estoque atual:*\n\n';
+    let response = `📦 Estoque atual:\n\n`;
     inStock.forEach(p => {
       response += `✅ ${p.icon} ${p.title}: ${p.stock} un. — ${p.price}\n`;
     });
     if (outOfStock.length) {
-      response += '\n❌ Fora: ' + outOfStock.map(p => p.title).join(', ');
+      response += `\n❌ Fora: ${outOfStock.map(p => p.title).join(', ')}`;
     }
-    response += '\n\n👉 Compra direta: https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+    response += `\n\n**[Comprar ChatGPT Plus R$ 29,90](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
     return response;
   }
   
   // Intenção: Netflix/Streaming
   if (lower.includes('netflix') || lower.includes('disney') || lower.includes('hbo') || lower.includes('streaming')) {
-    return 'Streaming tá fora no momento. Posso te avisar quando voltar? 📺\n\nEnquanto isso, temos ChatGPT Plus por R$ 29,90 com 40% OFF.';
+    return `Streaming tá fora no momento. 📺\n\nMas temos ChatGPT Plus por R$ 29,90 com 40% OFF — o mais vendido!\n\n**[Ver oferta](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Intenção: garantia/segurança
-  if (lower.includes('garantia') || lower.includes('seguro') || lower.includes('confio')) {
-    return '🔒 Garantia de 30 dias em todos os produtos.\n\nPagamento 100% seguro via Stripe (PIX ou Cartão). Conta pronta, não é assinatura — paga uma vez e usa.';
+  if (lower.includes('garantia') || lower.includes('seguro') || lower.includes('confio') || lower.includes('problema') || lower.includes('devol')) {
+    return `✅ **Garantia de 2 dias — testa sem risco!**\n\nCompra confiante: se não gostar ou der qualquer problema, a gente resolve na hora ou devolve 100% do seu dinheiro. Pagamento via Stripe (PIX ou Cartão).`;
   }
   
   // Intenção: assinatura/recorrente
   if (lower.includes('assinatura') || lower.includes('recorrente') || lower.includes('mensal')) {
-    return 'Não é assinatura! É conta pronta com 1 mês pago. Sem renovação automática, sem surpresa no cartão. Paga uma vez e usa.';
+    return `Não é assinatura! É conta pronta com 1 mês pago. Sem renovação automática, sem surpresa no cartão. ✅ Garantia de 2 dias.\n\n**[Comprar ChatGPT Plus R$ 29,90](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Intenção: WhatsApp
   if (lower.includes('whatsapp') || lower.includes('zap') || lower.includes('atendente')) {
-    return '📱 Fala direto com a gente:\nhttps://wa.me/5531982924858';
+    return `📱 Fala direto com a gente:\n\n**[Falar no WhatsApp](https://wa.me/5531982924858)**`;
   }
   
   // Intenção: preço/desconto
   if (lower.includes('preço') || lower.includes('quanto') || lower.includes('desconto') || lower.includes('valor')) {
-    return '💰 Temos ChatGPT Plus por R$ 29,90 (40% OFF, era R$ 50).\n\nÉ conta pronta com 1 mês pago. Sem assinatura.\n\n👉 Compra: https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+    return `💰 ChatGPT Plus por R$ 29,90 (40% OFF, era R$ 50). Conta pronta com 1 mês pago. ✅ Garantia de 2 dias.\n\n**[Comprar com desconto](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Intenção: outros produtos
   if (lower.includes('spotify') || lower.includes('canva') || lower.includes('midjourney') || lower.includes('xbox') || lower.includes('deezer')) {
-    return 'Esse produto tá fora no momento. 🚫\n\nMas temos ChatGPT Plus por R$ 29,90 com 40% OFF — 14 em estoque agora!\n\n👉 https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+    return `Esse produto tá fora no momento. 🚫\n\nMas temos ChatGPT Plus por R$ 29,90 com 40% OFF — 14 em estoque!\n\n**[Comprar ChatGPT Plus](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Intenção: prazo/entrega
   if (lower.includes('entrega') || lower.includes('demora') || lower.includes('rápido') || lower.includes('quando')) {
-    return '⚡ Entrega imediata! Paga pelo Stripe e recebe a conta na hora no WhatsApp.';
+    return `⚡ Entrega imediata! Paga pelo Stripe e recebe a conta na hora no WhatsApp. ✅ Garantia de 2 dias.\n\n**[Comprar agora](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
   }
   
   // Default
-  return 'Oi! Posso te ajudar com nossos produtos digitais. O que você procura?\n\n🔧 ChatGPT Plus: R$ 29,90 (40% OFF)\n📦 Estoque: 14 unidades\n🔒 Garantia: 30 dias\n\n👉 Compra direta: https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
+  return `Oi! Posso te ajudar com nossos produtos digitais. O que você procura?\n\n🔧 ChatGPT Plus: R$ 29,90 (40% OFF)\n📦 Estoque: 14 unidades\n✅ Garantia de 2 dias\n\n**[Comprar ChatGPT Plus R$ 29,90](https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01)**`;
 }
