@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento Confirmado — ContaFlash</title>
+  <meta name="description" content="Seu pagamento foi confirmado! Suas credenciais serão enviadas em instantes.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#10A37F">
+  <link rel="manifest" href="../manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="particles-container"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon"><i class="fas fa-bolt"></i></span>
+        <span class="logo-text">Conta<b>Flash</b></span>
+      </a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../index.html">Início</a>
+    <a href="produtos.html">Produtos</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <!-- Success -->
+  <section class="section" style="min-height: 90vh; display: flex; align-items: center; padding-top: 7rem;">
+    <div class="container" style="max-width: 620px; text-align: center;">
+      <div class="glass fade-in" style="padding: 3.5rem 2.5rem;">
+        <div style="width: 84px; height: 84px; margin: 0 auto 1.8rem; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-line); display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-check" style="font-size: 2.2rem; color: var(--accent-2);"></i>
+        </div>
+        <h1 style="font-size: 2rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.8rem;">
+          Pagamento <span class="gradient-text">confirmado!</span>
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 0.5rem;">
+          Obrigado pela sua compra. Nosso sistema já está processando o seu pedido.
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 2rem;">
+          Suas credenciais de acesso serão enviadas em até <strong style="color: var(--accent-2);">5 minutos</strong>
+          no WhatsApp e no e-mail informado no checkout.
+        </p>
+
+        <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+          <a href="https://wa.me/5531982924858?text=Olá! Acabei de fazer uma compra e quero acompanhar meu pedido." class="btn btn-primary" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> Acompanhar no WhatsApp
+          </a>
+          <a href="produtos.html" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Voltar aos Produtos
+          </a>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+          <span style="color: var(--text-muted); font-size: 0.85rem;"><i class="fas fa-shield-halved" style="color: var(--accent-2);"></i> Compra protegida</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem;"><i class="fas fa-rotate-left" style="color: var(--accent-2);"></i> Garantia de 30 dias</span>
+          <span style="color: var(--text-muted); font-size: 0.85rem;"><i class="fas fa-headset" style="color: var(--accent-2);"></i> Suporte 24h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast-container"></div>
+  <script src="../js/main.js"></script>
+</body>
+</html>

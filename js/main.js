@@ -2,6 +2,10 @@
    ContaFlash - JavaScript Principal
    ========================================= */
 
+// Gate: habilita animações apenas quando o JS está rodando.
+// Sem isso, o conteúdo nunca ficaria "preso" invisível se o JS falhar.
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', () => {
   initLoadingScreen();
   initParticles();
@@ -19,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initWhatsAppTooltip();
   initCookieModal();
   initPhoneMask();
+  initStripeCheckout();
+  initCancelToast();
 });
 
 // ==========================================
@@ -143,16 +149,15 @@ function initFadeInAnimations() {
   if (!elements.length) return;
   
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, index * 100);
-        observer.unobserve(entry.target);
-      }
+    // stagger limitado (máx 360ms) para não acumular atrasos absurdos
+    const visible = entries.filter(e => e.isIntersecting);
+    visible.forEach((entry, i) => {
+      const delay = Math.min(i * 90, 360);
+      setTimeout(() => entry.target.classList.add('visible'), delay);
+      observer.unobserve(entry.target);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
   elements.forEach(el => observer.observe(el));
 }
 
@@ -584,14 +589,63 @@ function showToast(message, type = 'success') {
     warning: 'fa-solid fa-triangle-exclamation'
   };
   
-  toast.innerHTML = `
-    <i class="${icons[type] || icons.success} toast-icon"></i>
-    <span class="toast-message">${message}</span>
-  `;
-  
+  // Construção segura via textContent (evita XSS caso a mensagem contenha HTML)
+  const icon = document.createElement('i');
+  icon.className = (icons[type] || icons.success) + ' toast-icon';
+  const span = document.createElement('span');
+  span.className = 'toast-message';
+  span.textContent = message;
+  toast.appendChild(icon);
+  toast.appendChild(span);
+
   container.appendChild(toast);
-  
+
   setTimeout(() => {
     toast.remove();
   }, 3500);
+}
+
+// ==========================================
+// Stripe Checkout (automação de pagamento)
+// ==========================================
+function initStripeCheckout() {
+  const buttons = document.querySelectorAll('.buy-btn');
+  if (!buttons.length) return;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const productId = btn.dataset.product;
+      if (!productId || btn.disabled) return;
+
+      // Feedback visual durante a criação da sessão
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.classList.add('loading');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando checkout...';
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.url) throw new Error(data.error || 'Falha ao iniciar o checkout.');
+        window.location.href = data.url; // Redireciona para o Stripe Checkout
+      } catch (err) {
+        showToast(err.message || 'Não foi possível iniciar o pagamento. Tente novamente.', 'error');
+        btn.disabled = false;
+        btn.classList.remove('loading');
+        btn.innerHTML = original;
+      }
+    });
+  });
+}
+
+// Aviso quando o usuário cancela o pagamento no Stripe e volta
+function initCancelToast() {
+  if (window.location.search.includes('cancelado=1')) {
+    showToast('Pagamento cancelado. Você não foi cobrado.', 'warning');
+    window.history.replaceState({}, '', window.location.pathname);
+  }
 }

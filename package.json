@@ -1,0 +1,12 @@
+{
+  "name": "contaflash",
+  "version": "1.0.0",
+  "description": "ContaFlash - Serviços digitais premium com checkout Stripe",
+  "private": true,
+  "engines": {
+    "node": ">=18.x"
+  },
+  "dependencies": {
+    "stripe": "^14.21.0"
+  }
+}

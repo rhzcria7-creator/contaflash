@@ -1,132 +1,114 @@
-# ⚡ ContaFlash - Serviços Digitais Premium
+# ⚡ ContaFlash
 
-Site profissional multipage para a ContaFlash, empresa especializada em contas premium de streaming, inteligência artificial, música e jogos.
+Site profissional **multipage** para venda de serviços digitais premium (streaming, IA, música, jogos) com **checkout automatizado via Stripe** e deploy na **Vercel**.
 
-## 🚀 Tecnologias
-
-- **HTML5** semântico
-- **CSS3** com Glass Morphism e animações
-- **JavaScript puro** (sem frameworks)
-- **Font Awesome 6** para ícones
-- **Google Fonts (Inter)** para tipografia
-- **Tailwind CSS** (CDN)
-
-## 📁 Estrutura do Projeto
-
-```
-├── index.html                 # Página principal
-├── pages/
-│   ├── produtos.html          # Catálogo de produtos
-│   ├── sobre.html             # Sobre a empresa
-│   ├── faq.html               # Perguntas frequentes
-│   └── contato.html           # Página de contato
-├── css/
-│   └── style.css              # Estilos principais
-├── js/
-│   └── main.js                # JavaScript principal
-├── manifest.json              # PWA Manifest
-├── vercel.json                # Configuração Vercel
-└── README.md                  # Este arquivo
-```
-
-## ✨ Funcionalidades
-
-### Design
-- Glass Morphism (efeito vidro)
-- Tema escuro com gradientes roxo/azul
-- Partículas flutuantes animadas
-- Loading screen animada
-- Cards com hover effects
-- Design 100% responsivo (mobile, tablet, desktop)
-
-### JavaScript
-- Partículas flutuantes no fundo
-- Header com efeito de scroll (blur ao rolar)
-- Menu mobile hamburger animado
-- Contadores numéricos animados
-- Slider de depoimentos com auto-play
-- Validação de formulário com proteção XSS
-- Máscara de telefone brasileiro (XX) XXXXX-XXXX
-- Newsletter com validação de email
-- FAQ com accordion e busca funcional
-- Filtros de produtos por categoria
-- Modal de cookies (GDPR)
-- Toast notifications
-- Smooth scroll
-- Fade-in animations ao scroll
-
-### SEO & Performance
-- Meta tags otimizadas
-- Open Graph para compartilhamento
-- Semantic HTML5
-- Acessibilidade (ARIA labels)
-- PWA ready
-
-## 🛠️ Como Executar
-
-1. Clone o repositório ou faça download dos arquivos
-2. Abra o arquivo `index.html` em qualquer navegador moderno
-3. Pronto! Não requer servidor ou dependências externas
-
-### Deploy
-
-O site pode ser hospedado em qualquer serviço de hosting estático:
-
-- **Vercel**: `vercel.json` já configurado
-- **Netlify**: Basta fazer upload da pasta
-- **GitHub Pages**: Ative nas configurações do repositório
-- **Qualquer hospedagem**: Upload dos arquivos via FTP
-
-## 🎨 Customização
-
-### Design System (estilo editorial / ChatGPT)
-O site usa uma paleta limpa e profissional — fundo quente neutro, tipografia
-editorial (Inter + Instrument Serif itálico para destaques) e o verde ChatGPT
-como acento. Edite as variáveis em `css/style.css`:
-
-```css
-:root {
-  --bg: #FAF9F5;          /* Fundo principal (papel quente) */
-  --bg-card: #FFFFFF;     /* Cards */
-  --bg-subtle: #F4F2EC;   /* Seções alternadas */
-  --ink: #171717;         /* Texto / botões escuros */
-  --accent: #10A37F;      /* Verde ChatGPT (acento) */
-  --accent-2: #0E8A6B;    /* Verde escuro */
-}
-```
-
-**Animações incluídas:** mesh gradient animado no hero, marquee de marcas,
-partículas sutis, scroll-reveal com stagger, contadores, slider de depoimentos,
-hover transforms, ripple do WhatsApp e loading screen minimalista.
-
-### WhatsApp
-Altere o número de WhatsApp em todos os arquivos HTML:
-```
-https://wa.me/5511999999999 → Seu número com código do país
-```
-
-### Produtos
-Adicione, remova ou edite produtos em `pages/produtos.html`.
-
-## 📱 Responsividade
-
-O site é totalmente responsivo e funciona perfeitamente em:
-- 📱 Mobile (320px+)
-- 📱 Tablet (768px+)
-- 💻 Desktop (1024px+)
-- 🖥️ Wide (1280px+)
-
-## 🔒 Segurança
-
-- Headers de segurança configurados (vercel.json)
-- Proteção XSS nos formulários
-- Content Security Policy
-- HTTPS obrigatório (configurar no hosting)
-
-## 📄 Licença
-
-Este projeto é de uso livre para fins educacionais e comerciais.
+Design editorial estilo ChatGPT/OpenAI: fundo neutro quente, tipografia Inter + Instrument Serif, acento verde `#10A37F`, animações suaves. Construído com **HTML5, CSS3 e JavaScript puro** no front + **funções serverless Node** para pagamento.
 
 ---
 
-Feito com ❤️ pela **ContaFlash**
+## 📁 Estrutura
+
+```
+contaflash/
+├── index.html            # Home
+├── css/style.css         # Design system
+├── js/main.js            # Interatividade + checkout Stripe
+├── pages/
+│   ├── produtos.html     # Catálogo (compra via Stripe Checkout)
+│   ├── sobre.html
+│   ├── faq.html
+│   ├── contato.html
+│   └── sucesso.html      # Pós-pagamento (retorno do Stripe)
+├── api/
+│   ├── checkout.js       # Cria sessão do Stripe Checkout
+│   └── webhook.js        # Confirmação de pagamento (webhook)
+├── package.json          # Dependência: stripe
+├── vercel.json           # Headers de segurança + funções
+├── manifest.json         # PWA
+├── .env.example          # Variáveis de ambiente (modelo)
+└── .gitignore
+```
+
+---
+
+## 💳 Fluxo de compra (Stripe Checkout)
+
+1. Cliente clica em **"Assinar Agora"** em um produto.
+2. `js/main.js` faz `POST /api/checkout` enviando **apenas o `productId`**.
+3. `api/checkout.js` valida o ID contra uma **whitelist no servidor** (preço nunca vem do cliente) e cria uma sessão do **Stripe Checkout**.
+4. Cliente é redirecionado para a página hospedada do Stripe (cartão → **PCI-DSS 100% com o Stripe**).
+5. Pago → retorna para `pages/sucesso.html`. Cancelado → volta para `produtos.html?cancelado=1` (mostra aviso).
+6. Stripe chama `api/webhook.js` (com **assinatura verificada**) para confirmar e entregar o produto.
+
+### 🔐 Por que é seguro
+- Preços e nomes vivem **somente no servidor** (`api/checkout.js`); o cliente não pode adulterar valores.
+- Dados de cartão **nunca tocam seu servidor** (Stripe Checkout hospedado).
+- Webhook com **verificação de assinatura** (`STRIPE_WEBHOOK_SECRET`).
+- Rate limit simples por IP + headers de segurança (CSP, HSTS, etc.) no `vercel.json`.
+- Sanitização contra XSS no front (`textContent` em toasts, escape em formulários).
+
+---
+
+## 🚀 Deploy na Vercel (passo a passo)
+
+### 1. Suba o código
+```bash
+git init && git add . && git commit -m "ContaFlash"
+git remote add origin https://github.com/SEU_USUARIO/contaflash.git
+git push -u origin main
+```
+
+### 2. Configure as chaves do Stripe
+No [Stripe Dashboard](https://dashboard.stripe.com) → **Developers → API Keys**, copie a **Secret key** (`sk_live_...`).
+
+### 3. Importe na Vercel
+1. Acesse [vercel.com](https://vercel.com) → **Add New → Project** → importe o repositório.
+2. A Vercel detecta as funções em `api/` automaticamente.
+3. Em **Settings → Environment Variables**, adicione:
+   | Variável | Valor |
+   |----------|-------|
+   | `STRIPE_SECRET_KEY` | `sk_live_sua_chave` |
+   | `STRIPE_WEBHOOK_SECRET` | `whsec_...` (passo 4) |
+4. **Deploy**.
+
+### 4. Crie o Webhook no Stripe
+1. Stripe Dashboard → **Developers → Webhooks → Add endpoint**.
+2. URL: `https://SEU-DOMINIO.vercel.app/api/webhook`
+3. Eventos: `checkout.session.completed`
+4. Copie o **Signing secret** (`whsec_...`) e adicione como `STRIPE_WEBHOOK_SECRET` na Vercel.
+5. **Redeploy** para a variável fazer efeito.
+
+### 5. Teste
+- Use o cartão de teste `4242 4242 4242 4242` (qualquer data/CVV futuros) com as chaves `sk_test_...` durante os testes.
+
+> **Entrega automática:** em `api/webhook.js`, no bloco `checkout.session.completed`, chame sua rotina de envio de credenciais (e-mail/WhatsApp/API de contas).
+
+---
+
+## 🎨 Personalizar
+
+**Preços/produtos:** edite a whitelist `PRODUCTS` em `api/checkout.js` (valores em **centavos**: R$ 19,90 = `1990`) e os cards em `pages/produtos.html` (atributo `data-product` deve bater com a chave da whitelist).
+
+**Cores:** variáveis em `:root` no `css/style.css` (`--bg`, `--ink`, `--accent`).
+
+**WhatsApp:** número `5531982924858` nos links `wa.me` e em `pages/sucesso.html`.
+
+---
+
+## 🏃 Rodar localmente
+
+O checkout **exige servidor** (funções serverless). Use o CLI da Vercel:
+```bash
+npm install
+npm i -g vercel
+vercel login
+vercel dev        # sobe o site + /api em http://localhost:3000
+```
+> Sem o Vercel CLI, as páginas navegam normalmente, mas o botão de compra precisa do backend.
+
+---
+
+## 📱 PWA & SEO
+`manifest.json` (instalável) + meta tags, Open Graph e `theme-color` em cada página.
+
+© 2026 ContaFlash. Feito com 💚 no Brasil.
