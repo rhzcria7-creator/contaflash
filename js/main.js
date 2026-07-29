@@ -3,26 +3,14 @@
    Suporte Autônomo Interativo & Stripe Checkout
    ========================================= */
 
-// ==========================================
 // Configurações Globais
-// ==========================================
 const WHATSAPP_PHONE = '5531982924858';
 const INSTAGRAM_HANDLE = 'contaf1sh';
 const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/6oUbJ2e7m2H429o3T3fnO01';
-const CHAT_API_URL = '/api/chat'; // Endpoint da IA vendedora
+const GGMAX_URL = 'https://ggmax.com.br/anuncio/conta-chatgpt-plus-mensal-acesso-exclusivo';
 
-// Session ID único por visitante (persiste no localStorage)
-function getChatSessionId() {
-  let sid = localStorage.getItem('cf-chat-session');
-  if (!sid) {
-    sid = 'cf-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8);
-    localStorage.setItem('cf-chat-session', sid);
-  }
-  return sid;
-}
-
-// Histórico da conversa (mantido em memória)
-const chatHistory = [];
+// Endpoint opcional de Webhook de Suporte (se houver API externa)
+const WEBHOOK_SUPPORT_ENDPOINT = null; // Ex: 'https://api.contaflash.com/v1/support'
 
 // Registro Autônomo de Estoque de Produtos (Apenas 1 Mês Pago - Não Assinaturas)
 const STOCK_DATA = {
@@ -195,11 +183,15 @@ function initStockManager() {
 
       if (btnEl) {
         if (product.inStock) {
-          btnEl.innerHTML = `<i class="fab fa-stripe-s"></i> Compre Agora e Receba Desconto`;
-          btnEl.className = 'btn btn-primary btn-buy-stripe';
+          // Se já é um link <a> configurado no HTML, apenas garante os dados
+          // (não sobrescreve o href/conteúdo para não quebrar a navegação)
           btnEl.setAttribute('data-product', product.title);
           btnEl.setAttribute('data-price', product.price);
-          btnEl.setAttribute('data-stripe-url', product.stripeUrl);
+          if (btnEl.tagName !== 'A') {
+            btnEl.innerHTML = `<i class="fab fa-stripe-s"></i> Comprar Agora — ${product.price}`;
+            btnEl.className = 'btn btn-primary btn-buy-stripe';
+            btnEl.setAttribute('data-stripe-url', product.stripeUrl);
+          }
         } else {
           btnEl.innerHTML = `<i class="fas fa-bell"></i> Esgotado - Falar com Suporte`;
           btnEl.className = 'btn btn-disabled btn-notify-suporte';
@@ -221,7 +213,7 @@ function initStockManager() {
 }
 
 // ==========================================
-// Suporte Autônomo Chat Engine (API IA Vendedora)
+// Suporte Autônomo Chat Engine (Integração Interativa)
 // ==========================================
 function initSuporteChat() {
   if (!document.getElementById('suporteWidgetBtn')) {
@@ -229,6 +221,7 @@ function initSuporteChat() {
       <div class="suporte-widget-btn" id="suporteWidgetBtn" title="Atendimento de Suporte 24h">
         <span class="dot-online"></span>
         <span>💬 Suporte 24h</span>
+        <span class="suporte-badge" id="suporteBadge">1</span>
       </div>
 
       <div class="suporte-chat-window" id="suporteChatWindow">
@@ -236,8 +229,8 @@ function initSuporteChat() {
           <div class="suporte-chat-title">
             <div class="suporte-chat-avatar">💬</div>
             <div>
-              <div style="font-size:.92rem; font-weight:600; line-height:1.2;">ContaFlash AI</div>
-              <div style="font-size:.74rem; opacity:.8;">Vendedora Online | Respostas Imediatas</div>
+              <div style="font-size:.92rem; font-weight:600; line-height:1.2;">Suporte Autônomo</div>
+              <div style="font-size:.74rem; opacity:.8;">Online | Respostas Imediatas</div>
             </div>
           </div>
           <button class="suporte-chat-close" id="closeSuporteChat">&times;</button>
@@ -245,19 +238,22 @@ function initSuporteChat() {
 
         <div class="suporte-chat-messages" id="suporteChatMessages">
           <div class="suporte-msg suporte-msg-bot">
-            Olá! Sou a vendedora da <strong>ContaFlash</strong>. Como posso te ajudar? 😊
+            👋 Olá! Bem-vindo ao <strong>Suporte ContaFlash</strong>.<br>
+            Temos <strong>ChatGPT Plus (1 Mês)</strong> em estoque por <strong>R$ 29,90</strong>.<br>
+            Como posso te ajudar?
           </div>
         </div>
 
         <div class="suporte-chat-chips">
           <button class="suporte-chip" data-query="chatgpt">⚡ Comprar ChatGPT Plus</button>
+          <button class="suporte-chip" data-query="ggmax">🛒 Comprar na GGMax</button>
           <button class="suporte-chip" data-query="estoque">📦 Consultar Estoque</button>
-          <button class="suporte-chip" data-query="garantia">🔒 Garantia de 30 Dias</button>
-          <button class="suporte-chip" data-query="zap">💬 WhatsApp Direto</button>
+          <button class="suporte-chip" data-query="garantia">🔒 Garantia</button>
+          <button class="suporte-chip" data-query="zap">💬 WhatsApp</button>
         </div>
 
         <form class="suporte-chat-input-box" id="suporteChatForm">
-          <input type="text" id="suporteChatInput" placeholder="Digite sua mensagem..." required autocomplete="off">
+          <input type="text" id="suporteChatInput" placeholder="Digite sua mensagem para o Suporte..." required autocomplete="off">
           <button type="submit" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
@@ -272,11 +268,28 @@ function initSuporteChat() {
   const chatInput = document.getElementById('suporteChatInput');
   const messagesBox = document.getElementById('suporteChatMessages');
 
+  const badge = document.getElementById('suporteBadge');
+
+  // Badge de notificação após 6s (se o chat nunca foi aberto)
+  if (badge && !sessionStorage.getItem('cf-chat-opened')) {
+    setTimeout(() => badge.classList.add('show'), 6000);
+  }
+
   if (widgetBtn && chatWindow) {
     widgetBtn.addEventListener('click', () => {
       chatWindow.classList.toggle('active');
+      if (chatWindow.classList.contains('active')) {
+        badge?.classList.remove('show');
+        sessionStorage.setItem('cf-chat-opened', '1');
+        setTimeout(() => chatInput?.focus(), 400);
+      }
     });
   }
+
+  // Fecha o chat com a tecla ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') chatWindow?.classList.remove('active');
+  });
 
   if (closeBtn && chatWindow) {
     closeBtn.addEventListener('click', () => {
@@ -290,11 +303,13 @@ function initSuporteChat() {
     if (chip) {
       const queryType = chip.getAttribute('data-query');
       if (queryType === 'chatgpt') {
-        sendToAI('Quero comprar o ChatGPT Plus com desconto.');
+        processUserSuporteMessage('Quero comprar o ChatGPT Plus.');
+      } else if (queryType === 'ggmax') {
+        processUserSuporteMessage('Quero comprar o ChatGPT Plus pela GGMax.');
       } else if (queryType === 'estoque') {
-        sendToAI('Quais produtos estão disponíveis no estoque agora?');
+        processUserSuporteMessage('Quais produtos estão disponíveis no estoque agora?');
       } else if (queryType === 'garantia') {
-        sendToAI('Como funciona a garantia do produto?');
+        processUserSuporteMessage('Como funciona a garantia do produto?');
       } else if (queryType === 'zap') {
         window.open(`https://wa.me/${WHATSAPP_PHONE}`, '_blank');
       }
@@ -307,83 +322,125 @@ function initSuporteChat() {
       e.preventDefault();
       const text = chatInput.value.trim();
       if (text) {
-        sendToAI(text);
+        processUserSuporteMessage(text);
         chatInput.value = '';
       }
     });
   }
 
-  // Envia mensagem pra API da IA
-  async function sendToAI(userText) {
-    appendChatMessage(sanitizeInput(userText), true);
-
-    // Salva no histórico local
-    chatHistory.push({ role: 'user', content: userText });
-
-    // Mostra "Digitando..."
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'suporte-msg suporte-msg-bot';
-    typingDiv.innerHTML = '<i>Digitando...</i>';
-    messagesBox.appendChild(typingDiv);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
-
-    try {
-      const response = await fetch(CHAT_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userText,
-          sessionId: getChatSessionId(),
-          conversationHistory: chatHistory.slice(-10)
-        })
-      });
-
-      const data = await response.json();
-      typingDiv.remove();
-
-      const reply = data.reply || 'Desculpe, tive um problema. Fala comigo no WhatsApp: https://wa.me/5531982924858';
-      appendChatMessage(reply, false);
-      chatHistory.push({ role: 'assistant', content: reply });
-
-    } catch (err) {
-      typingDiv.remove();
-      appendChatMessage('Erro de conexão. Tenta novamente ou fala no WhatsApp: https://wa.me/5531982924858', false);
-      console.error('Chat API error:', err);
-    }
+  function nowTime() {
+    return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   }
 
   function appendChatMessage(text, isUser = false) {
     if (!messagesBox) return;
     const msgDiv = document.createElement('div');
     msgDiv.className = `suporte-msg ${isUser ? 'suporte-msg-user' : 'suporte-msg-bot'}`;
-    
-    // Converte markdown simples (**, links)
-    let html = text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
-    
-    // Converte [texto](url) em BOTÃO roxo (Stripe) ou verde (WhatsApp)
-    html = html.replace(/\[([^\]]+)\]\((https:\/\/wa\.me[^\)]+)\)/g, 
-      '<a href="$2" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#25D366;color:#fff;margin:6px 0;text-decoration:none;"><i class="fab fa-whatsapp"></i> $1</a>');
-    
-    // Converte [texto](url) em BOTÃO roxo (Stripe)
-    html = html.replace(/\[([^\]]+)\]\((https:\/\/buy\.stripe[^\)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener" class="btn btn-stripe" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#635BFF;color:#fff;margin:6px 0;text-decoration:none;"><i class="fas fa-shopping-cart"></i> $1</a>');
-    
-    // Converte [texto](qualquer-url) em botão genérico
-    html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;color:#635BFF;border:2px solid #635BFF;margin:6px 0;text-decoration:none;">🔗 $1</a>');
-    
-    // URLs soltas que sobrarem -> botão roxo Stripe se for stripe, senão link normal
-    html = html.replace(/https:\/\/buy\.stripe\.com\/[^\s<)]+/g,
-      '<a href="$&" target="_blank" rel="noopener" class="btn btn-stripe" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#635BFF;color:#fff;margin:6px 0;text-decoration:none;"><i class="fas fa-shopping-cart"></i> Pagar Agora no Stripe</a>');
-    
-    html = html.replace(/https:\/\/wa\.me\/[^\s<)]+/g,
-      '<a href="$&" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;background:#25D366;color:#fff;margin:6px 0;text-decoration:none;"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>');
-    
-    msgDiv.innerHTML = html;
+    msgDiv.innerHTML = `${text}<span class="suporte-time">${nowTime()}</span>`;
     messagesBox.appendChild(msgDiv);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
+    messagesBox.scrollTo({ top: messagesBox.scrollHeight, behavior: 'smooth' });
+  }
+
+  async function processUserSuporteMessage(userText) {
+    appendChatMessage(sanitizeInput(userText), true);
+
+    // Typing indicator (3 dots)
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'suporte-msg suporte-msg-bot';
+    typingDiv.innerHTML = '<span class="suporte-typing"><span></span><span></span><span></span></span>';
+    messagesBox.appendChild(typingDiv);
+    messagesBox.scrollTo({ top: messagesBox.scrollHeight, behavior: 'smooth' });
+
+    // If external Webhook configured
+    if (WEBHOOK_SUPPORT_ENDPOINT) {
+      try {
+        const response = await fetch(WEBHOOK_SUPPORT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userText, phone: WHATSAPP_PHONE })
+        });
+        const data = await response.json();
+        typingDiv.remove();
+        if (data && data.reply) {
+          appendChatMessage(data.reply, false);
+          return;
+        }
+      } catch (err) {
+        console.warn('Suporte webhook fallback:', err);
+      }
+    }
+
+    // Built-in Intelligent Support Knowledge Engine
+    setTimeout(() => {
+      typingDiv.remove();
+      const lower = userText.toLowerCase();
+      let botReply = '';
+
+      const stripeBtn = `<a href="${STRIPE_CHECKOUT_URL}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn stripe"><i class="fab fa-stripe-s"></i> Stripe (recomendado)</a>`;
+      const ggmaxBtn = `<a href="${GGMAX_URL}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn ggmax"><i class="fas fa-store"></i> GGMax</a>`;
+      const zapBtn = `<a href="https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Quero comprar o ChatGPT Plus (1 Mês).')}" target="_blank" rel="noopener noreferrer" class="suporte-link-btn zap"><i class="fab fa-whatsapp"></i> WhatsApp</a>`;
+      const recTip = `<span class="suporte-note">💡 Recomendamos o <strong>Stripe</strong>: aprovação instantânea e liberação em minutos.</span>`;
+
+      const has = (...words) => words.some(w => lower.includes(w));
+
+      if (has('oi', 'ola', 'olá', 'bom dia', 'boa tarde', 'boa noite', 'eae', 'opa') && lower.length < 25) {
+        botReply = `Olá! 👋 Tudo bem?<br>Temos o <strong>ChatGPT Plus (1 Mês)</strong> disponível por <strong>R$ 29,90</strong>.<br><br>` +
+          `Quer comprar agora ou tirar alguma dúvida?<br>` + stripeBtn + ggmaxBtn;
+      } else if (has('ggmax', 'gg max')) {
+        botReply = `Ótima escolha! Nosso anúncio oficial na GGMax oferece compra protegida pela plataforma:<br><br>` +
+          ggmaxBtn + `<span class="suporte-note">Pagamento e entrega intermediados pela GGMax.</span>`;
+      } else if (has('preço', 'preco', 'valor', 'quanto custa', 'quanto é', 'quanto e')) {
+        botReply = `O <strong>ChatGPT Plus (1 Mês de Acesso)</strong> custa <strong>R$ 29,90</strong> — pagamento único, sem mensalidade.<br><br>` +
+          stripeBtn + ggmaxBtn + zapBtn;
+      } else if (has('chatgpt', 'comprar', 'stripe', 'pagar', 'quero', 'gpt')) {
+        botReply = `O <strong>ChatGPT Plus (1 Mês de Acesso)</strong> está em estoque por <strong>R$ 29,90</strong>. Escolha como prefere pagar:<br><br>` +
+          stripeBtn + ggmaxBtn + zapBtn + recTip;
+      } else if (has('pix', 'cartão', 'cartao', 'boleto', 'forma de pagamento', 'parcel')) {
+        botReply = `💳 <strong>Formas de pagamento:</strong><br>` +
+          `• <strong>Stripe</strong>: cartão de crédito e PIX<br>` +
+          `• <strong>GGMax</strong>: PIX e saldo da plataforma<br>` +
+          `• <strong>WhatsApp</strong>: PIX direto<br><br>` + stripeBtn + ggmaxBtn;
+      } else if (has('entrega', 'quanto tempo', 'demora', 'prazo', 'receber')) {
+        botReply = `⚡ <strong>Entrega imediata!</strong><br>` +
+          `Após a confirmação do pagamento, enviamos os dados de acesso no seu WhatsApp em <strong>até 5 minutos</strong>.<br><br>` +
+          `Atendemos 24 horas por dia, todos os dias.`;
+      } else if (has('estoque', 'disponiv', 'disponív', 'outros', 'netflix', 'spotify', 'disney', 'xbox', 'canva', 'hbo', 'deezer', 'midjourney')) {
+        botReply = `📦 <strong>Status do estoque agora:</strong><br>` +
+          `• <strong>ChatGPT Plus</strong> — 🔥 14 unidades (pronta entrega)<br>` +
+          `• Netflix, Spotify, Disney+, Xbox, HBO, Canva, Deezer e Midjourney — 🚫 esgotados<br><br>` +
+          `Quer ser avisado na reposição? Chame no WhatsApp:<br>` + zapBtn;
+      } else if (has('garantia', 'troca', 'segur', 'confia', 'golpe', 'reembolso')) {
+        botReply = `🔒 <strong>Garantia Imediata de 24 horas</strong> — e isso é uma grande vantagem:<br><br>` +
+          `• Testamos o acesso <strong>junto com você</strong> na entrega<br>` +
+          `• Qualquer problema de login é trocado <strong>na hora</strong><br>` +
+          `• Sem formulário, sem protocolo, sem esperar dias<br>` +
+          `• Suporte segue disponível o mês todo para dúvidas<br><br>` +
+          `<span class="suporte-note">Resolvemos em minutos o que outros vendedores levam dias para responder.</span>`;
+      } else if (has('assinatura', 'recorrente', 'renova', 'mensalidade', 'cobrança', 'cobranca')) {
+        botReply = `✅ <strong>Não é assinatura!</strong><br>` +
+          `Você compra uma conta pronta com <strong>1 mês já pago</strong>. Nenhuma cobrança recorrente será feita no seu cartão.<br><br>` +
+          `Ao final dos 30 dias, você decide se quer renovar comprando novamente.`;
+      } else if (has('funciona', 'como usa', 'como recebo', 'passo')) {
+        botReply = `📝 <strong>Como funciona:</strong><br>` +
+          `1️⃣ Você paga via Stripe, GGMax ou WhatsApp<br>` +
+          `2️⃣ Confirmamos o pagamento automaticamente<br>` +
+          `3️⃣ Enviamos login e senha no seu WhatsApp<br>` +
+          `4️⃣ Você usa por 30 dias com garantia total<br><br>` + stripeBtn;
+      } else if (has('instagram', 'insta', 'rede social', 'telegram', 'contato')) {
+        botReply = `📱 <strong>Nossos canais oficiais:</strong><br>` +
+          `• Instagram: <strong>@${INSTAGRAM_HANDLE}</strong><br>` +
+          `• WhatsApp: <strong>(31) 98292-4858</strong><br>` +
+          `• Telegram: indisponível no momento<br><br>` + zapBtn;
+      } else if (has('obrigad', 'valeu', 'vlw', 'tchau', 'ok')) {
+        botReply = `Por nada! 😊 Estou aqui 24h se precisar.<br>Boas compras na <strong>ContaFlash</strong>! ⚡`;
+      } else {
+        botReply = `Não tenho certeza se entendi. 🤔 Posso te ajudar com:<br><br>` +
+          `• Preço e formas de pagamento<br>• Prazo de entrega<br>• Estoque disponível<br>• Garantia<br><br>` +
+          `Ou fale direto com um atendente humano:<br>` + zapBtn;
+      }
+
+      appendChatMessage(botReply, false);
+    }, 900);
   }
 }
 
@@ -426,7 +483,10 @@ function initParticles() {
   const container = document.getElementById('particles-container');
   if (!container) return;
 
-  const particleCount = window.innerWidth < 768 ? 10 : 20;
+  // Desliga partículas para quem prefere menos movimento
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const particleCount = window.innerWidth < 768 ? 8 : 16;
   const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < particleCount; i++) {
@@ -435,8 +495,8 @@ function initParticles() {
 
     const size = Math.random() * 4 + 2;
     const left = Math.random() * 100;
-    const duration = Math.random() * 16 + 12;
-    const delay = Math.random() * 10;
+    const duration = Math.random() * 22 + 28; // 28s a 50s — bem devagar
+    const delay = Math.random() * 18;
 
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
@@ -528,34 +588,63 @@ function initSmoothScroll() {
 // Fade-in Animations
 // ==========================================
 function initFadeInAnimations() {
-  const elements = document.querySelectorAll('.fade-in');
+  const elements = Array.from(document.querySelectorAll('.fade-in'));
   if (!elements.length) return;
 
-  elements.forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      el.classList.add('visible');
-    }
-  });
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
-
-    elements.forEach(el => {
-      if (!el.classList.contains('visible')) {
-        observer.observe(el);
-      }
-    });
-  } else {
-    elements.forEach(el => el.classList.add('visible'));
+  // Respeita quem prefere menos movimento
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    elements.forEach(el => el.classList.add('revealed'));
+    return;
   }
+
+  // Ativa o estado inicial escondido só agora (garante fallback sem JS)
+  document.documentElement.classList.add('js-ready');
+
+  // Revela um elemento e, ao terminar, remove as classes de animação.
+  // Isso elimina o conflito de transform com o :hover dos cards.
+  function reveal(el, delay = 0) {
+    if (el.dataset.revealed === '1') return;
+    el.dataset.revealed = '1';
+
+    setTimeout(() => {
+      el.style.willChange = 'opacity, transform';
+      el.classList.add('visible');
+
+      const cleanup = () => {
+        el.classList.remove('fade-in', 'visible');
+        el.classList.add('revealed');
+        el.style.willChange = 'auto';
+      };
+      // Limpa após a transição (1s) com folga de segurança
+      el.addEventListener('transitionend', cleanup, { once: true });
+      setTimeout(cleanup, 1400);
+    }, delay);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => reveal(el, 0));
+    return;
+  }
+
+  // Elementos já visíveis no carregamento: stagger curto e ordenado
+  const inView = elements.filter(el => el.getBoundingClientRect().top < window.innerHeight * 0.92);
+  inView.forEach((el, i) => reveal(el, Math.min(i * 110, 550)));
+
+  const observer = new IntersectionObserver((entries) => {
+    // Ordena por posição na tela para o stagger sair de cima para baixo
+    const visibles = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+    visibles.forEach((entry, i) => {
+      reveal(entry.target, Math.min(i * 110, 440));
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  elements.forEach(el => {
+    if (el.dataset.revealed !== '1') observer.observe(el);
+  });
 }
 
 // ==========================================
@@ -580,7 +669,7 @@ function initCounterAnimations() {
 function animateCounter(element) {
   const target = parseInt(element.getAttribute('data-target'), 10);
   const suffix = element.getAttribute('data-suffix') || '';
-  const duration = 1800;
+  const duration = 2800;
   const startTime = performance.now();
 
   function update(currentTime) {
@@ -643,7 +732,7 @@ function initTestimonialSlider() {
 
   function startAutoplay() {
     stopAutoplay();
-    autoplayInterval = setInterval(nextSlide, 4500);
+    autoplayInterval = setInterval(nextSlide, 7500);
   }
 
   function stopAutoplay() {
@@ -838,20 +927,24 @@ function initStripeCheckout() {
 
   document.addEventListener('click', (e) => {
     const buyBtn = e.target.closest('.btn-buy-stripe');
-    if (buyBtn) {
-      e.preventDefault();
-      const directStripeUrl = buyBtn.getAttribute('data-stripe-url') || STRIPE_CHECKOUT_URL;
+    if (!buyBtn) return;
 
-      if (directStripeUrl) {
-        window.open(directStripeUrl, '_blank');
-      } else {
-        activeProduct.name = buyBtn.getAttribute('data-product') || 'ChatGPT Plus';
-        activeProduct.price = buyBtn.getAttribute('data-price') || 'R$ 29,90';
-        document.getElementById('modalProductName').textContent = activeProduct.name;
-        document.getElementById('modalProductPrice').textContent = activeProduct.price;
-        modalOverlay.classList.add('active');
-      }
+    // Se for um link <a> real, deixa o navegador abrir nativamente.
+    // (window.open + preventDefault era bloqueado por popup blockers)
+    if (buyBtn.tagName === 'A' && buyBtn.getAttribute('href')) {
+      showToast('Abrindo checkout seguro...', 'success');
+      return;
     }
+
+    // Caso seja um <button>, abre o modal de opções de compra
+    e.preventDefault();
+    activeProduct.name = buyBtn.getAttribute('data-product') || 'ChatGPT Plus (1 Mês)';
+    activeProduct.price = buyBtn.getAttribute('data-price') || 'R$ 29,90';
+    const nameEl = document.getElementById('modalProductName');
+    const priceEl = document.getElementById('modalProductPrice');
+    if (nameEl) nameEl.textContent = activeProduct.name;
+    if (priceEl) priceEl.textContent = activeProduct.price;
+    modalOverlay.classList.add('active');
   });
 
   if (closeBtn) closeBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
